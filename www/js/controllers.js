@@ -1,44 +1,25 @@
-angular.module('datespot.controllers', ['ionic', 'datespot.services'])
+angular.module('songhop.controllers', ['ionic', 'songhop.services'])
 
 
 /*
-Controller for the Discover page
+Controller for the discover page
 */
-
 .controller('DiscoverCtrl', function($scope) {
 
 })
 
-/*
-Controller for the Favorites page
-*/
 
+/*
+Controller for the favorites page
+*/
 .controller('FavoritesCtrl', function($scope) {
 
 })
 
-/*
-Controller for the tab bar
-*/
 
+/*
+Controller for our tab bar
+*/
 .controller('TabsCtrl', function($scope) {
 
-
-// .controller('DashCtrl', function($scope) {})
-
-// .controller('ChatsCtrl', function($scope, Chats) {
-//   $scope.chats = Chats.all();
-//   $scope.remove = function(chat) {
-//     Chats.remove(chat);
-//   }
-// })
-
-// .controller('ChatDetailCtrl', function($scope, $stateParams, Chats) {
-//   $scope.chat = Chats.get($stateParams.chatId);
-// })
-
-// .controller('AccountCtrl', function($scope) {
-//   $scope.settings = {
-//     enableFriends: true
-//   };
 });
