@@ -4,7 +4,7 @@ angular.module('songhop.controllers', ['ionic', 'songhop.services'])
 /*
 Controller for the discover page
 */
-.controller('DiscoverCtrl', function($scope) {
+.controller('DiscoverCtrl', function($scope, $timeout) {
   // our first three songs
   $scope.songs = [
      {
@@ -32,13 +32,17 @@ Controller for the discover page
 
   // fired when we favorite / skip a song.
   $scope.sendFeedback = function (bool) {
+  	$scope.currentSong.rated = bool;
+  	$scope.currentSong.hide = true;
 
-  	// set the current song to one of our three songs
-    var randomSong = Math.round(Math.random() * ($scope.songs.length - 1));
+  	
+  	$timeout(function() {
+	  	// set the current song to one of our three songs
+	    var randomSong = Math.round(Math.random() * ($scope.songs.length - 1));
 
-    // update current song in scope
-    $scope.currentSong = angular.copy($scope.songs[randomSong]);
-
+	    // update current song in scope
+	    $scope.currentSong = angular.copy($scope.songs[randomSong]);
+	  }, 250);
   }
 })
 
