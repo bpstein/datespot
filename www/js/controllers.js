@@ -66,6 +66,7 @@ Controller for the favorites page
 /*
 Controller for our tab bar
 */
-.controller('TabsCtrl', function($scope) {
+.controller('TabsCtrl', function($scope, User) {
 
+  $scope.favCount = User.favoriteCount;
 });
