@@ -1,4 +1,4 @@
-angular.module('songhop.controllers', ['ionic', 'songhop.services'])
+angular.module('datespot.controllers', ['ionic', 'datespot.services'])
 
 
 /*

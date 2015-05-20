@@ -1,4 +1,4 @@
-angular.module('songhop.services', [])
+angular.module('datespot.services', [])
 .factory('User', function() {
 
   var o = {
@@ -7,7 +7,7 @@ angular.module('songhop.services', [])
   }
 
   o.addSpotToFavorites = function(spot) {
-    // make sure there's a song to add
+    // make sure there's a date spot to add
     if (!spot) return false;
 
     // add to favorites array
@@ -16,7 +16,7 @@ angular.module('songhop.services', [])
   }
 
   o.removeSpotFromFavorites = function(spot, index) {
-    // make sure there's a song to add
+    // make sure there's a date spot to add
     if (!spot) return false;
 
     // add to favorites array
