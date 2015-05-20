@@ -36,7 +36,7 @@
 
 }
 
-.discover-page .current-song {
+.discover-page .current-spot {
   -webkit-transform: scale(1);
   -ms-transform: scale(1);
   transform: scale(1);
@@ -46,39 +46,39 @@
   transition:all cubic-bezier(0.420, 0.000, 1.000, 1.000) 0.1s;
 }
 
-.discover-page .current-song .item-image {
-  max-height:300px;
+.discover-page .current-spot .item-image {
+  max-height:400px;
   overflow:hidden;
 }
 
 @media screen and (max-height: 600px) {
-  .discover-page .current-song .item-image {
+  .discover-page .current-spot .item-image {
     max-height:200px;
     overflow:hidden;
   }
 }
 
-.discover-page .current-song.favorited.ng-hide {
+.discover-page .current-spot.favorited.ng-hide {
   -webkit-transform: translateX(1000px) rotate(50deg);
   -ms-transform: translateX(1000px) rotate(50deg);
   transform: translateX(1000px) rotate(50deg);
   opacity:0;
 }
 
-.discover-page .current-song.skipped.ng-hide {
+.discover-page .current-spot.skipped.ng-hide {
   -webkit-transform: translateX(-1000px) rotate(-50deg);
   -ms-transform: translateX(-1000px) rotate(-50deg);
   transform: translateX(-1000px) rotate(-50deg);
   opacity:0;
 }
 
-.discover-page .current-song.ng-hide-add {
+.discover-page .current-spot.ng-hide-add {
   -webkit-transition:all cubic-bezier(0.420, 0.000, 1.000, 1.000) 0.3s;
   transition:all cubic-bezier(0.420, 0.000, 1.000, 1.000) 0.3s;
   display:block!important;
 }
 
-.discover-page .current-song.ng-hide-remove {
+.discover-page .current-spot.ng-hide-remove {
   -webkit-transform: scale(0.7) translateX(0px) rotate(0deg);
   -ms-transform: scale(0.7) translateX(0px) rotate(0deg);
   transform: scale(0.7) translateX(0px) rotate(0deg);

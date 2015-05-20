@@ -5,8 +5,8 @@ angular.module('songhop.controllers', ['ionic', 'songhop.services'])
 Controller for the discover page
 */
 .controller('DiscoverCtrl', function($scope, $timeout, User) {
-  // our first three songs
-  $scope.songs = [
+  // our first three DateSpots
+  $scope.spots = [
      {
         "title":"Stealing Cinderella",
         "artist":"Chuck Wicks",
@@ -27,23 +27,23 @@ Controller for the discover page
       }
   ];
 
-  // initialize the current song
-  $scope.currentSong = angular.copy($scope.songs[0]);
+  // initialize the current date spot
+  $scope.currentSpot = angular.copy($scope.spots[0]);
 
-  // fired when we favorite / skip a song.
+  // fired when we favorite / skip a date spot.
   $scope.sendFeedback = function (bool) {
     // first, add to favorites if they favorited
-    if (bool) User.addSongToFavorites($scope.currentSong);
-  	$scope.currentSong.rated = bool;
-  	$scope.currentSong.hide = true;
+    if (bool) User.addSpotToFavorites($scope.currentSpot);
+  	$scope.currentSpot.rated = bool;
+  	$scope.currentSpot.hide = true;
 
   	
   	$timeout(function() {
-	  	// set the current song to one of our three songs
-	    var randomSong = Math.round(Math.random() * ($scope.songs.length - 1));
+	  	// set the current date spot to one of our three date spots
+	    var randomSpot = Math.round(Math.random() * ($scope.spots.length - 1));
 
-	    // update current song in scope
-	    $scope.currentSong = angular.copy($scope.songs[randomSong]);
+	    // update current date spot in scope
+	    $scope.currentSpot = angular.copy($scope.spots[randomSpot]);
 	  }, 250);
   }
 })
@@ -56,8 +56,8 @@ Controller for the favorites page
   // get the list of our favorites from the user service
   $scope.favorites = User.favorites;
 
-  $scope.removeSong = function(song, index) {
-    User.removeSongFromFavorites(song, index);
+  $scope.removeSpot = function(spot, index) {
+    User.removeSpotFromFavorites(spot, index);
   }
 
 })

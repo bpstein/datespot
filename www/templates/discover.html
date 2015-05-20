@@ -2,18 +2,27 @@
   <ion-content scroll="false">
 
 
-    <div class="list card current-song"
-      ng-class="{skipped: currentSong.rated == false,
-                  favorited: currentSong.rated == true}"
-      ng-show="currentSong && !currentSong.hide">
+    <div class="list card current-spot"
+      ng-class="{skipped: currentSpot.rated == false,
+                  favorited: currentSpot.rated == true}"
+      ng-show="currentSpot && !currentSpot.hide">
+      
+
+      <!-- ng-repeat="card in cards" 
+      on-destroy="cardDestroyed($index)"
+      on-swipe-left="cardSwipedLeft($index)" 
+      on-swipe-right="cardSwipedRight($index)"
+      on-partial-swipe="cardPartialSwipe(amt)"-->
 
       <div class="item item-image">
-        <img ng-src="{{ currentSong.image_large }}">
+        <div class="no-text overlayBox"><div class="noBox boxed">Trash</div></div>
+        <img ng-src="{{ currentSpot.image_large }}">
+        <div class="yes-text overlayBox"><div class="yesBox boxed" id="centerMe">Save</div></div>
       </div>
 
       <div class="item">
-        <h2>{{ currentSong.title }}</h2>
-        <p>{{ currentSong.artist }}</p>
+        <h2>{{ currentSpot.title }}</h2>
+        <p>{{ currentSpot.artist }}</p>
       </div>
 
       <div class="item tabs tabs-secondary tabs-icon-left">

@@ -2,12 +2,12 @@
   <ion-content>
 
     <ion-list>
-      <ion-item ng-repeat="song in favorites" class="item-avatar">
-        <img ng-src="{{ song.image_small }}">
-        <h2>{{ song.title }}</h2>
-        <p>{{ song.artist }}</p>
+      <ion-item ng-repeat="spot in favorites" class="item-avatar">
+        <img ng-src="{{ spot.image_small }}">
+        <h2>{{ spot.title }}</h2>
+        <p>{{ spot.artist }}</p>
 
-        <ion-option-button class="button-assertive" ng-click="removeSong(song, $index)">
+        <ion-option-button class="button-assertive" ng-click="removeSpot(spot, $index)">
           <i class="ion-minus-circled"></i>
         </ion-option-buttion>
       </ion-item>

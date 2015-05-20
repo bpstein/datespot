@@ -6,18 +6,18 @@ angular.module('songhop.services', [])
     newFavorites: 0
   }
 
-  o.addSongToFavorites = function(song) {
+  o.addSpotToFavorites = function(spot) {
     // make sure there's a song to add
-    if (!song) return false;
+    if (!spot) return false;
 
     // add to favorites array
-    o.favorites.unshift(song);
+    o.favorites.unshift(spot);
     o.newFavorites++;
   }
 
-  o.removeSongFromFavorites = function(song, index) {
+  o.removeSpotFromFavorites = function(spot, index) {
     // make sure there's a song to add
-    if (!song) return false;
+    if (!spot) return false;
 
     // add to favorites array
     o.favorites.splice(index, 1);
