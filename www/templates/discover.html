@@ -2,42 +2,54 @@
   <ion-content scroll="false">
 
 
-    <div class="list card current-spot"
-      ng-class="{skipped: currentSpot.rated == false,
-                  favorited: currentSpot.rated == true}"
-      ng-show="currentSpot && !currentSpot.hide">
-      
+    <!-- <td-cards>
+      <td-card ng-repeat="card in cards" on-destroy="cardDestroyed($index)" on-swipe="cardSwiped($index)">
+    Card content here
+      </td-card>
+    </td-cards> -->
 
-      <!-- ng-repeat="card in cards" 
-      on-destroy="cardDestroyed($index)"
-      on-swipe-left="cardSwipedLeft($index)" 
-      on-swipe-right="cardSwipedRight($index)"
-      on-partial-swipe="cardPartialSwipe(amt)"-->
+    <td-cards>
+      <td-card ng-repeat="spot in spots" on-destroy="spotDestroyed($index)" on-swipe="spotSwiped($index)">
 
-      <div class="item item-image">
-        <div class="no-text overlayBox"><div class="noBox boxed">Trash</div></div>
-        <img ng-src="{{ currentSpot.image_large }}">
-        <div class="yes-text overlayBox"><div class="yesBox boxed" id="centerMe">Save</div></div>
-      </div>
 
-      <div class="item">
-        <h2>{{ currentSpot.title }}</h2>
-        <p>{{ currentSpot.artist }}</p>
-      </div>
+        <div class="list card current-spot"
+          ng-class="{skipped: currentSpot.rated == false,
+                      favorited: currentSpot.rated == true}"
+          ng-show="currentSpot && !currentSpot.hide">
+          
 
-      <div class="item tabs tabs-secondary tabs-icon-left">
-        <a class="tab-item" ng-click="sendFeedback(false)">
-          <i class="icon ion-close"></i>
-          Skip
-        </a>
-        <a class="tab-item" ng-click="sendFeedback(true)">
-          <i class="icon ion-heart"></i>
-          Favorite
-        </a>
-      </div>
+          <!-- ng-repeat="card in cards" 
+          on-destroy="cardDestroyed($index)"
+          on-swipe-left="cardSwipedLeft($index)" 
+          on-swipe-right="cardSwipedRight($index)"
+          on-partial-swipe="cardPartialSwipe(amt)"-->
 
-    </div>
+          <div class="item item-image">
+            <div class="no-text overlayBox">Trash<div class="noBox boxed"></div></div>
+            <img ng-src="{{ currentSpot.image_large }}">
+            <div class="yes-text overlayBox"><div class="yesBox boxed" id="centerMe">Save</div></div>
+          </div>
 
+          <div class="item">
+            <h2>{{ currentSpot.title }}</h2>
+            <p>{{ currentSpot.artist }}</p>
+          </div>
+
+          <div class="item tabs tabs-secondary tabs-icon-left">
+            <a class="tab-item" ng-click="sendFeedback(false)">
+              <i class="icon ion-close"></i>
+              Skip
+            </a>
+            <a class="tab-item" ng-click="sendFeedback(true)">
+              <i class="icon ion-heart"></i>
+              Favorite
+            </a>
+          </div>
+
+        </div>
+
+      </td-card>
+    </td-cards>
 
   </ion-content>
 </ion-view>

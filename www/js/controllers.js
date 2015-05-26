@@ -46,6 +46,15 @@ Controller for the discover page
 	    $scope.currentSpot = angular.copy($scope.spots[randomSpot]);
 	  }, 250);
   }
+
+  $scope.spotDestroyed = function(index) {
+    $scope.spots.splice(index, 1);
+  };
+
+  $scope.spotSwiped = function(index) {
+    var newSpot = // new spot data
+    $scope.spot.push(newSpot);
+  };
 })
 
 
