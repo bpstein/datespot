@@ -1,28 +1,18 @@
 <ion-view view-title="Discover" class="discover-page">
   <ion-content scroll="false">
 
-
-    <!-- <td-cards>
-      <td-card ng-repeat="card in cards" on-destroy="cardDestroyed($index)" on-swipe="cardSwiped($index)">
-    Card content here
-      </td-card>
-    </td-cards> -->
-
     <td-cards>
-      <td-card ng-repeat="spot in spots" on-destroy="spotDestroyed($index)" on-swipe="spotSwiped($index)">
+      <td-card ng-repeat="spot in spots" 
+        on-destroy="spotDestroyed($index)" 
+        on-swipe-left="spotSwipedLeft($index)"
+        on-swipe-right="spotSwipedRight($index)"
+        on-partial-swipe="spotPartialSwipe(amt)">
 
 
         <div class="list card current-spot"
           ng-class="{skipped: currentSpot.rated == false,
                       favorited: currentSpot.rated == true}"
           ng-show="currentSpot && !currentSpot.hide">
-          
-
-          <!-- ng-repeat="card in cards" 
-          on-destroy="cardDestroyed($index)"
-          on-swipe-left="cardSwipedLeft($index)" 
-          on-swipe-right="cardSwipedRight($index)"
-          on-partial-swipe="cardPartialSwipe(amt)"-->
 
           <div class="item item-image">
             <div class="no-text overlayBox">Trash<div class="noBox boxed"></div></div>
