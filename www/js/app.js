@@ -40,6 +40,16 @@ angular.module('datespot', ['ionic', 'datespot.controllers'])
 
   // Each tab has its own nav history stack:
 
+  .state('tab.filter', {
+    url: '/filter',
+    views: {
+      'tab-filter': {
+        templateUrl: 'templates/filter.html',
+        controller: 'FilterCtrl'
+      }
+    }
+  })
+
   .state('tab.discover', {
     url: '/discover',
     views: {

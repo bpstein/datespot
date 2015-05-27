@@ -1,5 +1,18 @@
 angular.module('datespot.controllers', ['ionic', 'datespot.services'])
 
+/*
+Controller for the filter page
+*/
+
+.controller('FilterCtrl', function($scope, User) {
+
+  
+})
+
+/******
+ENTER FILTER FUNCTIONALITY HERE
+******/
+
 
 /*
 Controller for the discover page
