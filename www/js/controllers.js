@@ -23,19 +23,19 @@ Controller for the discover page
      {
         "title":"WC Clapham | Wine & Charcuterie",
         "artist":"Clapham Common South Side, London SW4 7AA",
-        "image_small":"https://i.scdn.co/image/d1f58701179fe768cff26a77a46c56f291343d68",
+        "image_small":"http://www.we-heart.com/upload-images/wcclapham2.jpg",
         "image_large":"http://www.we-heart.com/upload-images/wcclapham2.jpg"
      },
      {
         "title":"Duck & Waffle",
         "artist":"Heron Tower, 110 Bishopsgate, London EC2N 4AY",
-        "image_small":"https://i.scdn.co/image/1a4ba26961c4606c316e10d5d3d20b736e3e7d27",
+        "image_small":"http://cdni.condenast.co.uk/646x430/d_f/DuckandWaffle01_V_28Nov12_pr_b_646x430.jpg",
         "image_large":"http://cdni.condenast.co.uk/646x430/d_f/DuckandWaffle01_V_28Nov12_pr_b_646x430.jpg"
      },
      {
         "title":"214 Bermondsey",
         "artist":"214 Bermondsey St SE1 3TQ",
-        "image_small":"https://i.scdn.co/image/398df9a33a6019c0e95e3be05fbaf19be0e91138",
+        "image_small":"http://www.tastingbritain.co.uk/wp-content/uploads/2014/08/DSC5762.jpg",
         "image_large":"http://www.tastingbritain.co.uk/wp-content/uploads/2014/08/DSC5762.jpg"
       }
   ];
