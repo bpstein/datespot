@@ -21,22 +21,22 @@ Controller for the discover page
   // our first three DateSpots
   $scope.spots = [
      {
-        "title":"Stealing Cinderella",
-        "artist":"Chuck Wicks",
+        "title":"WC Clapham | Wine & Charcuterie",
+        "artist":"Clapham Common South Side, London SW4 7AA",
         "image_small":"https://i.scdn.co/image/d1f58701179fe768cff26a77a46c56f291343d68",
-        "image_large":"https://i.scdn.co/image/9ce5ea93acd3048312978d1eb5f6d297ff93375d"
+        "image_large":"http://www.we-heart.com/upload-images/wcclapham2.jpg"
      },
      {
-        "title":"Venom - Original Mix",
-        "artist":"Ziggy",
+        "title":"Duck & Waffle",
+        "artist":"Heron Tower, 110 Bishopsgate, London EC2N 4AY",
         "image_small":"https://i.scdn.co/image/1a4ba26961c4606c316e10d5d3d20b736e3e7d27",
-        "image_large":"https://i.scdn.co/image/91a396948e8fc2cf170c781c93dd08b866812f3a"
+        "image_large":"http://cdni.condenast.co.uk/646x430/d_f/DuckandWaffle01_V_28Nov12_pr_b_646x430.jpg"
      },
      {
-        "title":"Do It",
-        "artist":"Rootkit",
+        "title":"214 Bermondsey",
+        "artist":"214 Bermondsey St SE1 3TQ",
         "image_small":"https://i.scdn.co/image/398df9a33a6019c0e95e3be05fbaf19be0e91138",
-        "image_large":"https://i.scdn.co/image/4e47ee3f6214fabbbed2092a21e62ee2a830058a"
+        "image_large":"http://www.tastingbritain.co.uk/wp-content/uploads/2014/08/DSC5762.jpg"
       }
   ];
 
