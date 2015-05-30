@@ -91,3 +91,34 @@
   width:1px;
   opacity:0.01;
 }
+
+/* Filter/Gameplan page stylings */
+.preamble {
+  text-align: center;
+  padding-bottom: 25px;
+  margin-top: -15px;
+}
+
+.filter-page {
+  padding-horizontal: 15px;
+}
+
+#what-filter {
+  /*margin-right: 45px;*/
+}
+
+.range-positive {
+  padding-right: 15px;
+  padding-left: 15px;
+}
+
+#quirky-filter {
+  margin-bottom: 50px;
+}
+
+.button-block {
+  max-width: 450px;
+  text-align: center;
+  margin: 0 auto;
+  display: block;
+}
