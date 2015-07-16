@@ -48,7 +48,7 @@ function clean_string($string)
 	
 	
    // Return only spaces, a-z, A-Z, 0-9, *, _, ., -, ','
-   return preg_replace('/[^a-zA-Z0-9\.\,\/: ]/', '', $string);
+   return preg_replace('/[^a-zA-Z0-9\.\,\/:\- ]/', '', $string);
    
    
 /* 	

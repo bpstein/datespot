@@ -16,7 +16,8 @@ if ( !defined('IN_APPLICATION') )
 }
 
 // Database Table Names
-define('VENUE_TABLE',							$table_prefix.'venue');
+define('VENUE_TABLE',								$table_prefix.'venue');
+define('VENUE_IMAGE_TABLE',							$table_prefix.'venue_image');
 define('USER_TABLE',					$table_prefix.'user');
 define('USER_EVENT_LOG_TABLE',				$table_prefix.'user_event_log');
 define('USER_LOCATION_TABLE', 				$table_prefix.'user_location');

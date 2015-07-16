@@ -10,9 +10,11 @@
 
 /* Overall Template  */
 body    {
-        background-image: url('background.jpg');
-		background-repeat:no-repeat;
-		background-position:left top;		
+
+      /*  background-image: url('background.jpg'); */
+	    background-repeat:repeat-x; 
+		background-position:left top;	
+		background-color: #aaa;
         margin: 15px;
 	
 }

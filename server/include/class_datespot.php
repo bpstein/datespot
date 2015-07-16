@@ -38,7 +38,7 @@ class DateSpot
 		
 		if (!is_numeric($venue_id))
 		{
-			$sql = 'SELECT * FROM '. VENUE_TABLE .' ORDER BY venue_id ASC';
+			$sql = 'SELECT * FROM '. VENUE_TABLE .' ORDER BY venue_id DESC';
 		}
 		else
 		{
@@ -55,6 +55,17 @@ class DateSpot
 
 		return $data;
 		
+	}
+	
+	
+	// TODO
+	static function get_venue_images($venue_id)
+	{
+		
+		global $conn;
+		
+	
+	
 	}
 	
 
