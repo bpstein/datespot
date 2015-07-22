@@ -6,10 +6,7 @@ Controller for the filter page
 
 .controller('FilterCtrl', function($scope, User) {
 
-  $scope.runFilter = function (bool) {
-  }
-
-
+  
 })
 
 /******
@@ -20,41 +17,43 @@ ENTER FILTER FUNCTIONALITY HERE
 /*
 Controller for the discover page
 */
-.controller('DiscoverCtrl', function($scope, $timeout, User) {
+.controller('DiscoverCtrl', function($scope, $timeout, User, Reccomendations) {
 	
 
-  // $http.get('http://ds.urandom.info/client.php?originLat=51.4621653&originLong=-0.1691684&nojsonheader=true').then(function(resp) {
-  //   console.log('Success', resp);
-  //   // For JSON responses, resp.data contains the result
-  // }, function(err) {
-  //   console.error('ERR', err);
-  //   // err.status will contain the status code
-  // });
+   // get our first songs
+  Recommendations.getNextVenues()
+    .then(function(){
+      $scope.currentSong = Recommendations.queue[0];
+    });
   
   
-  
-
+  	
+/*
   // our first three DateSpots
   $scope.spots = [
      {
-        "name":"WC Clapham | Wine & Charcuterie",
-        "address":"Clapham Common South Side, London SW4 7AA",
+        "title":"WC Clapham | Wine & Charcuterie",
+        "artist":"Clapham Common South Side, London SW4 7AA",
         "image_small":"http://www.we-heart.com/upload-images/wcclapham2.jpg",
         "image_large":"http://www.we-heart.com/upload-images/wcclapham2.jpg"
      },
      {
-        "name":"Duck & Waffle",
-        "address":"Heron Tower, 110 Bishopsgate, London EC2N 4AY",
+        "title":"Duck & Waffle",
+        "artist":"Heron Tower, 110 Bishopsgate, London EC2N 4AY",
         "image_small":"http://cdni.condenast.co.uk/646x430/d_f/DuckandWaffle01_V_28Nov12_pr_b_646x430.jpg",
         "image_large":"http://cdni.condenast.co.uk/646x430/d_f/DuckandWaffle01_V_28Nov12_pr_b_646x430.jpg"
      },
      {
-        "name":"214 Bermondsey",
-        "address":"214 Bermondsey St SE1 3TQ",
+        "title":"214 Bermondsey",
+        "artist":"214 Bermondsey St SE1 3TQ",
         "image_small":"http://www.tastingbritain.co.uk/wp-content/uploads/2014/08/DSC5762.jpg",
         "image_large":"http://www.tastingbritain.co.uk/wp-content/uploads/2014/08/DSC5762.jpg"
       }
   ];
+  
+*/
+  
+  
 
   // initialize the current date spot
   $scope.currentSpot = angular.copy($scope.spots[0]);
@@ -74,8 +73,8 @@ Controller for the discover page
 	    // update current date spot in scope
 	    $scope.currentSpot = angular.copy($scope.spots[randomSpot]);
 	  }, 250);
-  
-}
+  }
+
   $scope.spotDestroyed = function(index) {
     $scope.spots.splice(index, 1);
   };
@@ -84,6 +83,7 @@ Controller for the discover page
     var newSpot = // new spot data
     $scope.spot.push(newSpot);
   };
+  
 })
 
 
