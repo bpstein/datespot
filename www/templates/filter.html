@@ -17,6 +17,9 @@
 		<div id="time-filter">
 			<label class="item item-input">
     		<span class="input-label">What time?</span>
+    			<ionic-timepicker etime="slots.epochTime" format="slots.format" step="slots.step" callback="timePickerCallback">    
+						<button class="button button-block button-positive"> {{slots.epochTime}} </button>
+					</ionic-timepicker>
     		<input type="text">
   		</label>
 		</div>

@@ -9,7 +9,16 @@ Controller for the filter page
   $scope.runFilter = function (bool) {
   }
 
+  $scope.slots = {epochTime: 12600, format: 12, step: 1};
 
+  $scope.timePickerCallback = function (val) {
+    if (typeof (val) === 'undefined') {
+      console.log('Time not selected');
+    } else {
+      console.log('Selected time is: ', val);
+      // 'val' will contain the selected time epoch
+    };
+  }
 })
 
 /******
