@@ -74,8 +74,8 @@ Controller for the discover page
 	    // update current date spot in scope
 	    $scope.currentSpot = angular.copy($scope.spots[randomSpot]);
 	  }, 250);
-  }
-
+  
+}
   $scope.spotDestroyed = function(index) {
     $scope.spots.splice(index, 1);
   };

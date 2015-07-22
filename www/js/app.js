@@ -5,6 +5,7 @@
 // the 2nd parameter is an array of 'requires'
 angular.module('datespot', ['ionic', 'datespot.controllers'])
 
+
 .run(function($ionicPlatform) {
   $ionicPlatform.ready(function() {
     // Hide the accessory bar by default (remove this to show the accessory bar above the keyboard
