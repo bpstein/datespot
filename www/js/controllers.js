@@ -6,7 +6,10 @@ Controller for the filter page
 
 .controller('FilterCtrl', function($scope, User) {
 
-  
+  $scope.runFilter = function (bool) {
+  }
+
+
 })
 
 /******

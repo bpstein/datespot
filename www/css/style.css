@@ -95,12 +95,15 @@
 /* Filter/Gameplan page stylings */
 .preamble {
   text-align: center;
-  padding-bottom: 25px;
-  margin-top: -15px;
+  padding-bottom: 15px;
 }
 
 .filter-page {
   padding-horizontal: 15px;
+}
+
+.input-label {
+  font-size: 0.95em;
 }
 
 #what-filter {
@@ -110,10 +113,11 @@
 .range-positive {
   padding-right: 15px;
   padding-left: 15px;
+  font-size: 1em;
 }
 
 #quirky-filter {
-  margin-bottom: 50px;
+  margin-bottom: 20px;
 }
 
 .button-block {
