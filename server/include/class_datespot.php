@@ -36,39 +36,29 @@ class DateSpot
 	{
 		global $conn;
 		
+		
+		
 		if (!is_numeric($venue_id))
 		{
 			$sql = 'SELECT * FROM '. VENUE_TABLE .' ORDER BY venue_id DESC';
+			
+			$query = $conn->query($sql);
+			$data = $query->fetchAll(PDO::FETCH_ASSOC);	
+		
 		}
 		else
 		{
 			$sql = 'SELECT * FROM '. VENUE_TABLE .' WHERE venue_id = '. $venue_id;
+			
+			$query = $conn->query($sql);
+			$data = $query->fetch(PDO::FETCH_ASSOC);				
+	
 		}
 	
-		/*
-		$query = $conn->prepare($sql);
-		$query->execute($id);
-		*/
-		
-		$query = $conn->query($sql);
-		$data = $query->fetchAll(PDO::FETCH_ASSOC);	
-
 		return $data;
 		
 	}
-	
-	
-	// TODO
-	static function get_venue_images($venue_id)
-	{
-		
-		global $conn;
-		
-	
-	
-	}
-	
 
-}
+} // DateSpot
 
 

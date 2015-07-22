@@ -59,7 +59,8 @@ if (DEBUG_MODE)
 		  }
 		  
 		  map = new google.maps.Map(document.getElementById('map-canvas'), mapOptions);
-		  	  
+
+ 
 		}
 		
 //	google.maps.event.addDomListener(window, 'load', initialize);
@@ -115,14 +116,31 @@ if (DEBUG_MODE)
 
 			// If we have coordinates, center the map on these
 			map.setCenter(new google.maps.LatLng(position.coords.latitude, position.coords.longitude));
+			
+			
+			/* Build the marker 
+			var contentString = '<div id="content">'+
+			  '<div id="bodyContent">This is where you are SCROT!</p>'+
+			  '</div>';
 
-
+			var infowindow = new google.maps.InfoWindow({
+			  content: contentString
+			});
+*/
 			// Stick a marker at our position
 			var marker = new google.maps.Marker({
 			  position: new google.maps.LatLng(position.coords.latitude, position.coords.longitude),
 			  map: map,
 			  title: 'This is where you are SCROT!'
 			});
+			
+			/*
+		  google.maps.event.addListener(marker, 'click', function() {
+			infowindow.open(map,marker);
+		  });
+		  
+		  */
+	  
 
 			// OK. SO we know our position, show us local things.
 			showVenuesAroundPoint(position.coords.latitude, position.coords.longitude);
@@ -131,7 +149,8 @@ if (DEBUG_MODE)
 		/* Show all the venues */
 		function showVenuesAroundPoint(lat, lng) 
 		{
-		
+
+						
 			// Make our call
 			jQuery.ajax('./client.php', 
 			{
@@ -148,16 +167,37 @@ if (DEBUG_MODE)
 					for(i in data.points) 
 					{					
 						var latLng = new google.maps.LatLng(data.points[i].Latitude, data.points[i].Longitude);
-						 
+						
+						var contentString = '<div id="content">'+
+						  '<h5>' + data.points[i].Name + '</h5>'+
+						  '<div id="bodyContent">'+
+						  '<p>Latitude: ' + data.points[i].Latitude + '. Longitude: ' + data.points[i].Longitude + '</p>'+
+						  '<p><b>Overall:</b> ' + data.points[i].GenRating + '&nbsp;&nbsp;&nbsp;<b>Cost:</b> ' + data.points[i].CostRating + '&nbsp;&nbsp;&nbsp;<b>Quirkiness:</b> ' + data.points[i].QuirkinessRating +'</p>'+
+						  '<p>' + data.points[i].Description + '</p>'+					  
+						  '</div>';
+						  
+						  
+						var infowindow = new google.maps.InfoWindow({
+						  content: contentString
+						});						  
+
+ 
 						// Creating a marker and putting it on the map
 						var marker = new google.maps.Marker({
 							position: latLng,
 							map: map,
-							title: "Distance Rank: "+ i + "\r\nName: " +data.points[i].Name
+							title: "Distance Rank: "+ i + "\r\nName: " +data.points[i].Name,
+							info: contentString // we need to use this or we get the same content for every bloody infomarket
 						});
+						
+						// Thank god for: https://tommcfarlin.com/multiple-infowindows-google-maps/
+						google.maps.event.addListener( marker, 'click', function() {
+						 
+						   infowindow.setContent( this.info );
+						   infowindow.open( map, this );
+						 
+						});			
 
-			
-			
 					 }
 					
 				} 

@@ -40,6 +40,20 @@ class JSONClientHandler
 
 	function JSONClientHandler()
 	{
+
+		/**************************************************
+		 JSONClientHandler, $_REQUEST query variables:
+		
+		 a 			= action		
+		 originLat	= Latitude
+		 originLong = Longitude
+		 
+		 
+		 */
+			
+
+		 
+		 
 		switch (@$_REQUEST['a'])
 		{
 		
@@ -73,18 +87,20 @@ class JSONClientHandler
 		// http://stackoverflow.com/questions/5756232/moving-lat-lon-text-columns-into-a-point-type-column
 		if ( is_numeric($_origin_lat) && is_numeric($_origin_long)   )
 		{
-			if (DEBUG_MODE) { echo 'Latitude and Longitude were OK.'; }
-			
+			if (DEBUG_MODE) { debug_message('Latitude and Longitude were OK.'); }
 		}
 		else
 		{
+		
+			$this->success = false;		
+			if (DEBUG_MODE) { debug_message('Latitude and Longitude were not OK.'); }
 			
-			
+			return false; // exit function here
 		}
 
 
 		// From: http://www.tec20.co.uk/working-with-postcodes-and-spatial-data-in-mysql/
-		/* 	In order to perform a search on this table, we need an efficient way of searching the data. MySQL offers a number of geometry functions that we could use, but we are in dangerous territory of writing an inefficient query. An obvious choice is to use GLength(), which calculates the distance between two points. The down side is that it’s impossible to make use of any indexes, as we would have to calculate a value for each postcode stored in the database. Searching against 1,700,000 entries would take far too long to return a value. In order to reduce the collation down, we can restrict the search with a bounding box. Our solution is going to present map that you click on, so we can get the current bounding box that the map covers. As we can get the minimum and maximum coordinates from the current map, we can use this to filter the database table down using MBRWithin() before we start performing GLength() operations. This will use the SPATIAL index and speed up our query significantly. An explanation of how the spatial index works in this scenario can be found in the MySQL documentation. */	
+		/* 	In order to perform a search on this table, we need an efficient way of searching the data. MySQL offers a number of geometry functions that we could use, but we are in dangerous territory of writing an inefficient query. An obvious choice is to use GLength(), which calculates the distance between two points. The down side is that itâ€™s impossible to make use of any indexes, as we would have to calculate a value for each postcode stored in the database. Searching against 1,700,000 entries would take far too long to return a value. In order to reduce the collation down, we can restrict the search with a bounding box. Our solution is going to present map that you click on, so we can get the current bounding box that the map covers. As we can get the minimum and maximum coordinates from the current map, we can use this to filter the database table down using MBRWithin() before we start performing GLength() operations. This will use the SPATIAL index and speed up our query significantly. An explanation of how the spatial index works in this scenario can be found in the MySQL documentation. */	
 		
 		// This query OMITS an ENVELOPE, so it is unbounded and will search the entire database space (small).
 		// might need to bound the search space at a later date with the below WHERE clause.
@@ -96,10 +112,11 @@ class JSONClientHandler
 		
 		
 		// We leverage MySQL Geometric and Spatial Index column here. Whilst the latitude and longitude are stored separately as well, we do not use them for the purposes of this query.
-		$sql = 'SELECT venue_name as Name, X(venue_location_spatial_point) Latitude, Y(venue_location_spatial_point) Longitude, venue_address as Address, venue_postcode as Postcode, venue_description as Description, GLENGTH(GEOMFROMTEXT(CONCAT(\'LINESTRING(' . $_origin_lat . ' '. $_origin_long. ',\' ,X(venue_location_spatial_point),\' \',Y(venue_location_spatial_point),\')\'))) AS SpatialDistance
-				FROM       '. VENUE_TABLE .'
-				WHERE venue_location_spatial_point IS NOT NULL
-				ORDER BY SpatialDistance ASC';
+		$sql = 'SELECT v.venue_name as Name, X(v.venue_location_spatial_point) Latitude, Y(v.venue_location_spatial_point) Longitude, v.venue_address as Address, v.venue_postcode as Postcode, v.venue_description as Description, v.venue_rating_general AS GenRating, v.venue_rating_cost AS CostRating, v.venue_rating_quirkiness AS QuirkinessRating
+				FROM       '. VENUE_TABLE .' v LEFT JOIN '. VENUE_IMAGE_TABLE .' vi ON v.venue_id = vi.venue_id
+				WHERE venue_location_spatial_point IS NOT NULL AND (vi.venue_image_order = '. VENUE_PRIMARY_MUGSHOT .' OR vi.venue_image_order IS NULL)
+				ORDER BY GLENGTH(GEOMFROMTEXT(CONCAT(\'LINESTRING(' . $_origin_lat . ' '. $_origin_long. ',\' ,X(venue_location_spatial_point),\' \',Y(venue_location_spatial_point),\')\'))) ASC';
+				// We need to make sure a venue doesn't have multiple images with a rank of 0 or we'll get duplicates!
 				
 		if ($nolimit == false)
 		{
@@ -110,37 +127,32 @@ class JSONClientHandler
 		try
 		{		
 			// Do the query
-			$query = $conn->query($sql);
-			$count = 1;
-			while ($data = $query->fetch(PDO::FETCH_ASSOC)) {
-				$this->result_array[$count++] = $data;
-			}
+			$query = $conn->query($sql); $count = 1;
+			while ($data = $query->fetch(PDO::FETCH_ASSOC)) { $this->result_array[$count++] = $data; }
 			
 			// Debug Mode
-			if (DEBUG_MODE)
-			{ echo $sql; }	
+			if (DEBUG_MODE){ debug_message($sql); }	
 				
 		}
 		catch(PDOException $e)
 		{
 			$this->success = false;
-			$this->error_messages[] =  'Failed to execute database query: ' . $e->getMessage();
-	
+			if (DEBUG_MODE){ debug_message('Failed to execute database query: ' . $e->getMessage()); }	
+			
+			return false; // fail.
 		}
-		
-	}
-	
-	function GetAll()
-	{
-		global $conn;
 
 	}
+	
+
 	
 	// That the result of the activities undertaken in this class and spit out the result
 	function _output_JSON()
 	{
 
-		$response = array('success' => $this->success, 'points' => $this->result_array, 'error' => implode(', ', $this->error_messages));
+		$response = array('success' => $this->success, 'points' => $this->result_array);
+		
+		if ( !isset($_REQUEST['nojsonheader']))
 		header('Content-Type: application/json');
 		
 		echo json_encode(utf8_encode_all($response));
@@ -262,7 +274,7 @@ class JSONClientHandler
 		echo json_encode($response);
 
 			
-		//  	In order to perform a search on this table, we need an efficient way of searching the data. MySQL offers a number of geometry functions that we could use, but we are in dangerous territory of writing an inefficient query. An obvious choice is to use GLength(), which calculates the distance between two points. The down side is that it’s impossible to make use of any indexes, as we would have to calculate a value for each postcode stored in the database. Searching against 1,700,000 entries would take far too long to return a value. In order to reduce the collation down, we can restrict the search with a bounding box. Our solution is going to present map that you click on, so we can get the current bounding box that the map covers. As we can get the minimum and maximum coordinates from the current map, we can use this to filter the database table down using MBRWithin() before we start performing GLength() operations. This will use the SPATIAL index and speed up our query significantly. An explanation of how the spatial index works in this scenario can be found in the MySQL documentation. 
+		//  	In order to perform a search on this table, we need an efficient way of searching the data. MySQL offers a number of geometry functions that we could use, but we are in dangerous territory of writing an inefficient query. An obvious choice is to use GLength(), which calculates the distance between two points. The down side is that itâ€™s impossible to make use of any indexes, as we would have to calculate a value for each postcode stored in the database. Searching against 1,700,000 entries would take far too long to return a value. In order to reduce the collation down, we can restrict the search with a bounding box. Our solution is going to present map that you click on, so we can get the current bounding box that the map covers. As we can get the minimum and maximum coordinates from the current map, we can use this to filter the database table down using MBRWithin() before we start performing GLength() operations. This will use the SPATIAL index and speed up our query significantly. An explanation of how the spatial index works in this scenario can be found in the MySQL documentation. 
 	}
 	
 	*/
