@@ -33,23 +33,25 @@ angular.module('datespot.services', [])
 
 
 // Pull the next venue recommendations from the server
-.factory('Recommendations', function($http, SERVER) {
-  var o = {
-    queue: []
-  };
+// .factory('Recommendations', function($http, SERVER) {
+//   var o = {
+//     queue: []
+//   };
   
-  return o;
-})
+//   return o;
+// })
 
 
 
- o.getNextVenues = function() {
-    return $http({
-      method: 'GET',
-      url: SERVER.url + '/client.php'
-    }).success(function(data){
-      // merge data into the queue
-      o.queue = o.queue.concat(data);
-    });
- }
+//  o.getNextVenues = function() {
+//     return $http({
+//       method: 'GET',
+//       url: SERVER.url + '/testclient.php'
+//     }).success(function(data){
+
+//       alert('hello');
+//       // merge data into the queue
+//       o.queue = o.queue.concat(data);
+//     });
+//  }
 

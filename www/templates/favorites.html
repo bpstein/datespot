@@ -4,8 +4,8 @@
     <ion-list>
       <ion-item ng-repeat="spot in favorites" class="item-avatar">
         <img ng-src="{{ spot.image_small }}">
-        <h2>{{ spot.title }}</h2>
-        <p>{{ spot.artist }}</p>
+        <h2>{{ spot.name }}</h2>
+        <p>{{ spot.address }}</p>
 
         <ion-option-button class="button-assertive" ng-click="removeSpot(spot, $index)">
           <i class="ion-minus-circled"></i>
