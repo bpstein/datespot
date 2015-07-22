@@ -6,7 +6,6 @@
 
 angular.module('datespot', ['ionic', 'datespot.controllers', 'ionic-timepicker'])
 
-
 .run(function($ionicPlatform) {
   $ionicPlatform.ready(function() {
     // Hide the accessory bar by default (remove this to show the accessory bar above the keyboard
@@ -78,9 +77,8 @@ angular.module('datespot', ['ionic', 'datespot.controllers', 'ionic-timepicker']
 
 
 .constant('SERVER', {
-  // Local server
-  //url: 'http://localhost:3000'
 
-  // Public Heroku server
-  url: 'https://ionic-songhop.herokuapp.com'
+  // DateSpot Public URL
+  url: 'http://dsp.urandom.info'
+
 });
