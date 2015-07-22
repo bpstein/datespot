@@ -4,19 +4,28 @@
   <ion-content class="has-header" overflow-scroll="true">
 
     <div class="preamble">
-    	<h5>Give us some deets for your special occasion.</h5>
+    	<h5>Give us some details for your special occasion.</h5>
     </div>
 
-    <div id="when-filter">
+    <div id="date-filter">
 			<label class="item item-input">
-    		<span class="input-label">When is it?</span>
+    		<span class="input-label">What's the date?</span>
+    		<input type="text">
+  		</label>
+		</div>
+
+		<div id="time-filter">
+			<label class="item item-input">
+    		<span class="input-label">What time?</span>
     		<input type="text">
   		</label>
 		</div>
 
 		<div id="where-filter">
 			<label class="item item-input">
-    		<span class="input-label">Where is it?</span>
+    		<span class="input-label">
+    			Where is it?
+    		</span>
     		<input type="text">
   		</label>
 		</div>
@@ -28,10 +37,18 @@
 						What occasion?
 					</div>
 					<select>
-						<option>First date</option>
-						<option>2nd or 3rd date</option>
+						<option>
+							First date
+							<i class="icon ion-clock"></i>
+						</option>
+						<option>Drinks date</option>
+						<option>Dinner date</option>
+						<option>Coffee date</option>
+						<option>Brunch or coffee date</option>
+						<option>Do something different</option>
 						<option>Impress a visitor</option>
-						<option>Group of friends</option>
+						<option>Drinks with friends</option>
+						<option>Seal the deal</option>
 					</select>
 				</label>
 			</div>
