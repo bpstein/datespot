@@ -21,6 +21,19 @@ ENTER FILTER FUNCTIONALITY HERE
 Controller for the discover page
 */
 .controller('DiscoverCtrl', function($scope, $timeout, User) {
+	
+
+  $http.get('http://ds.urandom.info/client.php?originLat=51.4621653&originLong=-0.1691684&nojsonheader=true').then(function(resp) {
+    console.log('Success', resp);
+    // For JSON responses, resp.data contains the result
+  }, function(err) {
+    console.error('ERR', err);
+    // err.status will contain the status code
+  })
+  
+  
+  	
+	
   // our first three DateSpots
   $scope.spots = [
      {

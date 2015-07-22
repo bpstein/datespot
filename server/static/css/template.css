@@ -1,0 +1,83 @@
+/*
+	"I was drunk last night, crawled home across the lawn.  By accident I
+	put the car key in the door lock.  The house started up.  So I figured
+	what the hell, and drove it around the block a few times.  I thought I
+	should go park it in the middle of the freeway and yell at everyone to
+	get off my driveway."
+			-- Steven Wright
+
+*/
+
+/* Overall Template  */
+body    {
+
+      /*  background-image: url('background.jpg'); */
+	    background-repeat:repeat-x; 
+		background-position:left top;	
+		background-color: #aaa;
+        margin: 15px;
+	
+}
+
+/* Additions */
+
+
+th { background: #ccc; color: #fff; }
+br.clear { width: 100%; height: 0; clear: both; }
+
+
+/* layout */
+
+a {
+  color: #2ea900;
+}
+a:hover {
+  color: #227d00;
+}
+
+p {
+  font-size: 16px;
+  line-height: 22px;
+  margin-bottom: 14px;
+}
+
+
+/* Dynatable */
+th a {
+  color: #fff;
+  font-weight: normal;
+  font-size: 0.9em;
+}
+
+
+/* Content */
+
+
+.contentbox
+{
+
+	/* Applicable to all fonts */
+	/* font-family: Tahoma, Arial, Helvetica, sans-serif; */
+
+	
+    /* Size and position */
+    width: 100%;
+    position: relative;
+    margin: 30px auto 30px;
+    padding: 15px;
+    overflow: hidden;
+
+	
+	/* Box Style */
+    border-radius: 0.4em;	
+	background: #fff; 
+    opacity:0.8;
+    filter:alpha(opacity=85); /* For IE8 and earlier */
+	
+    box-shadow: 
+        inset 0 0 2px 1px rgba(255,255,255,0.08), 
+        0 16px 10px -8px rgba(0, 0, 0, 0.6);	
+}
+
+
+
