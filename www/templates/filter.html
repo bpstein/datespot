@@ -10,6 +10,10 @@
     <div id="date-filter">
 			<label class="item item-input">
     		<span class="input-label">What's the date?</span>
+          <ionic-datepicker idate="currentDate" disablepreviousdates="true"  disablefuturedates="false" callback="datePickerCallback" disableddates="disabledDates" title="title">
+            <button class="button button-block button-positive"> {{ currentDate | date:'dd - MMMM - yyyy' }} 
+            </button>
+          </ionic-datepicker>
     		<input type="text">
   		</label>
 		</div>
@@ -17,43 +21,14 @@
 		<div id="time-filter">
 			<label class="item item-input">
     		<span class="input-label">What time?</span>
-    			<ionic-timepicker etime="slots.epochTime" format="slots.format" step="slots.step" callback="timePickerCallback">    
-						<button class="button button-block button-positive"> {{slots.epochTime}} </button>
-							
-						<!-- <div class="12HourTimePickerChildDiv">
-  						<div class="row">
-    <span class="button-small col-25">
-        <button class="button button-clear button-small button-dark timePickerArrows marginBottom10"
-                ng-click="increaseHours()">
-          <i class="icon ion-chevron-up"></i></button>
-        <input type="text" placeholder="" ng-model="time.hours" class="ipBoxes timePickerBoxText" disabled>
-        <button class="button button-clear button-small button-dark timePickerArrows marginTop10"
-                ng-click="decreaseHours()">
-          <i class="icon ion-chevron-down"></i></button>
-    </span>
-    <label class="col-10 timePickerColon"> : </label>
-      <span class="button-small col-25">
-        <button class="button button-clear button-small button-dark timePickerArrows marginBottom10"
-                ng-click="increaseMinutes()"><i class="icon ion-chevron-up"></i></button>
-        <input type="text" placeholder="" ng-model="time.minutes" class="ipBoxes timePickerBoxText" disabled>
-        <button class="button button-clear button-small button-dark timePickerArrows marginTop10"
-                ng-click="decreaseMinutes()"><i class="icon ion-chevron-down"></i></button>
-      </span>
-    <label class="col-10 timePickerColon"> : </label>
-      <span class="button-small col-25">
-        <button class="button button-clear button-small button-dark timePickerArrows marginBottom10"
-                ng-click="changeMeridian()"><i class="icon ion-chevron-up"></i></button>
-        <input type="text" placeholder="" ng-model="time.meridian" class="ipBoxes timePickerBoxText" disabled>
-        <button class="button button-clear button-small button-dark timePickerArrows marginTop10"
-                ng-click="changeMeridian()"><i class="icon ion-chevron-down"></i></button>
-      </span>
-  </div>
-</div> -->
-
-
-
+ 	    		<ionic-timepicker etime="slots.epochTime" format="slots.format" step="slots.step" callback="timePickerCallback">    
+						
+						<button class="button button-block button-positive">
+							{{slots.epochTime}} 
+						</button>
 
 					</ionic-timepicker>
+						
     		<input type="text">
   		</label>
 		</div>

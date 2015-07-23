@@ -4,7 +4,7 @@
 // 'starter' is the name of this angular module example (also set in a <body> attribute in index.html)
 // the 2nd parameter is an array of 'requires'
 
-angular.module('datespot', ['ionic', 'datespot.controllers', 'ionic-timepicker'])
+angular.module('datespot', ['ionic', 'datespot.controllers', 'ionic-timepicker', 'ionic-datepicker'])
 
 .run(function($ionicPlatform) {
   $ionicPlatform.ready(function() {

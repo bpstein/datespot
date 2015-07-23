@@ -14,11 +14,27 @@ Controller for the filter page
   $scope.timePickerCallback = function (val) {
     if (typeof (val) === 'undefined') {
       console.log('Time not selected');
-    } else {
+    } 
+    else {
       console.log('Selected time is: ', val);
       // 'val' will contain the selected time epoch
     };
-  }  
+  };
+
+  $scope.currentDate = new Date();
+  $scope.title = "Custom Title";
+
+  $scope.datePickerCallback = function (val) {
+    if(typeof(val)==='undefined'){      
+        console.log('Date not selected');
+    }
+    else{
+        console.log('Selected date is : ', val);
+    }
+};  
+
+
+
 })
 
 /******
