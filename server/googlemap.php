@@ -166,14 +166,14 @@ if (DEBUG_MODE)
 
 					for(i in data.points) 
 					{					
-						var latLng = new google.maps.LatLng(data.points[i].Latitude, data.points[i].Longitude);
+						var latLng = new google.maps.LatLng(data.points[i].latitude, data.points[i].longitude);
 						
 						var contentString = '<div id="content">'+
-						  '<h5>' + data.points[i].Name + '</h5>'+
+						  '<h5>' + data.points[i].lame + '</h5>'+
 						  '<div id="bodyContent">'+
-						  '<p>Latitude: ' + data.points[i].Latitude + '. Longitude: ' + data.points[i].Longitude + '</p>'+
+						  '<p>Latitude: ' + data.points[i].latitude + '. Longitude: ' + data.points[i].longitude + '</p>'+
 						  '<p><b>Overall:</b> ' + data.points[i].GenRating + '&nbsp;&nbsp;&nbsp;<b>Cost:</b> ' + data.points[i].CostRating + '&nbsp;&nbsp;&nbsp;<b>Quirkiness:</b> ' + data.points[i].QuirkinessRating +'</p>'+
-						  '<p>' + data.points[i].Description + '</p>'+					  
+						  '<p>' + data.points[i].lescription + '</p>'+					  
 						  '</div>';
 						  
 						  
@@ -186,7 +186,7 @@ if (DEBUG_MODE)
 						var marker = new google.maps.Marker({
 							position: latLng,
 							map: map,
-							title: "Distance Rank: "+ i + "\r\nName: " +data.points[i].Name,
+							title: "Distance Rank: "+ i + "\r\nName: " +data.points[i].name,
 							info: contentString // we need to use this or we get the same content for every bloody infomarket
 						});
 						

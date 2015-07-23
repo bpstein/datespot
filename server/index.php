@@ -411,8 +411,8 @@ if ( @$_REQUEST['action'] == 'upload_venue_image')
 				$fullsize->process_image($_FILES['imageUpload']['name'], $_FILES['imageUpload']['tmp_name'], false);
 
 				// Insert into the database
-				$sql = 'INSERT INTO '. VENUE_IMAGE_TABLE .' (`venue_id` ,`venue_image_order` ,`venue_image_data_format` ,`venue_image_description`, `venue_image_data`, `venue_image_thumbnail_data`) 
-					VALUES ('. $_REQUEST['venue_id'] .', '. $_REQUEST['venue_image_order'] .' ,  \''. $thumb->output_format .'\',  \''. clean_string($_REQUEST['venue_image_description']) .'\', \''. addslashes($fullsize->output_binary) .'\', \''. addslashes($thumb->output_binary) .'\' )';
+				$sql = 'INSERT INTO '. VENUE_IMAGE_TABLE .' (`venue_id` ,`venue_image_unique_id`, `venue_image_order` ,`venue_image_data_format` ,`venue_image_description`, `venue_image_data`, `venue_image_thumbnail_data`, `venue_image_hash`) 
+					VALUES ('. $_REQUEST['venue_id'] .', \''. md5(microtime()) .'\', '. $_REQUEST['venue_image_order'] .' ,  \''. $thumb->output_format .'\',  \''. clean_string($_REQUEST['venue_image_description']) .'\', \''. addslashes($fullsize->output_binary) .'\', \''. addslashes($thumb->output_binary) .'\', \''. $fullsize->image_md5_hash .'\' )';
 					
 				if (DEBUG_MODE) { debug_message($sql); }
 				

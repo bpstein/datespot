@@ -28,7 +28,11 @@
 	// We store these as JPEG
 	var $output_format = 'image/jpeg'; 	// or image/png  // or image/gif
 	var $output_binary = ''; 			// the binary of the image
-	
+
+	// Hash
+	var $image_md5_hash = '';
+
+		
 	// Error message should one be required
 	var $error 	=  ''; 
 	
@@ -57,6 +61,9 @@ te		$size= $_FILES["myfile"]["size"];
 			
 		}
 		
+		// Generate MD5 hash
+		$this->image_md5_hash = md5_file($temporary_file);
+
 		// Do the last step
 		return $this->_resize_and_crop_imagemagik($thumbnail);
 	
