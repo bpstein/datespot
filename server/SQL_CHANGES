@@ -1,0 +1,1 @@
+ALTER TABLE  `ds_venue_image` ADD INDEX (  `venue_image_unique_id` ) ;

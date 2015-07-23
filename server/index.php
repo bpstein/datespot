@@ -17,11 +17,13 @@ define ('IN_APPLICATION', TRUE);
 define ('DEBUG_MODE', FALSE);
 
 include('include/common.php');
-include('include/class_datespot.php'); // can't do much without this one
+include('include/class_datespot.php'); 		// can't do much without this one
+include('include/class_thumbnailer.php'); 	// for image resizing
 
 if (DEBUG_MODE)
 {
 	print_r($_REQUEST);
+	//print_r($_FILES);
 }
 
 
@@ -360,7 +362,110 @@ if ( @$_REQUEST['action'] == 'submit_edit_venue' )
 	
 }
 
+/* Venue Image Deleting */
+if ( @$_REQUEST['action'] == 'delete_venue_image')
+{	
 
+	if ( !is_numeric($_REQUEST['venue_image_id']) )
+	{
+		if (DEBUG_MODE) { debug_message('Not a valid Venue Image ID.. Why!?'); }
+		exit();
+	}
+	
+	$sql = 'DELETE FROM '. VENUE_IMAGE_TABLE .' WHERE venue_image_id = '. $_REQUEST['venue_image_id'];
+	if (DEBUG_MODE) { debug_message($sql); }
+	
+	$query 		= $conn->query($sql);
+	
+	// Now we go back to the venue image we were at.
+	$_REQUEST['action'] = 'edit_venue_image';
+} // end of delete images
+
+
+
+/* Venue Image Loading  */
+if ( @$_REQUEST['action'] == 'upload_venue_image')
+{	
+	if ( empty($_FILES['imageUpload']) || ($_FILES['imageUpload']['error'] != UPLOAD_ERR_OK) || !is_numeric($_REQUEST['venue_id']) || !is_numeric($_REQUEST['venue_image_order']) )
+	{
+	
+		$failure_msg = 'There was an error with the file to be uploaded. Did you select a file?';
+	}
+	else
+	{
+			// So we should be OK....
+			$thumb 		= new ThumbNailer();	
+			$fullsize	= new ThumbNailer();			
+			
+			// Try to perform the image conversion
+			if ( !$thumb->process_image($_FILES['imageUpload']['name'], $_FILES['imageUpload']['tmp_name'], true) )
+			{
+				// Image conversion failed. Let the user known.
+				$failure_msg = 'The image conversion failed. Please try again with a different image.' . $thumb->error;
+				
+			}
+			else
+			{
+			
+				// Build the fullsize
+				$fullsize->process_image($_FILES['imageUpload']['name'], $_FILES['imageUpload']['tmp_name'], false);
+
+				// Insert into the database
+				$sql = 'INSERT INTO '. VENUE_IMAGE_TABLE .' (`venue_id` ,`venue_image_unique_id`, `venue_image_order` ,`venue_image_data_format` ,`venue_image_description`, `venue_image_data`, `venue_image_thumbnail_data`, `venue_image_hash`) 
+					VALUES ('. $_REQUEST['venue_id'] .', \''. md5(microtime()) .'\', '. $_REQUEST['venue_image_order'] .' ,  \''. $thumb->output_format .'\',  \''. clean_string($_REQUEST['venue_image_description']) .'\', \''. addslashes($fullsize->output_binary) .'\', \''. addslashes($thumb->output_binary) .'\', \''. $fullsize->image_md5_hash .'\' )';
+					
+				if (DEBUG_MODE) { debug_message($sql); }
+				
+				// Try to insert the new image stuff
+				try
+				{				
+					$query = $conn->exec($sql);
+				}
+				catch(PDOException $e)
+				{
+					$failure_msg = "Error. Failed to execute database query: " . $e->getMessage();
+				}
+			}
+							
+			
+	} // logic
+	
+	
+	// Send the use back to the other action.
+	$_REQUEST['action'] = 'edit_venue_image';
+	
+} // end submit edit venue image
+
+
+/* Get the Venue Image Data */
+if ( @$_REQUEST['action'] == 'get_venue_image')
+{	
+
+	if ( !is_numeric($_REQUEST['venue_image_id']) )
+	{
+		if (DEBUG_MODE) { debug_message('Not a valid Venue Image ID.. Why!?'); }
+		exit();
+	}
+	
+	$sql = 'SELECT * FROM '. VENUE_IMAGE_TABLE .' WHERE venue_image_id = '. $_REQUEST['venue_image_id'];
+	if (DEBUG_MODE) { debug_message($sql); }
+	
+	$query 		= $conn->query($sql);
+	$image_data 	= $query->fetch();
+	
+	// Exit if the image data is empty
+	if (empty($image_data)) { exit(); }
+
+	
+	// We'll be outputting an image of type.... like a JPEG
+	header('Content-Type: '. $image_data['venue_image_data_format']);
+	
+	// Are we outputting the thumbnail or fullsize?
+	echo  (isset($_REQUEST['thumbnail'])) ? $image_data['venue_image_thumbnail_data']:$image_data['venue_image_data'];
+	exit(); // make sure we get outta here
+	
+
+} // end of image output
 
 
 
@@ -401,10 +506,6 @@ if  (!isset($_REQUEST['action']) || empty($_REQUEST['action']) )
 	<!-- Dyntable CSS -->
 	<link type="text/css" href="static/jspkg-dynatable/jquery.dynatable.css" rel="stylesheet" />
 
-	<!-- Leaflet CSS -->
-	<link rel="stylesheet" href="static/leaflet/leaflet.css" />
-	<script src="static/leaflet/leaflet.js"></script>
-	
 	
 	<!-- Dropzone CSS -->
 	<script type="text/javascript" src="static/dropzone-4.0.1/dist/dropzone.css"></script>	
@@ -434,9 +535,13 @@ if  (!isset($_REQUEST['action']) || empty($_REQUEST['action']) )
 	<script type="text/javascript" src="static/bootstrap-datepicker/js/bootstrap-datepicker.js"></script>    
 	
 	<!-- Dropzone -->
+<!--
 	<script type="text/javascript" src="static/dropzone-4.0.1/dist/dropzone.js"></script>
+-->
 
-
+	<!-- Google Maps -->
+    <script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?v=3.exp&signed_in=false"></script>
+	
 
 	<!-- JQUery Content Open -->
 	<script type="text/javascript">
@@ -444,7 +549,7 @@ if  (!isset($_REQUEST['action']) || empty($_REQUEST['action']) )
 	
 	  // Tabbed Interface
 	  $( "#tabs" ).tabs(); 
-
+	  
 	  //Dynatable
 	  $('#my-venue-table').dynatable();
 	  
@@ -474,49 +579,61 @@ if  (!isset($_REQUEST['action']) || empty($_REQUEST['action']) )
 		}
 		
 ?>
+		});	// copy button
 
-		  });	
-		  
-		  
-	  
-	  // Date picker
+
+		// Date picker
 		$('#venue_date_open-picker').datepicker({
 			format: 'yyyy-mm-dd',
 			todayBtn: 'linked'
 		});
-		
+
 		$('#venue_date_close-picker').datepicker({
 			format: 'yyyy-mm-dd',
 			todayBtn: 'linked'
 		});
-		
-		  
-	  // Json Test Button
-	  $( "#jsontest-button" )
+
+
+		// Json Test Button
+		$( "#jsontest-button" )
 		  .button()
 		  .click(function( event ) {
 			  
-		  $.getJSON( "http://192.168.0.9/client.php", {
-			a: "query",
-			tagmode: "any", 	/* not used */
-			format: "json" 		/* not used */
-		  })
-			.done(function( data ) 
-			{
+			  // Query and the query attributes
+			  $.get( "client.php", { originLat : "51.4621653", originLong : "-0.1691684", nojsonheader : "true"  },  function( data ) 
+				{
+
+					$( "#jsontest-textarea" ).val(data);
+					///alert( "Data Loaded: " + data );
+
+				}); // end done
 				
-			 alert(data);
-	
-			  
-		
-			}); // end done
-			
-			alert('Finished attempted JSON query');
 
 		  });		
-
+		});
 		
-	});
-	</script>			
+	</script>
+
+
+	<script>
+   
+		var map;
+   
+		// Show the google map with defaults
+		function initializeGoogleMap() {
+		  var myLatlng = new google.maps.LatLng(51.462481,-0.169433); // Start at eckstein
+		  var mapOptions = {
+			zoom: 16,
+			center: myLatlng
+		  }
+		  
+		  map = new google.maps.Map(document.getElementById('map-canvas'), mapOptions);
+		  	  
+		}
+		
+//	google.maps.event.addDomListener(window, 'load', initialize);
+	
+    </script>
     </head>
   <body>  
   
@@ -534,29 +651,31 @@ if  (!isset($_REQUEST['action']) || empty($_REQUEST['action']) )
               <span class="icon-bar"></span>
               <span class="icon-bar"></span>
             </button>
-            <a class="navbar-brand" href="#">DateSpot&trade;</a>
+            <a class="navbar-brand" href="/">DateSpot&trade;</a>
           </div>
           <div id="navbar" class="navbar-collapse collapse">
             <ul class="nav navbar-nav">
               <li><a href="?action=">Venue List</a></li>
+              <li><a href="#">Event List</a></li>			  
               <li><a href="googlemap.php" target="scrotmap">Venue Map</a></li>
-              <li><a href="?action=users">User List</a></li>
-			  <li><a href="?action=log">Logging</a></li>	
-			  <li><a href="?action=jsontest">JSON Query Test</a></li>			  
-			  <!--
+	  
+			
               <li class="dropdown">
-                <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">Dropdown <span class="caret"></span></a>
+                <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">Technical Stuff <span class="caret"></span></a>
                 <ul class="dropdown-menu" role="menu">
-                  <li><a href="#">Action</a></li>
-                  <li><a href="#">Another action</a></li>
-                  <li><a href="#">Something else here</a></li>
+				  <li><a href="?action=jsontest">JSON Query Test</a></li>
+				  <li><a href="?action=heatmap">Usage Heatmap</a></li>				  
+				  <li><a href="?action=usagelog">Usage Log</a></li>		
+				  <li><a href="?action=userlog">Active Users</a></li>
+				  <!--
                   <li class="divider"></li>
                   <li class="dropdown-header">Nav header</li>
                   <li><a href="#">Separated link</a></li>
                   <li><a href="#">One more separated link</a></li>
+				  -->
                 </ul>
               </li>
-			  -->
+			 
             </ul>
 			
 		<ul class="nav navbar-nav navbar-right">
@@ -650,7 +769,7 @@ if  (!isset($_REQUEST['action']) || empty($_REQUEST['action']) )
 		  <th class="dyntable-head">Price</th>
 		  <th class="dyntable-head">Quirky</th>
 		  <th class="dyntable-head">Overall</th>		  
-		 !<!-- <th class="dyntable-head">&nbsp;</th>		 -->	  
+		 <!-- <th class="dyntable-head">&nbsp;</th>		 -->	  
 
 		</tr>
 	  </thead>
@@ -671,8 +790,7 @@ if  (!isset($_REQUEST['action']) || empty($_REQUEST['action']) )
 		  <td><?php echo $venue['venue_id']; ?></td>
 		  <td><a href="?action=edit_venue&venue_id=<?php echo $venue['venue_id']; ?>"><?php echo $venue['venue_name']; ?></a></td>
 		 <td><?php echo clip_string($venue['venue_description']); ?></td>
-		  <td><a href="?action=edit_venue_image&venue_id=<?php echo $venue['venue_id']; ?>"><button type="button" class="btn btn-default btn-sm"><span class="glyphicon glyphicon-camera" aria-hidden="true"></span> <?php echo $ic['venue_image_count']; ?></button></a>
-</td>		 
+		  <td><a href="?action=edit_venue_image&venue_id=<?php echo $venue['venue_id']; ?>"><button type="button" class="btn btn-default btn-sm"><span class="glyphicon glyphicon-camera" aria-hidden="true"></span> <?php echo $ic['venue_image_count']; ?></button></a></td>		 
 		  <td><?php echo $venue['venue_postcode']; ?></td>
 		  <td><?php echo $venue['venue_address']; ?></td>
 		  <td><?php echo $venue['venue_rating_cost']; ?></td>
@@ -721,7 +839,7 @@ if  (!isset($_REQUEST['action']) || empty($_REQUEST['action']) )
 			if ( is_numeric ($_REQUEST['venue_id']))
 			{
 					$data = DateSpot::get_venue($_REQUEST['venue_id']);
-					$data = $data[0];
+					//$data = $data[0];
 					
 					$actiontitle = 'Edit Venue';
 			}
@@ -788,21 +906,32 @@ if  (!isset($_REQUEST['action']) || empty($_REQUEST['action']) )
 		The http:// web address of the venue's website.
       </div>
     </div>		
-
-
-	<script type="text/javascript">
 	
-	/* Make these variables global */
-	var map, markerLayer, venue_form_lat, venue_form_lon;
+	
+
+	<style type="text/css">
+	#map-canvas {
+		height: 300px;
+		width: 100%;
+		margin-bottom: 25px;
+	}
+	</style>	
+	
+	
+	
+   <script type="text/javascript">
+   
 	
 
 	$(function(){
 		
-	  $( "#map" ).hide();	 /// by default hide the map
+	  $( "#map-canvas" ).hide();	 /// by default hide the map
 	  
 	  /* Get the variables from the form */
 	  venue_form_lat 	= $('#venue_location_lat').val();
 	  venue_form_lon 	= $('#venue_location_lon').val();	
+	
+	
 	
 
 	  // Copy Date Button
@@ -813,72 +942,58 @@ if  (!isset($_REQUEST['action']) || empty($_REQUEST['action']) )
 			  // Use the JQuery isNumeric function
 			  if ( $.isNumeric(venue_form_lat) && $.isNumeric(venue_form_lon) )
 			  {	
-				$( "#map" ).show();		// show the map
+				$( "#map-canvas" ).show();		// show the map
 				$( "#show_map-button" ).hide(); // hide the button
 				
 				 /* OK so we're happy so show the map */
-				 initializeMap();
+				 initializeGoogleMap();
 			  }				
 
 		  });	
 	});
+
+	// Show the google map with defaults
+	var map;
 	
-	
-	function showClickSpot(e)
+	function initializeGoogleMap() 
 	{
-			// Find the clicked position
-			pos = e.latlng;
-	 
-			// Add the point where we clicked on the map
-			new L.marker([e.latlng.lat, e.latlng.lng])
-				.addTo(markerLayer)
-				.bindPopup('Latitude: '+e.latlng.lat+'<br />Longitude: '+e.latlng.lng);
- 
+		
+	    var myLatlng = new google.maps.LatLng(venue_form_lat,venue_form_lon); // Start at eckstein
+		var mapOptions = {
+		zoom: 16,
+		center: myLatlng
+		}
+	  
+		map = new google.maps.Map(document.getElementById('map-canvas'), mapOptions);
+		
+		
+		var contentString = '<div id="content">'+
+		  '<h5><?php echo $data['venue_name']; ?></h5>'+
+		  '<div id="bodyContent">'+
+		  '<p><?php echo $data['venue_description']; ?></p>'+
+		  '</div>';
+
+		var infowindow = new google.maps.InfoWindow({
+		  content: contentString
+		});
+
+		// Place the marker only after the map object has been created....
+		var marker = new google.maps.Marker({
+			position: new google.maps.LatLng(venue_form_lat, venue_form_lon),
+			map: map,
+			title: '<?php echo $data['venue_name']; ?>'
+		});
+	
+	  google.maps.event.addListener(marker, 'click', function() {
+		infowindow.open(map,marker);
+	  });
+  
 	}
 	
 
-	function initializeMap() {
-		// Create a map object (roughly positioned over Eckstein Baby)
-		map = L.map('map').setView([venue_form_lat,venue_form_lon], 16);
-
-		// Select the tiles
-		L.tileLayer('http://{s}.tile.osm.org/{z}/{x}/{y}.png', {
-		    attribution: 'Map data &copy; <a href="http://openstreetmap.org">OpenStreetMap</a> contributors, <a href="http://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>',
-		    minZoom: 10,
-		    maxZoom: 20
-		}).addTo(map);
-
-		// Bind our click function to the map
-		//map.on('click', findPoint);
-		
-		// If we already have a marker layer, remove it
-		if(!!markerLayer)
-			map.removeLayer(markerLayer);
-		
-		//alert(venue_form_lat);
-
-		// Create a new marker layer
-		markerLayer = new L.LayerGroup();
-	//	for(i in data.points) {
-			// Add markers for each of the points returned
-			new L.marker([venue_form_lat, venue_form_lon])
-				.addTo(markerLayer)
-				.bindPopup('<?php echo $data['venue_name']; ?>');
-	//	}
-
-		// Add the point where we clicked on the map
-
-		// new L.marker([e.latlng.lat, e.latlng.lng])
-			// .addTo(markerLayer)
-			// .bindPopup('Latitude: '+e.latlng.lat+'<br />Longitude: '+e.latlng.lng);
-
-		// Add the layer to the map
-		markerLayer.addTo(map);
+//	google.maps.event.addDomListener(window, 'load', initialize);
 	
-		map.on('click', showClickSpot);
-	}
-	</script>
-	
+    </script>
 	
    <div class="form-group">
       <label class="control-label col-sm-2" for="venue_url">Geocoding: (<a href="https://support.google.com/maps/answer/18539?hl=en" target="_blank">From Google!</a>)</label>
@@ -904,16 +1019,10 @@ if  (!isset($_REQUEST['action']) || empty($_REQUEST['action']) )
 	<!-- Show the map as to where we're saying it is -->
 	<div class="col-sm-12">
 
-	<style type="text/css">
-	#map {
-		height: 300px;
-		width: 100%;
-		margin-bottom: 25px;
-	}
-	</style>	
+	
+		<div id="map-canvas"></div>
+	
 
-	<!-- Show the mini Map -->
-	<div id="map"><br /></div>
 	</div>
 
 	
@@ -1122,9 +1231,6 @@ if  (!isset($_REQUEST['action']) || empty($_REQUEST['action']) )
 
       </div>
     </div>	
-
-
-	
 	
 
     <div class="form-group">        
@@ -1201,35 +1307,175 @@ if  (!isset($_REQUEST['action']) || empty($_REQUEST['action']) )
 	 **********************************************************/
 	if ( $_REQUEST['action'] == 'edit_venue_image' ) 
 	{
-
-		$data = array();
+		$venue = array();
 		
-		$actiontitle = 'Manage Venue Images';
-		
+		// $actiontitle = 'Manage Venue Images';
 		if (!isset($_REQUEST['venue_id']) || !is_numeric ($_REQUEST['venue_id']))
 		{
 			echo 'No Venue ID was provided';
 			exit();
 		}
-		
-	///	print_r($data);
+		else
+		{
+			$venue = DateSpot::get_venue($_REQUEST['venue_id']);
+			// $data = $data[0];
 
+		}
+	
+		// is it a valid venue that has been provided?
+		if ( !is_numeric($venue['venue_id']) || empty($venue['venue_unique_id']) )
+		{
+			echo 'Invalid Venue ID was provided. Not in the database!';
+			exit();
+		}
+		
+		
+		$sql = 'SELECT venue_image_id, venue_id, venue_image_order, venue_image_description 
+				FROM '. VENUE_IMAGE_TABLE .' WHERE venue_id = '. $venue['venue_id'] .'
+				ORDER BY venue_image_order ASC';
+
+		 // Do the query
+		$query = $conn->query($sql); 
+		
+		// Build the requlest sar
+		$image_list = array();
+		$row = array();
+		while ($row = $query->fetch(PDO::FETCH_ASSOC)) { $image_list[] = $row; }
+		unset($row);
+		
+?>
+  <div class="contentbox">
+  <h3 style="border-bottom: thin solid #ccc; padding:10px;">Manage images: <?php echo @$venue['venue_name']; ?></h3>
+
+  <div class="well">I really need to leverage <a href="http://www.w3schools.com/bootstrap/bootstrap_grid_basic.asp">BootStrap</a> more for this page.</div>
+  
+<?php
+
+	$counter = 1;
+	if ( count($image_list) > 0 )
+	{
+	
+?>	
+		<table class="table">
+		  <caption>Below is a list images/photos uploaded for this venue. Adjust the Description and Order accordingly as required.</caption>
+		  <thead>
+			<tr>
+			  <th>#</th>
+			  <th>Image</th>
+			  <th>Description</th>
+			  <th>Rank</th>
+			  <th>Action</th>
+			</tr>
+		  </thead>
+		  <tbody>
+<?php
+	
+
+	// blah
+	foreach ($image_list AS $image)
+	{
+?>	
+		<tr>
+		  <th scope="row"><?php echo $counter++; ?></th>
+		  <td><img src="<?php echo $_SERVER['PHP_SELF']; ?>?action=get_venue_image&venue_image_id=<?php echo $image['venue_image_id']; ?>&thumbnail=1" width="200" height="180" class="img-thumbnail" alt="Venue Image <?php echo $image['venue_image_id']; ?>" /></td>
+		  <td><i>Not currently used.</i></td>
+		  <td><input type="text" class="form-control" name="venue_image_order" id="venue_image_order" value="<?php echo $image['venue_image_order']; ?>"></td>
+		  <td><a href="?action=delete_venue_image&venue_id=<?php echo $_REQUEST['venue_id']; ?>&venue_image_id=<?php echo $image['venue_image_id']; ?>"><button type="button" class="btn btn-default btn-sm"><span class="glyphicon glyphicon-trash"></span> Delete</button></a></td>		  
+		</tr>
+<?php
+			
+	} // end of existing images loop
+	
 ?>
 
-  <div class="contentbox">
-  
-  <h3 style="border-bottom: thin solid #ccc; padding:10px;"><?php echo $actiontitle; ?></h3>
+		</tbody>
+		</table>
+	
+<?php
+			
+	} // end of image count check
+	
+?>
+
+	<h3>Upload an image</h3>
+	
+	<form enctype="multipart/form-data" action="<?php echo $_SERVER['PHP_SELF']; ?>" method="POST">    
+	<div class="form-group">
+	<table width="100%">
+	<tr>
+		<td><input type="file" id="imageUpload" name="imageUpload" accept="image/*"><p class="help-block">Select an image file to upload into the database.</p></td>
+		<td><textarea class="form-control" rows="2" name="venue_image_description" id="venue_image_description"></textarea></td>
+		<td><!-- Sneaky little hack to use the counter as the ordering there are existing images --><input type="text" class="form-control" name="venue_image_order" id="venue_image_order" value="<?php echo $counter; ?>" /><p class="help-block">IMPORTANT: A value of '0' will make this the 'mugshot' image that shows for this venue or event in the App!</p></td>
+		<td><input type="hidden" name="venue_id" value="<?php echo $_REQUEST['venue_id']; ?>" /><input type="hidden" name="action" value="upload_venue_image" /><button type="submit" class="btn btn-default">Upload</button></td>
+	</tr>
+	</table>
+	</div>
+	</form>   	
 
 
 
-  <div id="dropzone"><form action="http://www.torrentplease.com/dropzone.php" class="dropzone" id="demo-upload">
+<p>&nbsp;</p><p>&nbsp;</p><p>&nbsp;</p>
 
-  <div class="dz-message">
-    Drop files here or click to upload.<br />
-    <span class="note">(This is just a demo dropzone. Selected files are <strong>not</strong> actually uploaded.)</span>
+
+<?php
+
+ if (false)
+ {
+	 // HIDDEN SHIT
+	 
+?>
+	 
+	 
+	<div id="myCarousel" class="carousel slide" data-ride="carousel">
+  <!-- Indicators -->
+  <ol class="carousel-indicators">
+    <li data-target="#myCarousel" data-slide-to="0" class="active"></li>
+    <li data-target="#myCarousel" data-slide-to="1"></li>
+    <li data-target="#myCarousel" data-slide-to="2"></li>
+    <li data-target="#myCarousel" data-slide-to="3"></li>
+  </ol>
+
+  <!-- Wrapper for slides -->
+  <div class="carousel-inner" role="listbox">
+    <div class="item active">
+      <img src="img_chania.jpg" alt="Chania">
+    </div>
+
+    <div class="item">
+      <img src="img_chania2.jpg" alt="Chania">
+    </div>
+
+    <div class="item">
+      <img src="img_flower.jpg" alt="Flower">
+    </div>
+
+    <div class="item">
+      <img src="img_flower2.jpg" alt="Flower">
+    </div>
   </div>
 
-</form></div>
+  <!-- Left and right controls -->
+  <a class="left carousel-control" href="#myCarousel" role="button" data-slide="prev">
+    <span class="glyphicon glyphicon-chevron-left" aria-hidden="true"></span>
+    <span class="sr-only">Previous</span>
+  </a>
+  <a class="right carousel-control" href="#myCarousel" role="button" data-slide="next">
+    <span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span>
+    <span class="sr-only">Next</span>
+  </a>
+</div>
+
+<?php
+
+ }
+ 
+?>
+
+  	 
+   </div>
+   
+
+
 
 
 
@@ -1254,7 +1500,7 @@ if  (!isset($_REQUEST['action']) || empty($_REQUEST['action']) )
 	 * PHP ACTION SECTION START
 	 *
 	 **********************************************************/
-	if ( $_REQUEST['action'] == 'users' ) 
+	if ( ($_REQUEST['action'] == 'userlog') || ($_REQUEST['action'] == 'usagelog') ) 
 	{
 
 ?>
@@ -1289,14 +1535,103 @@ if  (!isset($_REQUEST['action']) || empty($_REQUEST['action']) )
 	 * PHP ACTION SECTION START
 	 *
 	 **********************************************************/
-	if ( $_REQUEST['action'] == 'log' ) 
+	if ( $_REQUEST['action'] == 'heatmap' ) 
 	{
 
 ?>
 
     <div class="contentbox">
-    <p>Mauris eleifend est et turpis. Duis id erat. Suspendisse potenti. Aliquam vulputate, pede vel vehicula accumsan, mi neque rutrum erat, eu congue orci lorem eget lorem. Vestibulum non ante. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos. Fusce sodales. Quisque eu urna vel enim commodo pellentesque. Praesent eu risus hendrerit ligula tempus pretium. Curabitur lorem enim, pretium nec, feugiat nec, luctus a, lacus.</p>
-    <p>Duis cursus. Maecenas ligula eros, blandit nec, pharetra at, semper at, magna. Nullam ac lacus. Nulla facilisi. Praesent viverra justo vitae neque. Praesent blandit adipiscing velit. Suspendisse potenti. Donec mattis, pede vel pharetra blandit, magna ligula faucibus eros, id euismod lacus dolor eget odio. Nam scelerisque. Donec non libero sed nulla mattis commodo. Ut sagittis. Donec nisi lectus, feugiat porttitor, tempor ac, tempor vitae, pede. Aenean vehicula velit eu tellus interdum rutrum. Maecenas commodo. Pellentesque nec elit. Fusce in lacus. Vivamus a libero vitae lectus hendrerit hendrerit.</p>
+
+	
+	<style>
+      #map-canvas {
+        height: 100%;
+        margin: 0;
+        padding: 0;
+      }
+
+      #panel {
+        position: absolute;
+        top: 5px;
+        left: 50%;
+        margin-left: -180px;
+        z-index: 5;
+        background-color: #fff;
+        padding: 5px;
+        border: 1px solid #999;
+      }
+
+      /*
+      Provide the following styles for both ID and class,
+      where ID represents an actual existing "panel" with
+      JS bound to its name, and the class is just non-map
+      content that may already have a different ID with
+      JS bound to its name.
+      */
+
+      #panel, .panel {
+        font-family: 'Roboto','sans-serif';
+        line-height: 30px;
+        padding-left: 10px;
+      }
+
+      #panel select, #panel input, .panel select, .panel input {
+        font-size: 15px;
+      }
+
+      #panel select, .panel select {
+        width: 100%;
+      }
+
+      #panel i, .panel i {
+        font-size: 12px;
+      }
+
+    </style>
+    <script src="https://maps.googleapis.com/maps/api/js?v=3.exp&signed_in=false&libraries=visualization"></script>
+	<script>
+	// Adding 500 Data Points
+	var map, pointarray, heatmap;
+
+	var taxiData = [
+	  new google.maps.LatLng(37.782551, -122.445368),
+	  new google.maps.LatLng(37.782745, -122.444586),
+	  new google.maps.LatLng(37.754665, -122.403242),
+	  new google.maps.LatLng(37.753837, -122.403172),
+	  new google.maps.LatLng(37.752986, -122.403112),
+	  new google.maps.LatLng(37.751266, -122.403355)
+	];
+
+	function initialize() {
+	  var mapOptions = {
+		zoom: 13,
+		center: new google.maps.LatLng(37.774546, -122.433523),
+		mapTypeId: google.maps.MapTypeId.SATELLITE
+	  };
+
+	  map = new google.maps.Map(document.getElementById('map-canvas'),
+		  mapOptions);
+
+	  var pointArray = new google.maps.MVCArray(taxiData);
+
+	  heatmap = new google.maps.visualization.HeatmapLayer({
+		data: pointArray
+	  });
+
+	  heatmap.setMap(map);
+	}
+
+	google.maps.event.addDomListener(window, 'load', initialize);
+
+    </script>
+ 
+
+    <div id="map-canvas"></div>
+	
+	
+	
+	
+	
   </div>
   
 
@@ -1328,24 +1663,21 @@ if  (!isset($_REQUEST['action']) || empty($_REQUEST['action']) )
 	{
 
 ?>
-  
-  
-  
-  
+
+
     <div class="contentbox">
-	
     <p>
 	<div style="padding-top:10px; padding-bottom:10px;"><button id="jsontest-button">JSON Query</button></div>
+	<p>HTTP Query: client.php?originLat=51.4621653&originLong=-0.1691684&nojsonheader=true</p>
 	
 	<form>
-		<textarea style="width:100%" id="jsontest-textarea">Click 'JSON Query' to make a call to make an AJAX JSON call to 'client.php's and return the result.</textarea>
+		<textarea style="width:100%" id="jsontest-textarea" rows="15">Click 'JSON Query' to make a call to make an AJAX JSON call to 'client.php's and return the result.</textarea>
 	</form>
 	
 	</p>	
   </div>
-  
-  
-  
+
+
   <?php
 
 	/**********************************************************
