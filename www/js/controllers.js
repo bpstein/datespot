@@ -1,4 +1,4 @@
-angular.module('datespot.controllers', ['ionic', 'datespot.services'])
+angular.module('datespot.controllers', ['ionic', 'datespot.services', 'datespot.jsonservices'])
 
 /*
 Controller for the filter page
@@ -46,13 +46,11 @@ ENTER FILTER FUNCTIONALITY HERE
 Controller for the discover page
 */
 .controller('DiscoverCtrl', function($scope, $timeout, User) {
-	
-
-   // get our first songs
-  // Recommendations.getNextVenues()
-  //   .then(function(){
-  //     $scope.currentSong = Recommendations.queue[0];
-  //   });
+	// get our first songs
+ //  Recommendations.getNextSongs()
+ //    .then(function(){
+ //      $scope.currentSpot = Recommendations.queue[0];
+ //    });
   
   
   	

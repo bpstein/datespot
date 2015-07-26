@@ -28,7 +28,7 @@
 
 .error_msg {
   color: #cc0000 !important;
-  font-size: 12px;
+  font-size: 10px;
 }
 
 .date_selected {
@@ -49,11 +49,11 @@
 }
 
 .select_section label {
-  padding: 12px;
+  padding: 10px;
 }
 
 .select_section select {
-  font-size: 12px;
+  font-size: 10px;
   font-weight: bold;
   padding: 2px 10px;
   direction: ltr;

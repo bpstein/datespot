@@ -80,5 +80,4 @@ angular.module('datespot', ['ionic', 'datespot.controllers', 'ionic-timepicker',
 
   // DateSpot Public URL
   url: 'http://dsp.urandom.info'
-
 });

@@ -29,8 +29,7 @@ angular.module('datespot.services', [])
 
 
   return o;
-});
-
+}
 
 // Pull the next venue recommendations from the server
 // .factory('Recommendations', function($http, SERVER) {
@@ -40,6 +39,41 @@ angular.module('datespot.services', [])
   
 //   return o;
 // })
+
+);
+
+angular.module('datespot.jsonservices', [])
+.factory('Recommendations', function($http, SERVER) {
+
+  var o = {
+    queue: [],
+    newFavorites: 0
+  }
+
+  o.getNextSongs = function() {
+    return $http({
+      method: 'GET',
+      url: SERVER.url + '/recommendations'
+    }).success(function(data){
+      // merge data into the queue
+      o.queue = o.queue.concat(data);
+    });
+  }
+
+  o.nextSong = function() {
+    // pop the index 0 off
+    o.queue.shift();
+
+    // low on the queue? lets fill it up
+    if (o.queue.length <= 3) {
+      o.getNextSongs();
+    }
+  }
+});
+
+
+
+
 
 
 
