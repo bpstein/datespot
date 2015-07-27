@@ -1,2 +1,0 @@
-# Might need to do this to sync the spatial point
-UPDATE ds_venue SET `venue_location_spatial_point` = GeomFromText(CONCAT('POINT (', venue_location_lat, ' ', venue_location_lon, ')'))

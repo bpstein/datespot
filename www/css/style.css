@@ -32,9 +32,6 @@
 }
 
 /* Discover page stylings */
-.discover-page {
-
-}
 
 .discover-page .current-spot {
   -webkit-transform: scale(1);
@@ -93,17 +90,8 @@
 }
 
 /* Filter/Gameplan page stylings */
-.preamble {
-  text-align: center;
-  padding-bottom: 10px;
-}
-
-.filter-page {
-  padding-horizontal: 15px;
-}
-
 .input-label {
-  font-size: 0.95em;
+  font-size: 0.85em;
 }
 
 #what-filter {
@@ -113,7 +101,7 @@
 .range-positive {
   padding-right: 15px;
   padding-left: 15px;
-  font-size: 1em;
+  font-size: 0.95em;
 }
 
 #quirky-filter {
@@ -125,6 +113,7 @@
   text-align: center;
   margin: 0 auto;
   display: block;
+  font-size: 1em;
 }
 
 /*TimePicker styling*/
@@ -140,6 +129,7 @@
 .timePickerBoxText {
   text-align: center;
   border: 1px solid #dddddd !important;
+  font-size: 0.9em;
 }
 
 .bar.bar-stable, .tabs {
