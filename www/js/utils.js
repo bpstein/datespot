@@ -1,5 +1,6 @@
-angular.module('ionic.utils', [])
 
+/* Some basic ionic utilities to be used for local storage of variable */
+angular.module('ionic.utils', [])
 .factory('$localstorage', ['$window', function($window) {
   return {
     set: function(key, value) {

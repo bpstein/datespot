@@ -1,16 +1,29 @@
-angular.module('datespot.controllers', ['ionic', 'datespot.services', 'datespot.jsonservices'])
+/**********************************************************************
+ *
+ *	script file		: controllers.js
+ *	
+ *	begin			: 1 August 2015
+ *	copyright		: Ben Stein and Grant Bartlett
+ *  description		: 
+ *
+ **********************************************************************/
+ 
+ 
+angular.module('datespot.controllers', ['ionic', 'datespot.userservices', 'datespot.jsonservices'])
 
 /*
-Controller for the filter page
-*/
-
+ * 	Controller for the FILTER page
+ */
 .controller('FilterCtrl', function($scope, User) {
 
-  $scope.runFilter = function (bool) {
+  $scope.runFilter = function (bool)
+  { 	
+		// To be expanded and perform the jSON query when
+		// the user has changed the search parameters
+		console.log('Runfilter clicked!'); 
   }
-
+  
   $scope.slots = {epochTime: 12600, format: 12, step: 1};
-
   $scope.timePickerCallback = function (val) {
     if (typeof (val) === 'undefined') {
       console.log('Time not selected');
@@ -22,7 +35,7 @@ Controller for the filter page
   };
 
   $scope.currentDate = new Date();
-  $scope.title = "Custom Title";
+  $scope.title = "Select Preferred Date and Time";
 
   $scope.datePickerCallback = function (val) {
     if(typeof(val)==='undefined'){      
@@ -33,57 +46,50 @@ Controller for the filter page
     }
 };  
 
-
-
-})
+}) // end of FilterCtrl Controller Definition
 
 /******
 ENTER FILTER FUNCTIONALITY HERE
 ******/
-
-
 /*
-Controller for the discover page
-*/
-.controller('DiscoverCtrl', function($scope, $timeout, User) {
-	// get our first songs
- //  Recommendations.getNextSongs()
- //    .then(function(){
- //      $scope.currentSpot = Recommendations.queue[0];
- //    });
-  
-  
-  	
+ *	Controller for the DISCOVER page
+ */
+.controller('DiscoverCtrl', function($scope, $timeout, User, Recommendations, FactoryFuck) {
+	
+	// Test the factory here. 
+	FactoryFuck.Scrot();
+	
+	
 
   // our first three DateSpots
+  /*
   $scope.spots = [
      {
         "name":"WC Clapham | Wine & Charcuterie",
         "address":"Clapham Common South Side, London SW4 7AA",
-        "image_small":"http://www.we-heart.com/upload-images/wcclapham2.jpg",
-        "image_large":"http://www.we-heart.com/upload-images/wcclapham2.jpg"
-     },
+        "image_url":"http://www.we-heart.com/upload-images/wcclapham2.jpg"
+     }
+  ];	
+  */
+  
+  $scope.spots = [
      {
-        "name":"Duck & Waffle",
-        "address":"Heron Tower, 110 Bishopsgate, London EC2N 4AY",
-        "image_small":"http://cdni.condenast.co.uk/646x430/d_f/DuckandWaffle01_V_28Nov12_pr_b_646x430.jpg",
-        "image_large":"http://cdni.condenast.co.uk/646x430/d_f/DuckandWaffle01_V_28Nov12_pr_b_646x430.jpg"
-     },
-     {
-        "name":"214 Bermondsey",
-        "address":"214 Bermondsey St SE1 3TQ",
-        "image_small":"http://www.tastingbritain.co.uk/wp-content/uploads/2014/08/DSC5762.jpg",
-        "image_large":"http://www.tastingbritain.co.uk/wp-content/uploads/2014/08/DSC5762.jpg"
-      }
-  ];
+          
+     }
+  ];  
   
 
-  
-  
 
-  // initialize the current date spot
-  $scope.currentSpot = angular.copy($scope.spots[0]);
+	// Get our recommended venues
+	Recommendations.getVenues()
+		.then(function(){
+			
+		  $scope.currentSpot = Recommendations.queue[0];
+		  
+		  console.log($scope.currentSpot);
+	});
 
+	
   // fired when we favorite / skip a date spot.
   $scope.sendFeedback = function (bool) {
     // first, add to favorites if they favorited
@@ -91,14 +97,18 @@ Controller for the discover page
   	$scope.currentSpot.rated = bool;
   	$scope.currentSpot.hide = true;
 
-  	
-  	$timeout(function() {
-	  	// set the current date spot to one of our three date spots
-	    var randomSpot = Math.round(Math.random() * ($scope.spots.length - 1));
+    // Drop the current venue from the results list and load the next one.
+	Recommendations.nextVenue();
 
-	    // update current date spot in scope
-	    $scope.currentSpot = angular.copy($scope.spots[randomSpot]);
-	  }, 250);
+    $timeout(function() {
+      // $timeout to allow animation to complete
+      $scope.currentSpot = Recommendations.queue[0];
+	  
+	  console.log('Loading Venue: ');
+	  console.log( $scope.currentSpot );
+	  
+    }, 250);
+	
   }
 
   $scope.spotDestroyed = function(index) {
@@ -114,8 +124,8 @@ Controller for the discover page
 
 
 /*
-Controller for the favorites page
-*/
+ *	Controller for the FAVOURITES page
+ */
 .controller('FavoritesCtrl', function($scope, User) {
   // get the list of our favorites from the user service
   $scope.favorites = User.favorites;
@@ -134,6 +144,7 @@ Controller for our tab bar
   $scope.enteringFavorites = function() {
     User.newFavorites = 0;
   }
-
+  
   $scope.favCount = User.favoriteCount;
+  
 });
