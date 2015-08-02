@@ -40,7 +40,7 @@ class ClientHandler
 	var $error_messages	= array();
 	var $result_array 	= array();
 	
-	var $venue_base_sql_select_attributes	= 'v.venue_unique_id 		AS identifier,
+	var $venue_base_sql_select_attributes	= 'v.venue_unique_id 		AS vuid,
 											   v.venue_name 			AS name,
 											   v.venue_description		AS description,
 											   v.venue_address			AS address,
@@ -155,7 +155,7 @@ class ClientHandler
 			$query = $conn->query($sql); $count = 1;
 			while ($data = $query->fetch(PDO::FETCH_ASSOC)) 
 			{ 
-				$this->result_array[$data['identifier']] = $this->_venue_data_last_chance_saloon($data); 
+				$this->result_array[] = $this->_venue_data_last_chance_saloon($data); 
 			}
 			
 			// Debug Mode
@@ -183,8 +183,7 @@ class ClientHandler
 		// We need to make sure a venue doesn't have multiple images with a rank of 0 or we'll get duplicates!
 		$sql = 'SELECT '. $this->venue_base_sql_select_attributes .'
 				FROM   '. VENUE_TABLE .' v LEFT JOIN '. VENUE_IMAGE_TABLE .' vi ON v.venue_id = vi.venue_id
-				WHERE venue_location_spatial_point IS NOT NULL 
-				GROUP BY vi.venue_id';
+				GROUP BY v.venue_id';
 	
 		try
 		{		
@@ -192,7 +191,7 @@ class ClientHandler
 			$query = $conn->query($sql); $count = 1;
 			while ($data = $query->fetch(PDO::FETCH_ASSOC)) 
 			{ 
-				$this->result_array[$data['identifier']] = $this->_venue_data_last_chance_saloon($data); 
+				$this->result_array[] = $this->_venue_data_last_chance_saloon($data); 
 			}
 			
 			// Debug Mode
@@ -290,7 +289,8 @@ class ClientHandler
 			}
 
 		   // remove this from the output
-		   // unset($row['venue_image_unique_id']);
+		   unset($row['venue_image_unique_id']);
+		   unset($row['image_order']);
 		}
 
 		return $row;
@@ -312,6 +312,7 @@ class ClientHandler
 		if ( !isset($_REQUEST['nojsonheader']))
 		header('Content-Type: application/json');
 		
+		header('Access-Control-Allow-Origin: http://localhost:8100');
 		echo json_encode(utf8_encode_all($response));
 		
 	}	
