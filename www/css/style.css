@@ -1,141 +1,48 @@
-/* Splash page stylings */
-.splash-page {
-  background:url(/img/splash-bkg.jpg);
-  background-size: cover;
-  background-repeat: no-repeat;
+.wide-as-needed {
+  overflow: scroll;
+  white-space: nowrap;
 }
-
-.splash-page .card {
-  margin-top:40px;
+.scroll { 
+  min-width: 100%;
 }
-
-.splash-page .logo h1 {
-  margin-top:30px;
-  text-align:center;
-  color:#fff !important;
-  font-family: Verdana, Geneva, sans-serif;
-  font-weight:bold;
-  letter-spacing: -3px;
-  font-size:42px;
-}
-
-.splash-page .signup-opt {
-  color:#fff;
-  padding:15px;
-  margin-top:20px;
-  font-weight: bold;
-  cursor:pointer;
-}
-
-.splash-page .action-button {
-  font-weight: bolder;
-}
-
-/* Discover page stylings */
-
-.discover-page .current-spot {
-  -webkit-transform: scale(1);
-  -ms-transform: scale(1);
-  transform: scale(1);
-  opacity: 1;
-
-  -webkit-transition:all cubic-bezier(0.420, 0.000, 1.000, 1.000) 0.1s;
-  transition:all cubic-bezier(0.420, 0.000, 1.000, 1.000) 0.1s;
-}
-
-.discover-page .current-spot .item-image {
-  max-height:400px;
-  overflow:hidden;
-}
-
-@media screen and (max-height: 600px) {
-  .discover-page .current-spot .item-image {
-    max-height:200px;
-    overflow:hidden;
-  }
-}
-
-.discover-page .current-spot.favorited.ng-hide {
-  -webkit-transform: translateX(1000px) rotate(50deg);
-  -ms-transform: translateX(1000px) rotate(50deg);
-  transform: translateX(1000px) rotate(50deg);
-  opacity:0;
-}
-
-.discover-page .current-spot.skipped.ng-hide {
-  -webkit-transform: translateX(-1000px) rotate(-50deg);
-  -ms-transform: translateX(-1000px) rotate(-50deg);
-  transform: translateX(-1000px) rotate(-50deg);
-  opacity:0;
-}
-
-.discover-page .current-spot.ng-hide-add {
-  -webkit-transition:all cubic-bezier(0.420, 0.000, 1.000, 1.000) 0.3s;
-  transition:all cubic-bezier(0.420, 0.000, 1.000, 1.000) 0.3s;
-  display:block!important;
-}
-
-.discover-page .current-spot.ng-hide-remove {
-  -webkit-transform: scale(0.7) translateX(0px) rotate(0deg);
-  -ms-transform: scale(0.7) translateX(0px) rotate(0deg);
-  transform: scale(0.7) translateX(0px) rotate(0deg);
-  opacity: 0;
-}
-
-
-.discover-page .img-lookahead img {
-  height:1px;
-  width:1px;
-  opacity:0.01;
-}
-
-/* Filter/Gameplan page stylings */
-.input-label {
-  font-size: 0.85em;
-}
-
-#what-filter {
-  /*margin-right: 45px;*/
-}
-
-.range-positive {
-  padding-right: 15px;
-  padding-left: 15px;
-  font-size: 0.95em;
-}
-
-#quirky-filter {
-  margin-bottom: 20px;
-}
-
-.button-block {
-  max-width: 450px;
-  text-align: center;
-  margin: 0 auto;
+.bar.bar-loading {
   display: block;
-  font-size: 1em;
-}
-
-/*TimePicker styling*/
-.timePickerColon {
-  padding-top: 38px;
+  height: 24px;
+  
+  /* starts right below a normal header */
+  top: 44px;
+  
+  /* make the text centered vertically and horizontally */
   text-align: center;
+  padding: 0;
+  line-height: 24px;
+
+  /* transition 'sliding down' (check below)*/
+  -webkit-transition: 200ms all;
 }
 
-.timePickerArrows {
-  padding-left: 15px;
+
+/* 
+ * make the content's top changes animate.
+ * might not always look good, but looks
+ * good when our loader is added & removed
+ */
+.has-header {
+  -webkit-transition: 200ms top;
+}
+.has-header.has-loading {
+  /* 44px (header) + 24px */
+  top: 68px;
 }
 
-.timePickerBoxText {
-  text-align: center;
-  border: 1px solid #dddddd !important;
-  font-size: 0.9em;
+/* make loading bar slide up/down */
+.bar-loading.ng-enter,
+.bar-loading.ng-leave.ng-leave-active {
+  height: 0;
+  border-width: 0px;
 }
-
-.bar.bar-stable, .tabs {
-  box-shadow: 0px 0px 5px #555;
-}
-
-.overflowShow {
-  white-space: normal !important;
+.bar-loading.ng-enter.ng-enter-active,
+.bar-loading.ng-leave {
+  height: 24px;
+  border-width: 1px;
 }

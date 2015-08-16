@@ -48,12 +48,16 @@ angular.module('datespot.controllers', ['ionic', 'datespot.userservices', 'dates
 
 }) // end of FilterCtrl Controller Definition
 
-/******
-ENTER FILTER FUNCTIONALITY HERE
-******/
 /*
  *	Controller for the DISCOVER page
  */
+
+// .controller('ScrollCtrl', ['$scope', function($scope) {
+//   $scope.data = {
+//     isLoading: false
+//   };
+// }]);
+
 .controller('DiscoverCtrl', function($scope, $timeout, User, Recommendations, FactoryFuck) {
 	
 	// Test the factory here. 
@@ -133,8 +137,22 @@ ENTER FILTER FUNCTIONALITY HERE
   $scope.removeSpot = function(spot, index) {
     User.removeSpotFromFavorites(spot, index);
   }
-
 })
+
+// Controller to manage the datespot shortlist
+// .controller('ListCtrl', function($scope) {
+//   $scope.spots = [
+//     {
+//       name: "Sexy Venue",
+//       description: "this is a sweet venue"
+//     },
+
+//     {
+//       name: "Seductive Spot",
+//       description: "ideal to impress"
+//     }
+//   ];
+// })
 
 
 /*

@@ -4,24 +4,30 @@
  * 'datespot' is the name of the angular module example (also set in a <body> attribute in index.html)
  * the 2nd parameter is an array of 'requires'
  */
-angular.module('datespot', ['ionic', 'datespot.controllers', 'ionic-timepicker', 'ionic-datepicker'])
-.run(function($ionicPlatform) {
-  $ionicPlatform.ready(function() {
-	 
-	console.log('Application loaded in app.js');
-	
-    // Hide the accessory bar by default (remove this to show the accessory bar above the keyboard
-    // for form inputs)
-    if(window.cordova && window.cordova.plugins.Keyboard) {
-      cordova.plugins.Keyboard.hideKeyboardAccessoryBar(true);
-    }
-    if(window.StatusBar) {
-      StatusBar.styleDefault();
-    }
-    
 
+(function() {
+
+  var app = angular.module('datespot', ['ionic', 'datespot.controllers'])
+
+  app.run(function($ionicPlatform) {
+    $ionicPlatform.ready(function() {
+
+      console.log('Application loaded in app.js');
+
+      if(window.cordova && window.cordova.plugins.Keyboard) {
+        cordova.plugins.Keyboard.hideKeyboardAccessoryBar(true);
+      }
+      if(window.StatusBar) {
+        StatusBar.styleDefault();
+      }
+    });
   });
-})
+  
+}());
+
+
+angular.module('datespot', ['ionic', 'datespot.controllers'])
+
 
 
 /* 
@@ -76,7 +82,11 @@ angular.module('datespot', ['ionic', 'datespot.controllers', 'ionic-timepicker',
         }
       }
     })
-	
+
+  .state('detail', {
+    url: '/detail',
+    templateUrl: 'templates/detail.html'
+  })
 	
   // The default or the first (on load) state/controller that the application will load
   // If none of the above states are matched, use this as the fallback:
