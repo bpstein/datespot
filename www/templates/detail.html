@@ -1,14 +1,16 @@
 <ion-view view-title="Datespot Details">
-	<ion-nav-bar class="bar-assertive">
+	<ion-nav-bar class="bar-positive">
 		<ion-nav-back-button></ion-nav-back-button>
 	</ion-nav-bar>
 	<ion-content>
 		<ion-nav-back-button>
 		</ion-nav-back-button>
-		<div class="item">
-			<h2>{{spot.name}}</h2>
-			<p>{{spot.description}}</p>
-			This is the details view.
-		</div>
+		<ion-pane class="item item-image">
+			<div class="hero has-mask" style="background-color: red">
+				<h2>{{spot.name}}</h2>
+				<p>{{spot.description}}</p>
+				This is the details view.
+			</div>
+		</ion-pane>
 	</ion-content>
 </ion-view>

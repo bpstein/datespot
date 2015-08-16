@@ -16,26 +16,11 @@ angular.module('datespot.controllers', ['ionic', 'datespot.userservices', 'dates
  */
 .controller('FilterCtrl', function($scope, User) {
 
-  $scope.runFilter = function (bool)
-  { 	
+  $scope.runFilter = function (bool) { 	
 		// To be expanded and perform the jSON query when
 		// the user has changed the search parameters
 		console.log('Runfilter clicked!'); 
   }
-  
-  $scope.slots = {epochTime: 12600, format: 12, step: 1};
-  $scope.timePickerCallback = function (val) {
-    if (typeof (val) === 'undefined') {
-      console.log('Time not selected');
-    } 
-    else {
-      console.log('Selected time is: ', val);
-      // 'val' will contain the selected time epoch
-    };
-  };
-
-  $scope.currentDate = new Date();
-  $scope.title = "Select Preferred Date and Time";
 
   $scope.datePickerCallback = function (val) {
     if(typeof(val)==='undefined'){      
