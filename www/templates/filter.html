@@ -1,67 +1,61 @@
 <ion-view view-title="Search">
 
-  <ion-content class="has-header" overflow-scroll="true">
 
-		  <div ng-controller="FilterCtrl" class="padding">
-      <ion-view view-title="Search">
-      <ion-header-bar class="bar-subheader">
-        
-        <ion-scroll direction="x" class="wide-as-needed">
-          <a class="button button-positive">First Date</a>
-          <a class="button button-positive">Drinks date</a>
-          <a class="button button-positive">Dinner date</a>
-          <a class="button button-positive">Get Weird</a>
-          <a class="button button-positive">Impress a visitor</a>
-          <a class="button button-positive">Casual fun with friends</a>
-          <a class="button button-positive">Brunch or coffee</a>
-          <a class="button button-positive">Go all out to impress</a>
-          <a class="button button-positive">Something corporate</a>      
-        </ion-scroll>
 
-   <!--      <div class="item range range-positive">
+
+
+  <ion-content overflow-scroll="true">
+
+    <ion-list class="padding">
+
+      <ion-item>
+        <div ng-controller="FilterCtrl" class="padding">
+          <ion-view view-title="Search">
+            <ion-scroll direction="x" class="wide-as-needed">
+              <a class="button button-positive">First Date</a>
+              <a class="button button-positive">Drinks date</a>
+              <a class="button button-positive">Dinner date</a>
+              <a class="button button-positive">Get Weird</a>
+              <a class="button button-positive">Impress a visitor</a>
+              <a class="button button-positive">Casual fun with friends</a>
+              <a class="button button-positive">Brunch or coffee</a>
+              <a class="button button-positive">Go all out to impress</a>
+              <a class="button button-positive">Something corporate</a>      
+            </ion-scroll>
+        </div>
+      </ion-item>
+
+        <ion-item>
+        When? [Placeholder for time/datepicker]
+      </ion-item>
+
+      <ion-item>
+        Where? [Placeholder for address]
+      </ion-item>
+
+      <ion-item class="padding">
+        <div class="range range-positive">
           How much?
           <input type="range" name="volume">
           <i class="icon ion-cash"></i>
         </div>
-
-        <div class="padding item range range-positive">
+      </ion-item>
+      
+      <ion-item class="padding">
+        <div class="range range-positive">
           How quirky?
           <input type="range" name="volume">
           <i class="icon ion-beaker"></i>
-        </div> -->
+        </div>
+      </ion-item>
 
-      </ion-header-bar>
-     
-    <!--   <ion-content ng-class="{'has-loading': data.isLoading}">
-        <ion-toggle ng-model="data.isLoading">Toggle me to toggle loading!</ion-toggle>
-      </ion-content> -->
-      </ion-view>
-    </div>
-			
-<!-- 		<div id="price-filter">
-			<div class="item range range-positive">
-				How much?
-  			<input type="range" name="volume">
-  			<i class="icon ion-cash"></i>
-			</div>
-		</div>
+      <ion-item>
+        <button class="button button-block button-positive" href="#/tab/favorites" ng-click="runFilter(true)">
+        Find me datespots!
+        </button>
+      </ion-item>
+    </ion-list>
 
-		<div id="quirky-filter">
-			<div class="item range range-positive">
-				How quirky?
-  			<input type="range" name="volume">
-  			<i class="icon ion-beaker"></i>
-			</div>
-		</div> -->
-
-			<button class="button button-block button-positive" href="#/tab/favorites" ng-click="runFilter(true)">
-  			Find me datespots!
-			</button>
-
- 
-
-
-	
 
 
 
