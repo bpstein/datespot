@@ -1,16 +1,31 @@
-<ion-view view-title="Datespot Details">
-	<ion-nav-bar class="bar-positive">
-		<ion-nav-back-button></ion-nav-back-button>
-	</ion-nav-bar>
-	<ion-content>
-		<ion-nav-back-button>
-		</ion-nav-back-button>
-		<ion-pane class="item item-image">
-			<div class="hero has-mask" style="background-color: red">
-				<h2>{{spot.name}}</h2>
-				<p>{{spot.description}}</p>
-				This is the details view.
-			</div>
-		</ion-pane>
-	</ion-content>
-</ion-view>
+<body ng-app="datespot" animation="slide-left-right-ios7">
+  <ion-nav-bar>
+    <ion-nav-back-button class="button-icon icon ion-ios7-arrow-back">
+      Back
+    </ion-nav-back-button>
+  </ion-nav-bar>
+  <ion-nav-view title="Datespot details">
+    <ion-content padding="false" class="has-header">
+      <div style="line-height: 250px; border: 1px solid rgb(238, 238, 238); border-radius: 3px; text-align: center; width: 100%; height: auto; background-color: rgb(255, 255, 255);">
+        <i class="icon ion-image" style="font-size: 64px; color: rgb(136, 136, 136); vertical-align: middle;"></i>
+      </div>
+      <ion-list>
+        <ion-item>
+          <h2>A Venue</h2>
+          <textarea rows="6">The description of the venue should go here. The descriptionof the venue should go here. </textarea>
+        </ion-item>
+      </ion-list>
+      <div>
+       <!--  <app-map style="height:400px;margin:12px;box-shadow:0 3px 25px black;"
+          center="basel"
+          zoom="15"
+          markers="whoiswhere">  -->
+      </div>
+    </ion-content>
+  </ion-nav-view>
+</body>
+
+
+
+
+
