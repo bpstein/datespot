@@ -139,6 +139,17 @@ angular.module('datespot.controllers', ['ionic', 'datespot.userservices', 'dates
 //   ];
 // })
 
+// Controller for our slidebox (carousel) on the details page
+// .controller('SlideCtrl', function($scope, User) {
+//   $scope.slides = [];
+//   for (var i = 1; i <= 5; i++) {
+//     $scope.slides.push({
+//       title: 'Slide #' + i,
+//       description: 'This is this slide # ' + i
+//     });
+//   }
+// })
+
 
 /*
 Controller for our tab bar
