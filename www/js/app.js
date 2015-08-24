@@ -104,3 +104,12 @@ angular.module('datespot', ['ionic', 'datespot.controllers'])
   
 });
 
+  var $range = $(".js-range-slider");
+
+$range.ionRangeSlider({
+    type: "single",
+    postfix: " $",
+    grid: true,
+    values: ["7.5", "15", "35", "65", "99", "125", "150", "199", "299", "399", "499"]
+});
+

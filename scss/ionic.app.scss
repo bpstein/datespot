@@ -13,14 +13,20 @@ $royal:                           #8a6de9 !default;
 $dark:                            #444 !default;
 */
 
+$positive:                        #4048FC !default;
+$assertive:												#F51E01 !default;
+$dark:														#000 !default;
+$content-padding:                 2px !default;
+$padding-base-horizontal:         6px !default;
+$base-background-color:           #000 !default;
+$base-color:                      #fff !default;
+
 // The path for our Ionicon font files, relative to the built CSS in www/css
 $ionicons-font-path: "../lib/ionic/fonts" !default;
 
 // My custom color. I’ll override the default for $positive.
 // Note that it’s before we load the rest of Ionic.
 // This is important!
-$positive:                        #4048FC !default;
-$assertive:												#F51E01 !default;
 
 
 // Include all of Ionic.
