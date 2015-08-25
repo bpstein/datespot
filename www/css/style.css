@@ -8,15 +8,18 @@
 
 .occasion-button {
   text-align: center;
-  height: 70px;
-  background-color: #fff;
+  height: 225px;
+  background-image: url({{item.url}});
+  background-size: cover;
+  z-index: 1;
 }
 
 .occasion-header {
   text-align: center;
-  color: #000;
+  color: #f43dcd;
   font: 24px 'Source Sans Pro';
   text-transform: uppercase;
+  z-index: 2;
 }
 
 

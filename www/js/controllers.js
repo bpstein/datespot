@@ -111,7 +111,6 @@ angular.module('datespot.controllers', ['ionic', 'datespot.userservices', 'dates
   
 })
 
-
 /*
  *	Controller for the FAVOURITES page
  */
@@ -122,6 +121,44 @@ angular.module('datespot.controllers', ['ionic', 'datespot.userservices', 'dates
   $scope.removeSpot = function(spot, index) {
     User.removeSpotFromFavorites(spot, index);
   }
+})
+
+// Controller to manage search/filter menu for occasion types
+.controller('PopupCtrl', function ($scope, $ionicPopup) {
+
+    $scope.items = [{
+        name: "First date",
+        id: 1,
+        url: "http://www.tv-testbild.com/2003/Testbild_Maroko.jpg"
+    }, {
+        name: "Just drinks",
+        id: 2,
+        url: "http://betterwithbutter.com/wp-content/uploads/2010/05/effen-vodka-cocktails.jpg"
+    }, {
+        name: "Dinner date",
+        id: 3,
+        url: "http://www.tv-testbild.com/2003/Testbild_Maroko.jpg"
+    }, {
+        name: "Coffee or brunch",
+        id: 4,
+        url: "http://www.tv-testbild.com/2003/Testbild_Maroko.jpg"
+    }, {
+        name: "Let's get weird",
+        id: 5,
+        url: "http://www.tv-testbild.com/2003/Testbild_Maroko.jpg"
+    }, {
+        name: "Go all out to impress",
+        id: 6,
+        url: "http://www.tv-testbild.com/2003/Testbild_Maroko.jpg"
+    }, {
+        name: "Fun with friends",
+        id: 7,
+        url: "http://www.tv-testbild.com/2003/Testbild_Maroko.jpg"
+    }, {
+        name: "Something corporate",
+        id: 8,
+        url: "http://www.tv-testbild.com/2003/Testbild_Maroko.jpg"
+    }];
 })
 
 // Controller to manage the datespot shortlist
