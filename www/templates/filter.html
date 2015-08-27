@@ -10,91 +10,20 @@
 
       <div>
       <ion-list>
-        <ion-item class="defaultItem occasion-button" 
+        <ion-item 
+          class="defaultItem occasion-button" 
           ng-repeat="item in items" 
-          href="/#">
-          <!-- <img src="{{item.url}}" /> -->
+          href="#/discover"
+          nav-direction="enter">
+          <img src="{{item.url}}" />
             <div class="itemInfo">
-              <h2 class="occasion-header">{{item.name}}</h2>
+              <strong><span class="itemHeader"><h2 class="occasion-header">{{item.name}}</h2></span></strong>
                 <!-- <p>id: {{item.id}}</p> -->
             </div>
         </ion-item>
 
-         <ion-item class="occasion-button" href="/#">
-        <h2 class="occasion-header"><span>Just drinks</span></h2>
-        </ion-item>
-
-
       </ion-list>
       </div>
     </ion-content>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
- <!--      <ion-list>
-
-        <ion-item class="item-icon-righ
-          
-
-          <ion-item class="item-icon-right item-avatar defaultItem" ng-repeat="item in items " style="background-image: url({{item.url}})">
-            <img src="{{item.url}}" />
-            <div class="itemInfo">
-                 <h2 class="occasion-header">{{item.name}}</h2>
-
-                <p>id: {{item.id}}
-                    <br/>url: {{item.url}}</p>
-            </div>
-        </ion-item>
-
-
-
-
-        <h2 class="occasion-header"><span>First dates</span></h2>
-      </ion-item>
-        
-        <ion-item class="occasion-button" href="/#">
-        <h2 class="occasion-header"><span>Just drinks</span></h2>
-        </ion-item>
-        
-        <ion-item class="occasion-button" href="/#">
-        <h2 class="occasion-header"><span>Dinner dates</span></h2>
-        </ion-item>
-        
-        <ion-item class="occasion-button" href="/#">
-        <h2 class="occasion-header"><span>Let's get weird</span></h2>
-        </ion-item>
-        
-        <ion-item class="occasion-button" href="/#">
-        <h2 class="occasion-header"><span>Go all out to impress</span></h2>
-        </ion-item>
-
-        <ion-item class="occasion-button" href="/#">
-          <h2 class="occasion-header"><span>Fun with friends</span></h2>
-        </ion-item>
-        
-        <ion-item class="occasion-button" href="/#">
-          <h2 class="occasion-header"><span>Coffee or brunch</span></h2>
-        </ion-item>
-        
-        <ion-item class="occasion-button">
-          <h2 class="occasion-header"><span>Something corporate</span></h2>
-        </ion-item>
-      </ion-list>
-
-
-    </ion-content>
-  </ion-view>
+</ion-view>
 </body>
-
- -->

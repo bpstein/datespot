@@ -3,25 +3,51 @@
 
 
 * {
-  font: 24px 'Source Sans Pro';
+  font: 38px 'Source Sans Pro';
 }
+
+/***********************************
+/*STYLING FOR SEARCH/FILTER SCREEN*/
+/**********************************/
 
 .occasion-button {
   text-align: center;
   height: 225px;
-  background-image: url({{item.url}});
+  /*background-image: url({{item.url}});*/
   background-size: cover;
-  z-index: 1;
 }
 
 .occasion-header {
   text-align: center;
-  color: #f43dcd;
-  font: 24px 'Source Sans Pro';
+  color: #fff;
+  font-family:'Source Sans Pro';
+  font-weight: bolder;
   text-transform: uppercase;
-  z-index: 2;
 }
 
+.defaultItem > .item-content {
+
+      /*background-image: {{item.url}});*/
+    background-image: url("https://s3-us-west-1.amazonaws.com/datespot/occasions/brunch.jpg");
+    /*background-repeat: no-repeat;*/
+    size: 80%;
+    height: 225px;
+    background-size: cover;
+}
+
+.itemInfo {
+  height: 225px;
+  line-height: 225px;
+  text-align: center;
+}
+
+.itemHeader {
+  text-align: center;
+  display: inline-block;
+  vertical-align: middle;
+  margin-left: 30px;
+  line-height: normal;
+}
 
 
 
@@ -52,20 +78,6 @@
   padding-right: 3px;
 }
 
-.filter-button-text {
-  position: absolute;
-  text-align: center;
-  top: 120px;
-  left: 0;
-  font: 24px 'Source Sans Pro';
-  color: white;
-  text-transform: uppercase;
-  background: rgb(0, 0, 0); /* fallback color */
-  background: rgba(0, 0, 0, 0.6);
-  margin-left: 2px;
-  margin-right: 2px;
-  width: 99%;
-}
 
 
 .wide-as-needed {
