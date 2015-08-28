@@ -10,12 +10,7 @@
 /*STYLING FOR SEARCH/FILTER SCREEN*/
 /**********************************/
 
-.occasion-button {
-  text-align: center;
-  height: 225px;
-  /*background-image: url({{item.url}});*/
-  background-size: cover;
-}
+.occasion-button { }
 
 .occasion-header {
   text-align: center;
@@ -26,10 +21,11 @@
 }
 
 .defaultItem > .item-content {
-
+	
       /*background-image: {{item.url}});*/
-    background-image: url("https://s3-us-west-1.amazonaws.com/datespot/occasions/brunch.jpg");
+   /* background-image: url("https://s3-us-west-1.amazonaws.com/datespot/occasions/brunch.jpg");*/
     /*background-repeat: no-repeat;*/
+
     size: 80%;
     height: 225px;
     background-size: cover;

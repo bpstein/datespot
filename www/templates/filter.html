@@ -8,22 +8,17 @@
 
 
 
-      <div>
-      <ion-list>
-        <ion-item 
-          class="defaultItem occasion-button" 
-          ng-repeat="item in items" 
-          href="#/discover"
-          nav-direction="enter">
-          <img src="{{item.url}}" />
-            <div class="itemInfo">
-              <strong><span class="itemHeader"><h2 class="occasion-header">{{item.name}}</h2></span></strong>
-                <!-- <p>id: {{item.id}}</p> -->
-            </div>
-        </ion-item>
-
-      </ion-list>
-      </div>
+    <div>
+	<ion-list>
+	
+		<ion-item href="#/discover/{{item.id}}" ng-repeat="item in items" ng-style="{'background-image':'url({{item.url}})'}">
+		<div class="itemInfo">
+			<span class="occasion-header">{{item.name}}</span>
+		</div>
+		</ion-item> 
+	</ion-list>
+	</div>
+	
     </ion-content>
 </ion-view>
 </body>

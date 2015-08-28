@@ -2521,7 +2521,7 @@ cite {
   text-align: center; }
 
 h1, h2, h3, h4, h5, h6, .h1, .h2, .h3, .h4, .h5, .h6 {
-  color: #fff;
+  color: #000;
   font-weight: 500;
   font-family: "Helvetica Neue", "Roboto", sans-serif;
   line-height: 1.2; }
@@ -4441,7 +4441,8 @@ a.item {
   z-index: 2;
   padding: 16px 49px 16px 16px;
   border: none;
-  background-color: white; }
+  /* GRANT B Nuked the bacgkround color here */
+ }
 
 a.item-content {
   display: block;

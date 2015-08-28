@@ -129,19 +129,19 @@ angular.module('datespot.controllers', ['ionic', 'datespot.userservices', 'dates
     $scope.items = [{
         name: "First date",
         id: 1,
-        // url: "https://s3-us-west-1.amazonaws.com/datespot/occasions/coffeeorbrunch.jpg"
+         url: "https://s3-us-west-1.amazonaws.com/datespot/occasions/coffeeorbrunch.jpg"
     }, {
         name: "Just drinks",
         id: 2,
-        // url: "http://betterwithbutter.com/wp-content/uploads/2010/05/effen-vodka-cocktails.jpg"
+         url: "http://betterwithbutter.com/wp-content/uploads/2010/05/effen-vodka-cocktails.jpg"
     }, {
         name: "Dinner date",
         id: 3,
-        // url: "http://www.tv-testbild.com/2003/Testbild_Maroko.jpg"
+         url: "http://www.tv-testbild.com/2003/Testbild_Maroko.jpg"
     }, {
         name: "Coffee or brunch",
         id: 4,
-        // url: "http://www.tv-testbild.com/2003/Testbild_Maroko.jpg"
+         url: "http://www.tv-testbild.com/2003/Testbild_Maroko.jpg"
     }, {
         name: "Let's get weird",
         id: 5,
