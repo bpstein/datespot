@@ -5,26 +5,22 @@
  * the 2nd parameter is an array of 'requires'
  */
 
-(function() {
+angular.module('datespot', ['ionic', 'datespot.controllers', 'datespot.services', 'ionic.contrib.ui.tinderCards'])
 
-  var app = angular.module('datespot', ['ionic', 'datespot.controllers'])
+.run(function($ionicPlatform) {
+  $ionicPlatform.ready(function() {
 
-  app.run(function($ionicPlatform) {
-    $ionicPlatform.ready(function() {
-
-      console.log('Application loaded in app.js');
+    console.log('Application loaded in app.js');
 
       if(window.cordova && window.cordova.plugins.Keyboard) {
         cordova.plugins.Keyboard.hideKeyboardAccessoryBar(true);
+        cordova.plugins.Keyboard.disableScroll(true);
       }
       if(window.StatusBar) {
-        StatusBar.styleDefault();
+        StatusBar.styleLightContent();
       }
-    });
   });
-  
-}());
-
+})
 
 angular.module('datespot', ['ionic', 'datespot.controllers'])
 
@@ -53,12 +49,12 @@ angular.module('datespot', ['ionic', 'datespot.controllers'])
 
   // Each tab has its own nav history stack:
 
-  .state('tab.filter', {
-    url: '/filter',
+  .state('tab.search', {
+    url: '/search',
     views: {
-      'tab-filter': {
-        templateUrl: 'templates/filter.html',
-        controller: 'FilterCtrl'
+      'search': {
+        templateUrl: 'templates/search.html',
+        controller: 'SearchCtrl'
       }
     }
   })
@@ -66,34 +62,45 @@ angular.module('datespot', ['ionic', 'datespot.controllers'])
   .state('tab.discover', {
     url: '/discover',
     views: {
-      'tab-discover': {
+      'discover': {
         templateUrl: 'templates/discover.html',
         controller: 'DiscoverCtrl'
       }
     }
   })
 
-  .state('tab.favorites', {
-      url: '/favorites',
-      views: {
-        'tab-favorites': {
-          templateUrl: 'templates/favorites.html',
-          controller: 'FavoritesCtrl'
-        }
+  .state('tab.shortlist', {
+    url: '/shortlist',
+    views: {
+      'shortlist': {
+        templateUrl: 'templates/shortlist.html',
+        controller: 'ShortlistCtrl'
       }
-    })
+    }
+  })
 
   .state('detail', {
-    url: '/detail',
-    templateUrl: 'templates/detail.html'
-  })
+      url: '/detail/:spotId',
+      templateUrl: 'templates/detail.html',
+          controller: 'DetailCtrl'
+  });
 	
   // The default or the first (on load) state/controller that the application will load
   // If none of the above states are matched, use this as the fallback:
-  $urlRouterProvider.otherwise('/tab/discover');
+  $urlRouterProvider.otherwise('/tab/search');
  
 })
 
+.directive('noScroll', function() {
+  return {
+    restrict: 'A',
+    link: function($scope, $element, $attr) {
+      $element.on('touchmove', function(e) {
+        e.preventDefault();
+      });
+    }
+  }
+})
 
 .constant('SERVER', {
 
@@ -104,12 +111,12 @@ angular.module('datespot', ['ionic', 'datespot.controllers'])
   
 });
 
-  var $range = $(".js-range-slider");
+// var $range = $(".js-range-slider");
 
-$range.ionRangeSlider({
-    type: "single",
-    postfix: " $",
-    grid: true,
-    values: ["7.5", "15", "35", "65", "99", "125", "150", "199", "299", "399", "499"]
-});
+// $range.ionRangeSlider({
+//     type: "single",
+//     postfix: " $",
+//     grid: true,
+//     values: ["7.5", "15", "35", "65", "99", "125", "150", "199", "299", "399", "499"]
+// });
 

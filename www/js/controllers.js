@@ -8,58 +8,32 @@
  *
  **********************************************************************/
  
- 
 angular.module('datespot.controllers', ['ionic', 'datespot.userservices', 'datespot.jsonservices'])
 
-/*
- * 	Controller for the FILTER page
- */
-.controller('FilterCtrl', function($scope, User) {
-
-  $scope.runFilter = function (bool) { 	
-		// To be expanded and perform the jSON query when
-		// the user has changed the search parameters
-		console.log('Runfilter clicked!'); 
+// CONTROLLER FOR TABS NAVIGATION AND SHORTLIST COUNTER
+.controller('TabsCtrl', function($scope, User) {
+  $scope.enteringShortlist = function() {
+    User.newShortlist = 0;
   }
 
-  $scope.datePickerCallback = function (val) {
-    if(typeof(val)==='undefined'){      
-        console.log('Date not selected');
-    }
-    else{
-        console.log('Selected date is : ', val);
-    }
-};  
+  $scope.shortlistCount = User.shortlistCount;
+})
 
-}) // end of FilterCtrl Controller Definition
+// CONTROLLER FOR THE SEARCH VIEW
+.controller('SearchCtrl', function($scope, User) {
+  $scope.runFilter = function (bool) {  
+    // To be expanded and perform the jSON query when
+    // the user has changed the search parameters
+    console.log('Runfilter clicked!'); 
+  }
 
-/*
- *	Controller for the DISCOVER page
- */
+})
 
-// .controller('ScrollCtrl', ['$scope', function($scope) {
-//   $scope.data = {
-//     isLoading: false
-//   };
-// }]);
-
+// CONTROLLER FOR THE DISCOVER/SWIPE VIEW
 .controller('DiscoverCtrl', function($scope, $timeout, User, Recommendations, FactoryFuck) {
 	
 	// Test the factory here. 
 	FactoryFuck.Scrot();
-	
-	
-
-  // our first three DateSpots
-  /*
-  $scope.spots = [
-     {
-        "name":"WC Clapham | Wine & Charcuterie",
-        "address":"Clapham Common South Side, London SW4 7AA",
-        "image_url":"http://www.we-heart.com/upload-images/wcclapham2.jpg"
-     }
-  ];	
-  */
   
   $scope.spots = [
      {
@@ -67,8 +41,6 @@ angular.module('datespot.controllers', ['ionic', 'datespot.userservices', 'dates
      }
   ];  
   
-
-
 	// Get our recommended venues
 	Recommendations.getVenues()
 		.then(function(){
@@ -82,7 +54,7 @@ angular.module('datespot.controllers', ['ionic', 'datespot.userservices', 'dates
   // fired when we favorite / skip a date spot.
   $scope.sendFeedback = function (bool) {
     // first, add to favorites if they favorited
-    if (bool) User.addSpotToFavorites($scope.currentSpot);
+    if (bool) User.addSpotToShortlist($scope.currentSpot);
   	$scope.currentSpot.rated = bool;
   	$scope.currentSpot.hide = true;
 
@@ -111,91 +83,107 @@ angular.module('datespot.controllers', ['ionic', 'datespot.userservices', 'dates
   
 })
 
-/*
- *	Controller for the FAVOURITES page
- */
-.controller('FavoritesCtrl', function($scope, User) {
-  // get the list of our favorites from the user service
-  $scope.favorites = User.favorites;
+// CONTROLLER FOR SHORTLIST VIEW (PREVIOUSLY FAVORITES)
+.controller('ShortlistCtrl', function($scope, User) {
+  // With the new view caching in Ionic, Controllers are only called
+  // when they are recreated or on app start, instead of every page change.
+  // To listen for when this page is active (for example, to refresh data),
+  // listen for the $ionicView.enter event:
+  //
+  //$scope.$on('$ionicView.enter', function(e) {
+  //});
+  $scope.shortlist = User.shortlist;
+
+  // $scope.spots = Spots.all();
+  // $scope.remove = function(spot) {
+  //   Spots.remove(spot);
+  // };
 
   $scope.removeSpot = function(spot, index) {
-    User.removeSpotFromFavorites(spot, index);
+    User.removeSpotFromShortlist(spot, index);
   }
 })
 
-// Controller to manage search/filter menu for occasion types
-.controller('PopupCtrl', function ($scope, $ionicPopup) {
+// CONTROLLER FOR DETAILS PAGE
+.controller('DetailCtrl', function($scope, $stateParams, Spots) {
+  $scope.spot = Spots.get($stateParams.spotId);
+})
 
-    $scope.items = [{
-        name: "First date",
-        id: 1,
-         url: "https://s3-us-west-1.amazonaws.com/datespot/occasions/coffeeorbrunch.jpg"
-    }, {
-        name: "Just drinks",
-        id: 2,
-         url: "http://betterwithbutter.com/wp-content/uploads/2010/05/effen-vodka-cocktails.jpg"
-    }, {
-        name: "Dinner date",
-        id: 3,
-         url: "http://www.tv-testbild.com/2003/Testbild_Maroko.jpg"
-    }, {
-        name: "Coffee or brunch",
-        id: 4,
-         url: "http://www.tv-testbild.com/2003/Testbild_Maroko.jpg"
-    }, {
-        name: "Let's get weird",
-        id: 5,
-        
-    }, {
-        name: "Go all out to impress",
-        id: 6,
-        // url: "http://www.tv-testbild.com/2003/Testbild_Maroko.jpg"
-    }, {
-        name: "Fun with friends",
-        id: 7,
-        
-    }, {
-        name: "Something corporate",
-        id: 8,
-        
+// CONTROLLER FOR BACK BUTTON
+.controller('BackCtrl', function($scope, $ionicHistory) {
+  $scope.myGoBack = function () {
+    $ionicHistory.goBack();
+  };
+})
+
+// CONTROLLER FOR LISTING OF OCCASION TYPES ON SEACH VIEW
+.controller('OccasionCtrl', function($scope, $ionicPopup) {
+  $scope.items = [{
+      name: "First Date",
+      id: 1,
+      tag: "She said 'yes.' Choose a place that'll impress.",
+      url: "/img/firstdate2.jpg"
+  }, {
+      name: "Just drinks",
+      id: 2,
+      tag: "Hip spots to grab a drink with a date or friend.",
+      url: "/img/drinks.jpeg"
+  },
+     {
+      name: "Dinner date",
+      id: 3,
+      tag: "Suave restaurants, tasty treats and cheap eats.",
+      url: "/img/dinnerdate.jpg"
+  },
+    {
+      name: "Brunch or coffee",
+      id: 4,
+      tag: "Casual coffee or brunch ideas.",
+      url: "/img/brunch.jpg"
+    },
+
+    {
+      name: "Fun with friends",
+      id: 5,
+      tag: "Something informal with friends in pubs, bars or clubs.",
+      url: "img/funwithfriends.jpg"
+    },
+
+    {
+      name: "Get weird",
+      id: 6,
+      tag: "Something informal with friends in pubs, bars or clubs.",
+      url: "img/letsgetweird.png"
+    },
+
+    {
+      name: "Go all out",
+      id: 7,
+      tag: "Something informal with friends in pubs, bars or clubs.",
+      url: "/img/goallout.jpg"
+    },
+    {
+      name: "Something sunny",
+      id: 8,
+      tag: "Something informal with friends in pubs, bars or clubs.",
+      url: "/img/somethingsunny.jpg"
+    },
+    {
+      name: "Cheap eats",
+      id: 9,
+      tag: "Something informal with friends in pubs, bars or clubs.",
+      url: "/img/cheapeats.png"
+    },
+    {
+      name: "Hen night",
+      id: 10,
+      tag: "Something informal with friends in pubs, bars or clubs.",
+      url: "/img/hennight.jpg"
+    },
+    {
+      name: "stag night",
+      id: 11,
+      tag: "Something informal with friends in pubs, bars or clubs.",
+      url: "/img/stagnight.jpeg"
     }];
-})
-
-// Controller to manage the datespot shortlist
-// .controller('ListCtrl', function($scope) {
-//   $scope.spots = [
-//     {
-//       name: "Sexy Venue",
-//       description: "this is a sweet venue"
-//     },
-
-//     {
-//       name: "Seductive Spot",
-//       description: "ideal to impress"
-//     }
-//   ];
-// })
-
-// Controller for our slidebox (carousel) on the details page
-// .controller('SlideCtrl', function($scope, User) {
-//   $scope.slides = [];
-//   for (var i = 1; i <= 5; i++) {
-//     $scope.slides.push({
-//       title: 'Slide #' + i,
-//       description: 'This is this slide # ' + i
-//     });
-//   }
-// })
-
-
-/*
-Controller for our tab bar
-*/
-.controller('TabsCtrl', function($scope, User) {
-  $scope.enteringFavorites = function() {
-    User.newFavorites = 0;
-  }
-  
-  $scope.favCount = User.favoriteCount;
-  
 });

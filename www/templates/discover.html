@@ -1,45 +1,67 @@
-<ion-view view-title="Discover" class="discover-page">
-  <ion-content scroll="false">
+<ion-view view-title="Discover">
+  
+  <ion-nav-title>
+    <div class="padding">
+      <!-- Ben to update logo when ready -->
+      <img height="30px" src="img/logo.png">
+    </div>
+  </ion-nav-title>
+
+  <ion-pane class="padding cardBackground" scroll="false" ng-controller="DiscoverCtrl">
 
     <td-cards>
-      <td-card ng-repeat="spot in spots" 
-        on-destroy="spotDestroyed($index)" 
+      <td-card 
+        id="td-card"
+        ng-repeat="spot in spots"
+        on-destroy="spotDestroyed($index)"
         on-swipe-left="spotSwipedLeft($index)"
         on-swipe-right="spotSwipedRight($index)"
         on-partial-swipe="spotPartialSwipe(amt)">
 
-
         <div class="list card current-spot"
           ng-class="{skipped: currentSpot.rated == false,
-                      favorited: currentSpot.rated == true}"
+                    shortlisted: currentSpot.rated == true}"
           ng-show="currentSpot && !currentSpot.hide">
 
           <div class="item item-image">
-            <div class="no-text overlayBox"><div class="noBox boxed"></div></div>
+            <div class="no-text overlayBox">
+              <div class="noBox boxed"
+                on-swipe-left="spotSwipedLeft($index)">Skip it 
+              </div>
+            </div>
             <img ng-src="{{ currentSpot.image_url }}" ng-style="{'height':'100%'}">
-            <div class="yes-text overlayBox"><div class="yesBox boxed" id="centerMe">Image goes here</div></div>
-          </div>
+            <div class="yes-text overlayBox"
+              on-swipe-right="spotSwipedRight($index)">
+              <div class="yesBox boxed" id="centerMe">Yes!</div>
+            </div>
 
-          <div class="item">
-            <h2>{{ currentSpot.name }}</h2>
-            <p>{{ currentSpot.address }}</p>
-          </div>
+            <div class="item">
+              <h2>{{ currentSpot.name }}</h2>
+              <p>{{ currentSpot.address }}</p>
+       <!--        <ion-option-button class="button-assertive"
+                ng-click="removeSpot(spot,$index)"> -->
+              <!-- </ion-option-button> -->
+            </div>
 
-          <div class="item tabs tabs-secondary tabs-icon-left">
-            <a class="tab-item" ng-click="sendFeedback(false)">
-              <i class="icon ion-close"></i>
-              <!-- Pass -->
-            </a>
-            <a class="tab-item" ng-click="sendFeedback(true)">
-              <i class="icon assertive ion-heart"></i>
-              <!-- Shortlist -->
-            </a>
+             
+            <div class="item tabs tabs-secondary tabs-icon-left">
+              <a class="tab-item" ng-click="sendFeedback(false)">
+                <i class="icon stable ion-close"></i>
+              </a>
+              <a class="tab-item" ng-click="sendFeedback(true)">
+                <i class="icon assertive ion-heart"></i>
+              </a>
+            </div>
           </div>
 
         </div>
-
       </td-card>
     </td-cards>
-
-  </ion-content>
+  </ion-pane>
+  </ion-pane>
 </ion-view>
+
+
+
+
+

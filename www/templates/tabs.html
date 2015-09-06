@@ -3,24 +3,29 @@ Create tabs with an icon and label, using the tabs-positive style.
 Each tab's child <ion-nav-view> directive will have its own
 navigation history that also transitions its views in and out.
 -->
-<ion-tabs class="tabs-icon tabs-color-active-positive">
+<ion-tabs class="tabs-icon tabs-color-active-stable">
 
-  <!-- Filter Tab -->
-  <ion-tab title="Gameplan" icon="ion-search" href="#/tab/filter">
-    <ion-nav-view name="tab-filter"></ion-nav-view>
-  </ion-tab>
-    
-
-  <!-- Discover Tab -->
-  <ion-tab title="Discover" icon="ion-lightbulb" href="#/tab/discover">
-    <ion-nav-view name="tab-discover"></ion-nav-view>
+  <!-- Search Tab -->
+  <ion-tab class="tabStyle" title="Search" icon-off="ion-search" icon-on="ion-search" href="#/tab/search">
+    <ion-nav-view name="search"></ion-nav-view>
   </ion-tab>
 
-
-  <!-- Favorites Tab -->
-  <ion-tab title="My Datespots" icon="ion-wineglass" icon="ion-wineglass" on-select="enteringFavorites()" on-deselect="leavingFavorites()" href="#/tab/favorites" badge="favCount()" badge-style="badge-assertive">
-    <ion-nav-view name="tab-favorites"></ion-nav-view>
+  <!-- Account Tab -->
+  <ion-tab class="tabStyle" title="Discover" icon-off="ion-lightbulb" icon-on="ion-lightbulb" href="#/tab/discover">
+    <ion-nav-view name="discover"></ion-nav-view>
   </ion-tab>
 
+  <!-- Shortlist Tab -->
+  <ion-tab class="tabStyle" 
+    title="Shortlist" 
+    icon-off="ion-bookmark" 
+    icon-on="ion-bookmark" 
+    href="#/tab/shortlist"
+    on-select="enteringShortlist()"
+    on-deselect="leavingShortlist()"
+    badge="shortlistCount()"
+    badge-style="badge-assertive">
+    <ion-nav-view name="shortlist"></ion-nav-view>
+  </ion-tab>
 
 </ion-tabs>

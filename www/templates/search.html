@@ -1,0 +1,18 @@
+<ion-view view-title="Search">
+  <ion-content>
+    <div ng-controller="OccasionCtrl">
+      <ion-list class="OccasionPicker">
+        <ion-item 
+          class="defaultOccasion" 
+          href="#/tab/discover"
+          ng-repeat="item in items"
+          style="background-image: url({{item.url}})">
+          <div class="occasionInfo">
+            <span class="occasionSpan"><h1 class="occasionHeader">{{item.name}}</h1></span>
+            <p class="occasionTagline">{{item.tag}}</p>
+          </div>
+        </ion-item>
+      </ion-list>
+    </div>
+  </ion-content>
+</ion-view>

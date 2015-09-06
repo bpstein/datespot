@@ -1,16 +1,23 @@
+
+
+/***********************************
+/*OLD CODE OLD CODE OLD CODE OLD CODE*/
+/**********************************/
+
+/*
 /*Search tab styling*/
-@import url(http://fonts.googleapis.com/css?family=Source+Sans+Pro:400,900);
+/*@import url(http://fonts.googleapis.com/css?family=Source+Sans+Pro:400,900);
 
 
 * {
-  font: 38px 'Source Sans Pro';
-}
+  font: 'Source Sans Pro';
+}*/
 
 /***********************************
 /*STYLING FOR SEARCH/FILTER SCREEN*/
 /**********************************/
 
-.occasion-button { }
+/*.occasion-button { }
 
 .occasion-header {
   text-align: center;
@@ -21,10 +28,6 @@
 }
 
 .defaultItem > .item-content {
-	
-      /*background-image: {{item.url}});*/
-   /* background-image: url("https://s3-us-west-1.amazonaws.com/datespot/occasions/brunch.jpg");*/
-    /*background-repeat: no-repeat;*/
 
     size: 80%;
     height: 225px;
@@ -85,19 +88,19 @@
 }
 .bar.bar-loading {
   display: block;
-  height: 24px;
+  height: 24px;*/
   
   /* starts right below a normal header */
-  top: 44px;
-  
+/*  top: 44px;
+  */
   /* make the text centered vertically and horizontally */
-  text-align: center;
+/*  text-align: center;
   padding: 0;
-  line-height: 24px;
+  line-height: 24px;*/
 
   /* transition 'sliding down' (check below)*/
-  -webkit-transition: 200ms all;
-}
+/*  -webkit-transition: 200ms all;
+}*/
 
 
 /* 
@@ -105,16 +108,16 @@
  * might not always look good, but looks
  * good when our loader is added & removed
  */
-.has-header {
+/*.has-header {
   -webkit-transition: 200ms top;
 }
 .has-header.has-loading {
   /* 44px (header) + 24px */
-  top: 68px;
-}
+/*  top: 68px;
+}*/
 
 /* make loading bar slide up/down */
-.bar-loading.ng-enter,
+/*.bar-loading.ng-enter,
 .bar-loading.ng-leave.ng-leave-active {
   height: 0;
   border-width: 0px;
@@ -145,4 +148,360 @@
     border-top: 3px solid #000;
     padding: 5px 0 0;
 }
+
+*/
+/***********************************
+/* END OF END OF OLD CODE OLD CODE OLD CODE OLD CODE*/
+/**********************************/
+
+/*******************
+/* GLOBAL STYLING */
+/******************/
+
+@import url(http://fonts.googleapis.com/css?family=Source+Sans+Pro:400,900);
+@import url(https://fonts.googleapis.com/css?family=Varela+Round);
+
+* {
+  font: 20px 'Varela Round';
+  /*Other fonts to consider: 'Adelle Bold', 'Helvetica Neue', sans-serif;*/
+}
+
+.customBar {
+  background-color: #000;
+  color: #FFF;
+  border: none;
+/*  height: 60px;
+  vertical-align: middle;*/
+}
+
+/*****************
+/* TABS STYLING */
+/****************/
+
+.tab-nav {
+  background-color: #000;
+  border: none;
+}
+
+.tab-nav-tabs {
+  background-color:#000 !important;
+}
+
+.tabStyle, .tab-item {
+      background-color:#000  !important;
+    }
+
+.tab-item-active {
+  color: black;
+  opacity: 2;
+}
+
+.tabs-icon {
+  background-color: #444;
+}
+
+/***********************
+/* SEARCH TAB STYLING */
+/**********************/
+
+.item-complex .item-content {
+  background-color: rgba(0,0,0,0.15);
+  border: none;
+  border: transparent !important;
+  border-top: none;
+  border-bottom:none;
+  margin-bottom: -5px;
+}
+
+.item-complex .item-content:hover {
+  background: rgba(0, 0, 0, 0.65) !important;
+  border: transparent !important;
+}
+
+.ion-item. .item-complex {
+  border: transparent !important;
+  border-top: none;
+  border-bottom:none;
+  margin-bottom: -5px;
+}
+
+.item.active, .item.activated, .item-complex.active .item-content, .item-complex.activated .item-content {
+  border-color: #ccc;
+  background-color: #FFF;
+  border-top: none;
+  border-bottom:none
+;}
+
+.occasionPicker {
+  padding: 0px !important;
+  margin: 0px !important;
+  border: none;
+}
+
+.occasionInfo {
+  height: 150px; 
+  line-height: 150px;
+  padding: 0px;
+  text-align: center;
+  background-size: cover;
+}
+
+.defaultOccasion {
+  background: no-repeat center;
+  background-size: cover!important;
+  -webkit-background-size: cover!important;
+  -webkit-background-size: cover;
+  -moz-background-size: cover;
+  -o-background-size: cover;
+  border: none;
+}
+
+.occasionHeader {
+  display: inline-block;
+  vertical-align: middle;
+  line-height: normal;
+  text-transform: uppercase;
+  font-family: 'Varela Round';
+  font-size: 30px;
+  color: #fff;
+  text-shadow: 1px 1px #444;
+}
+
+.occasionTagline {
+  font-family: 'Varela Round';
+  font-size: 20px;
+  color: #fff;
+}
+
+/**************************
+/* DISCOVER PAGE STYLING */
+/*************************/
+
+/*.list .card .current-spot {
+  border-radius: 100%;
+  background-color: black;
+}
+
+.currentSpotSwipeCard {
+  border-radius: 100%;
+}
+
+.cardBackground {
+  background-color: #444;
+  border: none;
+}
+
+.cardCanvas, .cardBack {
+  background-color: #444;
+}*/
+
+.discover-page .current-spot {
+  -webkit-transform: scale(1);
+  -ms-transform: scale(1);
+  transform: scale(1);
+  opacity: 1;
+  -webkit-transition:all cubic-bezier(0.420, 0.000, 1.000, 1.000) 0.1s;
+  transition:all cubic-bezier(0.420, 0.000, 1.000, 1.000) 0.1s;
+}
+
+.tab-item .activated {
+  background-color: #000;
+}
+
+.discover-page .current-spot .item-image {
+  max-height:300px;
+  overflow:hidden;
+}
+
+@media screen and (max-height: 600px) {
+  .discover-page .current-spot .item-image {
+    max-height:200px;
+    overflow:hidden;
+  }
+}
+
+.discover-page .current-spot.shortlisted.ng-hide {
+  -webkit-transform: translateX(1000px) rotate(50deg);
+  -ms-transform: translateX(1000px) rotate(50deg);
+  transform: translateX(1000px) rotate(50deg);
+  opacity:0;
+}
+
+.discover-page .current-spot.skipped.ng-hide {
+  -webkit-transform: translateX(-1000px) rotate(-50deg);
+  -ms-transform: translateX(-1000px) rotate(-50deg);
+  transform: translateX(-1000px) rotate(-50deg);
+  opacity:0;
+}
+
+.discover-page .current-spot.ng-hide-add {
+  -webkit-transition:all cubic-bezier(0.420, 0.000, 1.000, 1.000) 0.3s;
+  transition:all cubic-bezier(0.420, 0.000, 1.000, 1.000) 0.3s;
+  display:block!important;
+}
+
+.discover-page .current-spot.ng-hide-remove {
+  -webkit-transform: scale(0.7) translateX(0px) rotate(0deg);
+  -ms-transform: scale(0.7) translateX(0px) rotate(0deg);
+  transform: scale(0.7) translateX(0px) rotate(0deg);
+  opacity: 0;
+}
+
+.discover-page .img-lookahead img {
+  height:1px;
+  width:1px;
+  opacity:0.01;
+}
+
+
+/* Card styling */
+ 
+td-cards {
+    display: block;
+}
+ 
+td-card {
+    position: absolute;
+    left: 50%;
+    margin: 80px 0 40px -150px;
+    width: 300px;
+    height: 300px;
+    border: 1px solid #999;
+    box-shadow: 0px 1px 3px rgba(0,0,0,0.2);
+    border-radius: 6px;
+    background-color: rgb(255,255,255);
+}
+ 
+.td-card .title {
+    height: 40px;
+    font-size: 15px;
+    padding: 15px;
+}
+ 
+td-card .image {
+    position: absolute;
+    top: 40px;
+    width: 100%;
+}
+ 
+td-card img {
+    height: 258px;
+    width: 100%;
+    border-radius: 6px;
+}
+ 
+/* Overlay styling*/
+ 
+.overlayBox {
+    position: absolute;
+    left: 50%;
+    height: 98%;
+    width: 100%;
+    top: -80px;
+    opacity: 0;
+    margin: 80px 0 0 -149px;
+}
+ 
+.boxed {
+    height: 50px;
+    width: 100px;
+    padding: 10px;
+    border-radius: 6px;
+    font-size: 30px;
+}
+ 
+.yes-text {
+    background-color: rgba(0,256,0,0.2);
+}
+ 
+.yesBox {
+    margin: 10% 60% 0% 10%;
+    border: 2px solid #00FF00;
+    color: rgb(0, 256, 0);
+    -webkit-transform: rotate(-25deg);
+}
+ 
+.no-text {
+    background-color: rgba(256,0,0,0.2);
+}
+ 
+.noBox {
+    margin: 10% 10% 0% 60%;
+    border: 2px solid #FF0000;
+    color: rgb(256, 0, 0);
+    -webkit-transform: rotate(25deg);
+}
+ 
+.fade {
+    -webkit-transition: 0.2s opacity linear;
+    transition: 0.2s opacity linear;
+    opacity: 0;
+}
+
+
+/***************************
+/* SHORTLIST PAGE STYLING */
+/**************************/
+
+.shortlistInfo {
+  padding: 15px;
+  background: no-repeat center;
+  background-size: cover!important;
+  -webkit-background-size: cover!important;
+  -webkit-background-size: cover;
+  -moz-background-size: cover;
+  -o-background-size: cover;
+  height: 255px;
+  width: 400px;
+  border: none;
+}
+
+.item-remove-animate .item-icon-right {
+  border: none;
+}
+
+/*.shortlistInfo:hover {
+  background: rgba(0, 0, 0, 0.15) !important;
+  border: transparent !important;
+}*/
+
+.shortlistHeader {
+  color: #FFF;
+  font-family: 'Varela Round';
+  font-size: 30px;
+  text-shadow: 1px 1px #444;
+  position: relative;
+  padding-top: 135px;
+}
+
+.shortlistAddress {
+  color: #FFF;
+  font-family: 'Varela Round';
+  font-size: 30px;
+  position: relative;
+  
+}
+
+.shortlistTagline, .ion-footer-bar {
+  font-family: 'Varela Round';
+  height: 60px;
+  padding-left: 15px;
+  float: left;
+  overflow-x: scroll;
+  white-space: nowrap;
+  word-break:break-all;
+}
+
+.item-complex .item-content, .item-radio .item-content {
+  padding: 0px;
+}
+
+/*************************
+/* DETAILS PAGE STYLING */
+/************************/
+
+
+
+
+
 

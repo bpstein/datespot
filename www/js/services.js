@@ -22,29 +22,29 @@ angular.module('datespot.userservices', [])
   console.log('Loaded the User Factory');
 
   var o = {
-    favorites: [],
-    newFavorites: 0
+    shortlist: [],
+    newShortlist: 0
   }
 
-  o.addSpotToFavorites = function(spot) {
+  o.addSpotToShortlist = function(spot) {
     // make sure there's a date spot to add
     if (!spot) return false;
 
-    // add to favorites array
-    o.favorites.unshift(spot);
-    o.newFavorites++;
+    // add to shortlist array
+    o.shortlist.unshift(spot);
+    o.newShortlist++;
   }
 
-  o.removeSpotFromFavorites = function(spot, index) {
+  o.removeSpotFromShortlist = function(spot, index) {
     // make sure there's a date spot to add
     if (!spot) return false;
 
-    // add to favorites array
-    o.favorites.splice(index, 1);
+    // add to shortlist array
+    o.shortlist.splice(index, 1);
   }
 
-  o.favoriteCount = function() {
-  	return o.newFavorites;
+  o.shortlistCount = function() {
+  	return o.newShortlist;
   }
   return o;
   
@@ -83,7 +83,7 @@ angular.module('datespot.jsonservices', [])
   // We need to insure we are always returing a value from a factory definition
   var o = {
     queue: [],
-    newFavorites: 0
+    newShortlist: 0
   }
 
   // Function: Get Venues 

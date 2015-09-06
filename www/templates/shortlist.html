@@ -1,0 +1,34 @@
+<ion-view view-title="Shortlist">
+  <ion-content ng-controller="ShortlistCtrl">
+    <ion-list>
+      <ion-item 
+        class="item-remove-animate item-icon-right" 
+        ng-repeat="spot in shortlist"  
+        type="item-text-wrap" 
+        href="#/detail/{{spot.id}}">
+        <!-- change ng-repeat to spot in spots for static version -->
+        <div class="shortlistImage"
+          style="background-image: url({{spot.image_url}})">
+        </div>
+        <div class="shortlistInfo" style="background-image: url({{spot.image_url}})">
+            <h2 class="shortlistHeader">{{spot.name}}</h2>
+            <h3 class="shortlistAddress">{{spot.address}}</h3>
+          <ion-footer-bar class="shortlistTagline">
+            <p>{{spot.tag}}</p>
+          </ion-footer-bar>
+        </div>
+
+        <i class="icon ion-chevron-right icon-accessory"></i>
+
+        <ion-option-button class="button-assertive" 
+          ng-click="removeSpot(spot, $index)">
+          <i class="ion-trash-a"> Delete</i>
+        </ion-option-button>
+        <ion-option-button class="button-positive">
+          <i class="ion-paper-airplane"> Share</i>
+        </ion-option-button>
+             
+      </ion-item>
+    </ion-list>
+  </ion-content>
+</ion-view>
