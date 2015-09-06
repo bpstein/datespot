@@ -4,7 +4,7 @@
   The FriendsCtrl pulls data from the Friends service (service.js)
   The Friends service returns an array of friend data
 -->
-<ion-nav-bar ng-controller="BackCtrl" class="bar-dark nav-title-slide-ios7">
+<!-- <ion-nav-bar ng-controller="BackCtrl" class="bar-dark nav-title-slide-ios7">
   <ion-nav-back-button 
     class="button-clear"
     ng-click="myGoBack()">
@@ -34,6 +34,23 @@
     <p>
       {{spot.lastText}}
     </p>
+  </ion-content>
+</ion-view> -->
+
+<ion-nav-bar class="bar-dark nav-title-slide-ios7">
+  <ion-nav-back-button 
+    class="button-clear"
+    ng-click="myGoBack()">
+    <i class="ion-arrow-left-c" href="#/tab/discover"></i>Back
+   </ion-nav-back-button>
+</ion-nav-bar>
+
+<ion-view view-title="{{ spot.name }}">
+  <ion-content class="padding" scroll="true">
+    <div class="item item-body">
+      <h2>{{spot.name}}</h2>
+      Test test 
+      <h3>{{spot.address}}</h3>
   </ion-content>
 </ion-view>
 

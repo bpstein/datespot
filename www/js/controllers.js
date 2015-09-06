@@ -30,7 +30,7 @@ angular.module('datespot.controllers', ['ionic', 'datespot.userservices', 'dates
 })
 
 // CONTROLLER FOR THE DISCOVER/SWIPE VIEW
-.controller('DiscoverCtrl', function($scope, $timeout, User, Recommendations, FactoryFuck) {
+.controller('DiscoverCtrl', function($scope, $timeout, $ionicLoading, User, Recommendations, FactoryFuck) {
 	
 	// Test the factory here. 
 	FactoryFuck.Scrot();
@@ -77,10 +77,26 @@ angular.module('datespot.controllers', ['ionic', 'datespot.userservices', 'dates
   };
 
   $scope.spotSwiped = function(index) {
-    var newSpot = // new spot data
-    $scope.spot.push(newSpot);
+    console.log('sweetswipe');
+    //var newSpot = // new spot data
+    //$scope.spots.push(newSpot);
+    
+    //$scope.currentSpot.rated = true;
   };
-  
+
+  $scope.spotSwipedLeft = function(index) {
+    console.log('LEFT SWIPE');
+    //$scope.spots[index].rated = false;
+    $scope.sendFeedback(false);
+    //$scope.spotSwiped();
+  };
+  $scope.spotSwipedRight = function(index) {
+    console.log('RIGHT SWIPE');
+    //$scope.spotSwiped();
+    $scope.sendFeedback(true);
+
+    //$scope.spots[index].rated = true;
+  };
 })
 
 // CONTROLLER FOR SHORTLIST VIEW (PREVIOUSLY FAVORITES)
@@ -105,16 +121,16 @@ angular.module('datespot.controllers', ['ionic', 'datespot.userservices', 'dates
 })
 
 // CONTROLLER FOR DETAILS PAGE
-.controller('DetailCtrl', function($scope, $stateParams, Spots) {
-  $scope.spot = Spots.get($stateParams.spotId);
+.controller('DetailCtrl', function($scope, Spots) {
+  $scope.spot = Spots.get;
 })
 
 // CONTROLLER FOR BACK BUTTON
-.controller('BackCtrl', function($scope, $ionicHistory) {
-  $scope.myGoBack = function () {
-    $ionicHistory.goBack();
-  };
-})
+// .controller('BackCtrl', function($scope, $ionicHistory) {
+//   $scope.myGoBack = function () {
+//     $ionicHistory.goBack();
+//   };
+// })
 
 // CONTROLLER FOR LISTING OF OCCASION TYPES ON SEACH VIEW
 .controller('OccasionCtrl', function($scope, $ionicPopup) {

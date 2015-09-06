@@ -6,18 +6,29 @@ navigation history that also transitions its views in and out.
 <ion-tabs class="tabs-icon tabs-color-active-stable">
 
   <!-- Search Tab -->
-  <ion-tab class="tabStyle" title="Search" icon-off="ion-search" icon-on="ion-search" href="#/tab/search">
-    <ion-nav-view name="search"></ion-nav-view>
+  <ion-tab class="tabStyle" 
+    title="Search"
+    name="tab-search" 
+    icon-off="ion-search" 
+    icon-on="ion-search" 
+    href="#/tab/search">
+    <ion-nav-view name="tab-search"></ion-nav-view>
   </ion-tab>
 
-  <!-- Account Tab -->
-  <ion-tab class="tabStyle" title="Discover" icon-off="ion-lightbulb" icon-on="ion-lightbulb" href="#/tab/discover">
-    <ion-nav-view name="discover"></ion-nav-view>
+  <!-- Discover Tab -->
+  <ion-tab class="tabStyle" 
+    title="Discover" 
+    name="tab-discover"
+    icon-off="ion-lightbulb" 
+    icon-on="ion-lightbulb" 
+    href="#/tab/discover">
+    <ion-nav-view name="tab-discover"></ion-nav-view>
   </ion-tab>
 
   <!-- Shortlist Tab -->
   <ion-tab class="tabStyle" 
     title="Shortlist" 
+    name="tab-shortlist"
     icon-off="ion-bookmark" 
     icon-on="ion-bookmark" 
     href="#/tab/shortlist"
@@ -25,7 +36,7 @@ navigation history that also transitions its views in and out.
     on-deselect="leavingShortlist()"
     badge="shortlistCount()"
     badge-style="badge-assertive">
-    <ion-nav-view name="shortlist"></ion-nav-view>
+    <ion-nav-view name="tab-shortlist"></ion-nav-view>
   </ion-tab>
 
 </ion-tabs>

@@ -1,18 +1,18 @@
 <ion-view view-title="Discover">
   
-  <ion-nav-title>
-    <div class="padding">
+ <!--  <ion-nav-title>
+    <div class="padding"> -->
       <!-- Ben to update logo when ready -->
-      <img height="30px" src="img/logo.png">
-    </div>
-  </ion-nav-title>
+      <!-- <img height="30px" src="img/logo.png"> -->
+<!--     </div>
+  </ion-nav-title> -->
 
   <ion-pane class="padding cardBackground" scroll="false" ng-controller="DiscoverCtrl">
 
     <td-cards>
       <td-card 
         id="td-card"
-        ng-repeat="spot in spots"
+        ng-repeat="spot in spots track by 'vuid'"
         on-destroy="spotDestroyed($index)"
         on-swipe-left="spotSwipedLeft($index)"
         on-swipe-right="spotSwipedRight($index)"
@@ -26,12 +26,11 @@
           <div class="item item-image">
             <div class="no-text overlayBox">
               <div class="noBox boxed"
-                on-swipe-left="spotSwipedLeft($index)">Skip it 
+                id="centerMe">Skip it 
               </div>
             </div>
             <img ng-src="{{ currentSpot.image_url }}" ng-style="{'height':'100%'}">
-            <div class="yes-text overlayBox"
-              on-swipe-right="spotSwipedRight($index)">
+            <div class="yes-text overlayBox">
               <div class="yesBox boxed" id="centerMe">Yes!</div>
             </div>
 

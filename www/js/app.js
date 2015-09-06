@@ -52,7 +52,7 @@ angular.module('datespot', ['ionic', 'datespot.controllers'])
   .state('tab.search', {
     url: '/search',
     views: {
-      'search': {
+      'tab-search': {
         templateUrl: 'templates/search.html',
         controller: 'SearchCtrl'
       }
@@ -62,7 +62,7 @@ angular.module('datespot', ['ionic', 'datespot.controllers'])
   .state('tab.discover', {
     url: '/discover',
     views: {
-      'discover': {
+      'tab-discover': {
         templateUrl: 'templates/discover.html',
         controller: 'DiscoverCtrl'
       }
@@ -72,7 +72,7 @@ angular.module('datespot', ['ionic', 'datespot.controllers'])
   .state('tab.shortlist', {
     url: '/shortlist',
     views: {
-      'shortlist': {
+      'tab-shortlist': {
         templateUrl: 'templates/shortlist.html',
         controller: 'ShortlistCtrl'
       }
@@ -80,9 +80,13 @@ angular.module('datespot', ['ionic', 'datespot.controllers'])
   })
 
   .state('detail', {
-      url: '/detail/:spotId',
-      templateUrl: 'templates/detail.html',
+      url: '/detail',
+      views: {
+        'tab-shortlist': {
+          templateUrl: 'templates/detail.html',
           controller: 'DetailCtrl'
+        }
+      } 
   });
 	
   // The default or the first (on load) state/controller that the application will load

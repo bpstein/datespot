@@ -98,7 +98,21 @@ angular.module('datespot.jsonservices', [])
     }).success(function(data)
 	{
 		  // merge data into the queue
-		o.queue = o.queue.concat(data.points); // get the array of 'points'
+		  //_.map(data.points,function(dataPoint))
+		  for(var j= 0; j < data.points.length; j++){
+		  	var found = false;
+		  	var dataPoint = data.points[j];
+		  	for(var i= 0; i<o.queue.length; i++){
+		  			if(o.queue[i].vuid === dataPoint.vuid){
+		  				found = true;
+		  			}
+		  	}
+		  	if(!found){
+		  		o.queue.push(dataPoint);
+		  	}
+		  }
+		  
+		//o.queue = o.queue.concat(data.points); // get the array of 'points'
 
 		// OK so we've apparently received something here, we need to loop through the results
 		console.log('Looping through results...');
