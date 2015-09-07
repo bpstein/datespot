@@ -125,15 +125,6 @@
 /* DISCOVER PAGE STYLING */
 /*************************/
 
-/*.list .card .current-spot {
-  border-radius: 100%;
-  background-color: black;
-}
-
-.currentSpotSwipeCard {
-  border-radius: 100%;
-}*/
-
 .cardBackground {
   background-color: #f3f3f3;
   border: none;
@@ -154,7 +145,7 @@
   opacity: 1;
   -webkit-transition:all cubic-bezier(0.420, 0.000, 1.000, 1.000) 0.1s;
   transition:all cubic-bezier(0.420, 0.000, 1.000, 1.000) 0.1s;
-}
+}*/
 
 .tab-item .activated {
   background-color: #000;
@@ -163,7 +154,7 @@
 .discover-page .current-spot .item-image {
   max-height:300px;
   overflow:hidden;
-}*/
+}
 
 @media screen and (max-height: 600px) {
   .discover-page .current-spot .item-image {
@@ -210,6 +201,7 @@
  
 td-cards {
     display: block;
+    margin-top: -25px;
 }
  
 td-card {
@@ -310,10 +302,6 @@ td-card img {
 }
 
 
-
-
-
-
 /***************************
 /* SHORTLIST PAGE STYLING */
 /**************************/
@@ -346,6 +334,7 @@ td-card img {
   font-size: 30px;
   position: relative;
   padding-top: 135px;
+  text-shadow: 1px 1px #444;
 }
 
 .shortlistAddress {
@@ -353,6 +342,7 @@ td-card img {
   font-family: 'Varela Round';
   font-size: 30px;
   position: relative;
+  text-shadow: 1px 1px #444;
 }
 
 .shortlistTagline, .ion-footer-bar {

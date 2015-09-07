@@ -26,22 +26,18 @@
           <div class="item item-image">
             <div class="no-text overlayBox">
               <div class="noBox boxed"
-                id="centerMe">Skip it 
+                on-swipe-left="spotSwipedLeft($index)">Skip it  
               </div>
             </div>
             <img ng-src="{{ currentSpot.image_url }}" ng-style="{'height':'100%'}">
             <div class="yes-text overlayBox">
-              <div class="yesBox boxed" id="centerMe">Yes!</div>
+              <div class="yesBox boxed" on-swipe-right="spotSwipedRight($index)">Yes!</div>
             </div>
 
             <div class="item">
               <h2>{{ currentSpot.name }}</h2>
               <p>{{ currentSpot.address }}</p>
-       <!--        <ion-option-button class="button-assertive"
-                ng-click="removeSpot(spot,$index)"> -->
-              <!-- </ion-option-button> -->
             </div>
-
              
             <div class="item tabs tabs-secondary">
               <a class="tab-item" ng-click="sendFeedback(false)">
