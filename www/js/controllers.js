@@ -8,7 +8,7 @@
  *
  **********************************************************************/
  
-angular.module('datespot.controllers', ['ionic', 'datespot.userservices', 'datespot.jsonservices'])
+angular.module('datespot.controllers', ['ionic', 'datespot.userservices', 'datespot.jsonservices', 'ionic.contrib.ui.tinderCards']  )
 
 // CONTROLLER FOR TABS NAVIGATION AND SHORTLIST COUNTER
 .controller('TabsCtrl', function($scope, User) {
@@ -94,8 +94,6 @@ angular.module('datespot.controllers', ['ionic', 'datespot.userservices', 'dates
     console.log('RIGHT SWIPE');
     //$scope.spotSwiped();
     $scope.sendFeedback(true);
-
-    //$scope.spots[index].rated = true;
   };
 })
 

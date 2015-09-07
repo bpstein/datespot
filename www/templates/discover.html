@@ -23,7 +23,7 @@
                     shortlisted: currentSpot.rated == true}"
           ng-show="currentSpot && !currentSpot.hide">
 
-          <div class="item item-image">
+          <div class="item item-image" style="height:300px">
             <div class="no-text overlayBox">
               <div class="noBox boxed"
                 on-swipe-left="spotSwipedLeft($index)">Skip it  
@@ -34,24 +34,37 @@
               <div class="yesBox boxed" on-swipe-right="spotSwipedRight($index)">Yes!</div>
             </div>
 
-            <div class="item">
+  <!--           <div class="item" style="height:100px">
               <h2>{{ currentSpot.name }}</h2>
               <p>{{ currentSpot.address }}</p>
-            </div>
+            </div> -->
              
-            <div class="item tabs tabs-secondary">
-              <a class="tab-item" ng-click="sendFeedback(false)">
-                <i class="icon stable ion-close"></i>
-              </a>
-              <a class="tab-item" ng-click="sendFeedback(true)">
-                <i class="icon assertive ion-heart"></i>
-              </a>
-            </div>
+
+
+
+        
           </div>
 
         </div>
       </td-card>
     </td-cards>
+      
+    
+
+    <!-- Secondary tabs for liking or skipping each venue -->
+     <div class="item spotInfo" style="height:100px">
+              <h2>{{ currentSpot.name }}</h2>
+              <p>{{ currentSpot.address }}</p>
+            </div>
+
+    <div class="item tabs tabs-secondary">
+      <a class="tab-item" ng-click="sendFeedback(false)">
+        <i class="icon stable ion-close"></i>
+      </a>
+      <a class="tab-item" ng-click="sendFeedback(true)">
+        <i class="icon assertive ion-heart"></i>
+      </a>
+    </div>
   </ion-pane>
   </ion-pane>
 </ion-view>
