@@ -18,6 +18,10 @@
   vertical-align: middle;*/
 }
 
+.scroll-content {
+  background-color: #f3f3f3;
+}
+
 /*****************
 /* TABS STYLING */
 /****************/
@@ -128,14 +132,18 @@
 
 .currentSpotSwipeCard {
   border-radius: 100%;
-}
+}*/
 
 .cardBackground {
-  background-color: #444;
+  background-color: #f3f3f3;
   border: none;
 }
 
-.cardCanvas, .cardBack {
+.tabs-secondary {
+  background-color: #000;
+}
+
+/*.cardCanvas, .cardBack {
   background-color: #444;
 }*/
 
