@@ -40,59 +40,39 @@ angular.module('datespot', ['ionic', 'datespot.controllers'])
 
 
   // Set up an abstract state for the tabs directive:
-  .state('tab', {
-    url: '/tab',
-    abstract: true,
-    templateUrl: 'templates/tabs.html',
-    controller: 'TabsCtrl'
-  })
 
-  // Each tab has its own nav history stack:
-
-  .state('tab.search', {
+  .state('search', {
     url: '/search',
-    views: {
-      'tab-search': {
-        templateUrl: 'templates/search.html',
-        controller: 'SearchCtrl'
-      }
-    }
+    templateUrl: 'templates/search.html',
+    controller: 'SearchCtrl'
   })
 
-  .state('tab.discover', {
+  .state('discover', {
     url: '/discover',
-    views: {
-      'tab-discover': {
-        templateUrl: 'templates/discover.html',
-        controller: 'DiscoverCtrl'
-      }
-    }
+    templateUrl: 'templates/discover.html',
+    controller: 'DiscoverCtrl'
   })
 
-  .state('tab.shortlist', {
+  .state('shortlist', {
     url: '/shortlist',
-    views: {
-      'tab-shortlist': {
-        templateUrl: 'templates/shortlist.html',
-        controller: 'ShortlistCtrl'
-      }
-    }
+    templateUrl: 'templates/shortlist.html',
+    controller: 'ShortlistCtrl'
   })
 
   .state('detail', {
       url: '/detail',
-      views: {
-        'tab-shortlist': {
-          templateUrl: 'templates/detail.html',
-          controller: 'DetailCtrl'
-        }
-      } 
+      templateUrl: 'templates/detail.html',
+      controller: 'DetailCtrl'
   });
 	
   // The default or the first (on load) state/controller that the application will load
   // If none of the above states are matched, use this as the fallback:
-  $urlRouterProvider.otherwise('/tab/search');
+  $urlRouterProvider.otherwise('/search');
  
+})
+
+.config(function($ionicConfigProvider) {
+    $ionicConfigProvider.backButton.text('').icon('ion-chevron-left').previousTitleText(false);
 })
 
 .directive('noScroll', function() {

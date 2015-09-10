@@ -19,19 +19,46 @@ angular.module('datespot.controllers', ['ionic', 'datespot.userservices', 'dates
   $scope.shortlistCount = User.shortlistCount;
 })
 
+// CONTROLLER FOR NAVIGATION BUTTONS
+.controller('ButtonCtrl', function($scope, User) {
+  $scope.rightButtons = [{
+    type: 'button-clear',
+    content: 'Shortlist',
+    tap: function(e) {}
+  }];
+})
+
 // CONTROLLER FOR THE SEARCH VIEW
 .controller('SearchCtrl', function($scope, User) {
   $scope.runFilter = function (bool) {  
     // To be expanded and perform the jSON query when
     // the user has changed the search parameters
     console.log('Runfilter clicked!'); 
+
+    $scope.save = function() {
+      $state.go('shortlist');
+    };
   }
 
 })
 
 // CONTROLLER FOR THE DISCOVER/SWIPE VIEW
-.controller('DiscoverCtrl', function($scope, $timeout, $ionicLoading, User, Recommendations, FactoryFuck) {
+.controller('DiscoverCtrl', function($scope, $timeout, $ionicLoading, User, Recommendations, FactoryFuck, TDCardDelegate) {
 	
+  // Loading screen while app pulls data form server
+  var showLoading = function() {
+    $ionicLoading.show({
+      template: '<i class="ion-spinner">Seducing...</i>',
+      noBackdrop: true
+    });
+  }
+
+  var hideLoading = function() {
+    $ionicLoading.hide();
+  }
+
+  showLoading();
+
 	// Test the factory here. 
 	FactoryFuck.Scrot();
   
@@ -48,7 +75,12 @@ angular.module('datespot.controllers', ['ionic', 'datespot.userservices', 'dates
 		  $scope.currentSpot = Recommendations.queue[0];
 		  
 		  console.log($scope.currentSpot);
-	});
+	})
+  .then(function(){
+    // turn loading off
+    hideLoading();
+    $scope.currentSpot.loaded = true;
+  });
 
 	
   // fired when we favorite / skip a date spot.
@@ -57,6 +89,7 @@ angular.module('datespot.controllers', ['ionic', 'datespot.userservices', 'dates
     if (bool) User.addSpotToShortlist($scope.currentSpot);
   	$scope.currentSpot.rated = bool;
   	$scope.currentSpot.hide = true;
+    // $scope.addCard();
 
     // Drop the current venue from the results list and load the next one.
 	Recommendations.nextVenue();
@@ -64,12 +97,13 @@ angular.module('datespot.controllers', ['ionic', 'datespot.userservices', 'dates
     $timeout(function() {
       // $timeout to allow animation to complete
       $scope.currentSpot = Recommendations.queue[0];
+      $scope.currentSpot.loaded = false;
 	  
 	  console.log('Loading Venue: ');
 	  console.log( $scope.currentSpot );
 	  
     }, 250);
-	
+
   }
 
   $scope.spotDestroyed = function(index) {
@@ -78,10 +112,10 @@ angular.module('datespot.controllers', ['ionic', 'datespot.userservices', 'dates
 
   $scope.spotSwiped = function(index) {
     console.log('sweetswipe');
-    //var newSpot = // new spot data
-    //$scope.spots.push(newSpot);
+    var newSpot = // new spot data
+    $scope.spots.push(newSpot);
     
-    //$scope.currentSpot.rated = true;
+    $scope.currentSpot.rated = true;
   };
 
   $scope.spotSwipedLeft = function(index) {
@@ -136,24 +170,24 @@ angular.module('datespot.controllers', ['ionic', 'datespot.userservices', 'dates
       name: "First Date",
       id: 1,
       tag: "She said 'yes.' Choose a place that'll impress.",
-      url: "/img/firstdate2.jpg"
+      url: "https://s3-us-west-1.amazonaws.com/datespot/occasions/firstdate2.jpg"
   }, {
       name: "Just drinks",
       id: 2,
       tag: "Hip spots to grab a drink with a date or friend.",
-      url: "/img/drinks.jpeg"
+      url: "https://s3-us-west-1.amazonaws.com/datespot/occasions/justdrinks.jpg"
   },
      {
       name: "Dinner date",
       id: 3,
       tag: "Suave restaurants, tasty treats and cheap eats.",
-      url: "/img/dinnerdate.jpg"
+      url: "https://s3-us-west-1.amazonaws.com/datespot/occasions/dinnerdate.jpg"
   },
     {
       name: "Brunch or coffee",
       id: 4,
       tag: "Casual coffee or brunch ideas.",
-      url: "/img/brunch.jpg"
+      url: "https://s3-us-west-1.amazonaws.com/datespot/occasions/M1LK-Sweetcorn-fritters-bacon-862x575.jpg"
     },
 
     {
@@ -174,7 +208,7 @@ angular.module('datespot.controllers', ['ionic', 'datespot.userservices', 'dates
       name: "Go all out",
       id: 7,
       tag: "Something informal with friends in pubs, bars or clubs.",
-      url: "/img/goallout.jpg"
+      url: "https://s3-us-west-1.amazonaws.com/datespot/occasions/goallout.jpg"
     },
     {
       name: "Something sunny",

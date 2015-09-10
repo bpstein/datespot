@@ -112,7 +112,7 @@
   font-family: 'Varela Round';
   font-size: 30px;
   color: #fff;
-  text-shadow: 1px 1px #444;
+  text-shadow: 2px 2px #444;
 }
 
 .occasionTagline {
@@ -131,7 +131,7 @@
 }
 
 .tabs-secondary {
-  margin-top: -30px;
+  margin-top: -10px;
   background-color: transparent;
   border: none;
 }
@@ -146,13 +146,14 @@
 }
 
 .spotInfo {
-  margin-top: 365px;
+  margin-top: 315px;
   bottom: 0;
-  height: 50px;
+  height: 80px;
   background-color: transparent;
   border: none;
   text-align: center;
   font-family: 'Varela Round';
+  word-wrap: word-break;
 }
 
 .ng-binding {
@@ -226,18 +227,30 @@
  
 td-cards {
     display: block;
-    margin-top: -25px;
-}
+/*    margin-top: -5px;
+*/}
  
 td-card {
     position: absolute;
     left: 50%;
     margin: 80px 0 40px -150px;
     width: 300px;
-    height: auto;
+    height: 200px;
     border: transparent;
     border-radius: 100%;
     background-color: transparent;
+}
+
+.swipe-card {
+  height: 200px;
+  margin-left: 25px;
+  margin-top: -10px;
+}
+
+.current-spot {
+  height: 250px;
+  width: 250px;
+  margin: 0 auto;
 }
  
 .td-card .title {

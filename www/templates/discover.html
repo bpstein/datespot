@@ -1,5 +1,9 @@
 <ion-view view-title="Discover">
-  
+  <ion-nav-buttons side="right">
+    <a class="button button-icon ion-bookmark" 
+      ng-href="#/shortlist">
+    </a>
+  </ion-nav-buttons>
  <!--  <ion-nav-title>
     <div class="padding"> -->
       <!-- Ben to update logo when ready -->
@@ -7,8 +11,8 @@
 <!--     </div>
   </ion-nav-title> -->
 
-  <ion-pane class="padding cardBackground" scroll="false" ng-controller="DiscoverCtrl">
-
+  <ion-pane class="padding cardBackground" scroll="false" ng-controller="DiscoverCtrl" has-header="true" has-tabs="true">
+    
     <td-cards>
       <td-card 
         id="td-card"
@@ -17,45 +21,58 @@
         on-swipe-left="spotSwipedLeft($index)"
         on-swipe-right="spotSwipedRight($index)"
         on-partial-swipe="spotPartialSwipe(amt)">
+        
 
         <div class="list card current-spot"
+
           ng-class="{skipped: currentSpot.rated == false,
                     shortlisted: currentSpot.rated == true}"
-          ng-show="currentSpot && !currentSpot.hide">
+                    ng-show="currentSpot && !currentSpot.hide">
 
-          <div class="item item-image" style="height:300px">
+
+
+          <div class="item item-image" 
+            style="height:300px">
+
             <div class="no-text overlayBox">
               <div class="noBox boxed"
                 on-swipe-left="spotSwipedLeft($index)">Skip it  
               </div>
             </div>
-            <img ng-src="{{ currentSpot.image_url }}" ng-style="{'height':'100%'}">
+          
+            <img ng-src="{{ currentSpot.image_url }}" 
+              ng-style="{'height':'100%'}"
+              ng-repeat="spot in spots track by 'vuid'">
             <div class="yes-text overlayBox">
               <div class="yesBox boxed" on-swipe-right="spotSwipedRight($index)">Yes!</div>
             </div>
 
-  <!--           <div class="item" style="height:100px">
+       <!--      <div class="item" style="height:100px">
               <h2>{{ currentSpot.name }}</h2>
               <p>{{ currentSpot.address }}</p>
             </div> -->
              
-
-
-
         
           </div>
 
         </div>
+
       </td-card>
+
     </td-cards>
       
     
 
     <!-- Secondary tabs for liking or skipping each venue -->
      <div class="item spotInfo" style="height:100px">
-              <h2>{{ currentSpot.name }}</h2>
-              <p>{{ currentSpot.address }}</p>
-            </div>
+        <span ng-hide="currentSpot.loaded">
+          <ion-spinner icon="ripple"></ion-spinner>
+        </span>
+        <h2>{{ currentSpot.name }}</h2>
+
+        <p>{{ currentSpot.address }}</p>
+        <p>This is a very nice venue. This is text that cunthead Grant needs to help me with.</P>
+      </div>
 
     <div class="item tabs tabs-secondary">
       <a class="tab-item" ng-click="sendFeedback(false)">
