@@ -48,9 +48,9 @@ angular.module('datespot.controllers', ['ionic', 'datespot.userservices', 'dates
   // Loading screen while app pulls data form server
   var showLoading = function() {
     $ionicLoading.show({
-      template: '<i class="ion-spinner">Seducing...</i>',
-      noBackdrop: true
-    });
+      templateUrl: 'templates/loading.html',
+      noBackdrop: false
+    })
   }
 
   var hideLoading = function() {
@@ -76,6 +76,7 @@ angular.module('datespot.controllers', ['ionic', 'datespot.userservices', 'dates
 		  
 		  console.log($scope.currentSpot);
 	})
+    
   .then(function(){
     // turn loading off
     hideLoading();
@@ -153,16 +154,10 @@ angular.module('datespot.controllers', ['ionic', 'datespot.userservices', 'dates
 })
 
 // CONTROLLER FOR DETAILS PAGE
-.controller('DetailCtrl', function($scope, Spots) {
+.controller('DetailCtrl', function($scope, User, Spots) {
   $scope.spot = Spots.get;
 })
 
-// CONTROLLER FOR BACK BUTTON
-// .controller('BackCtrl', function($scope, $ionicHistory) {
-//   $scope.myGoBack = function () {
-//     $ionicHistory.goBack();
-//   };
-// })
 
 // CONTROLLER FOR LISTING OF OCCASION TYPES ON SEACH VIEW
 .controller('OccasionCtrl', function($scope, $ionicPopup) {

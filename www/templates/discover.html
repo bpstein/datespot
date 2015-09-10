@@ -42,7 +42,8 @@
           
             <img ng-src="{{ currentSpot.image_url }}" 
               ng-style="{'height':'100%'}"
-              ng-repeat="spot in spots track by 'vuid'">
+              ng-repeat="spot in spots track by 'vuid'"
+              class="swipeImage">
             <div class="yes-text overlayBox">
               <div class="yesBox boxed" on-swipe-right="spotSwipedRight($index)">Yes!</div>
             </div>
@@ -66,7 +67,7 @@
     <!-- Secondary tabs for liking or skipping each venue -->
      <div class="item spotInfo" style="height:100px">
         <span ng-hide="currentSpot.loaded">
-          <ion-spinner icon="ripple"></ion-spinner>
+          
         </span>
         <h2>{{ currentSpot.name }}</h2>
 

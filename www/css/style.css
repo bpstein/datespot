@@ -48,6 +48,48 @@
   background-color: #444;
 }
 
+/*************************
+/* LOADING PAGE STYLING */
+/************************/
+
+.loadingPage {
+  background-color: #f3f3f3;
+}
+
+.loadingMessage {
+  font-size: 20px;
+  margin-top: 90px;
+  color: #444;
+   -webkit-box-ordinal-group: 1;
+    -moz-box-ordinal-group: 1;
+    -webkit-order: 0;
+    -ms-flex-order: 0;
+    order: 0;
+    -webkit-box-flex: 0;
+    -moz-box-flex: 0;
+    -webkit-flex: 0 1 auto;
+    -ms-flex: 0 1 auto;
+    flex: 0 1 auto;
+    -webkit-align-self: stretch;
+    -ms-flex-item-align: stretch;
+    align-self: stretch;
+}
+
+.ripple {
+  width: 88px;
+  height: 88px;
+  stroke: #444;
+  fill: #444;
+  background-color: rgba(240, 50, 50, 0.7) !important;
+}
+
+.spinner svg {
+  width: 45% !important;
+  height: 155px !important;
+}
+
+
+
 /***********************
 /* SEARCH TAB STYLING */
 /**********************/
@@ -143,6 +185,13 @@
 .current-spot, .list .card {
   border-radius: 100%;
   margin-top: -10px;
+  background: no-repeat center;
+  background-size: cover!important;
+}
+
+.swipeImage {
+  background: no-repeat center;
+  background-size: cover!important;
 }
 
 .spotInfo {
