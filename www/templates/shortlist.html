@@ -9,7 +9,8 @@
       <ion-item 
         class="item-remove-animate item-icon-right" 
         ng-repeat="spot in shortlist"
-        type="item-text-wrap" 
+        type="item-text-wrap"
+        href="#/shortlist/{{spot}}" 
         >
         <!-- change ng-repeat to spot in spots for static version -->
         <div class="shortlistImage"
@@ -19,7 +20,7 @@
             <h2 class="shortlistHeader">{{spot.name}}</h2>
             <h3 class="shortlistAddress">{{spot.address}}</h3>
           <ion-footer-bar class="shortlistTagline">
-            <p>{{spot.teaser}}</p>
+            <div class="textWrapper">{{spot.description}}</div>
           </ion-footer-bar>
         </div>
 

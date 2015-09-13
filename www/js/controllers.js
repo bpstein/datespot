@@ -39,7 +39,6 @@ angular.module('datespot.controllers', ['ionic', 'datespot.userservices', 'dates
       $state.go('shortlist');
     };
   }
-
 })
 
 // CONTROLLER FOR THE DISCOVER/SWIPE VIEW
@@ -76,7 +75,7 @@ angular.module('datespot.controllers', ['ionic', 'datespot.userservices', 'dates
 		  
 		  console.log($scope.currentSpot);
 	})
-    
+
   .then(function(){
     // turn loading off
     hideLoading();
@@ -141,6 +140,7 @@ angular.module('datespot.controllers', ['ionic', 'datespot.userservices', 'dates
   //
   //$scope.$on('$ionicView.enter', function(e) {
   //});
+
   $scope.shortlist = User.shortlist;
 
   // $scope.spots = Spots.all();
@@ -206,7 +206,7 @@ angular.module('datespot.controllers', ['ionic', 'datespot.userservices', 'dates
       url: "https://s3-us-west-1.amazonaws.com/datespot/occasions/goallout.jpg"
     },
     {
-      name: "Something sunny",
+      name: "Fun in the sun",
       id: 8,
       tag: "Something informal with friends in pubs, bars or clubs.",
       url: "/img/somethingsunny.jpg"
@@ -216,17 +216,17 @@ angular.module('datespot.controllers', ['ionic', 'datespot.userservices', 'dates
       id: 9,
       tag: "Something informal with friends in pubs, bars or clubs.",
       url: "/img/cheapeats.png"
-    },
-    {
-      name: "Hen night",
-      id: 10,
-      tag: "Something informal with friends in pubs, bars or clubs.",
-      url: "/img/hennight.jpg"
-    },
-    {
-      name: "stag night",
-      id: 11,
-      tag: "Something informal with friends in pubs, bars or clubs.",
-      url: "/img/stagnight.jpeg"
+    // },
+    // {
+    //   name: "Hen night",
+    //   id: 10,
+    //   tag: "Something informal with friends in pubs, bars or clubs.",
+    //   url: "/img/hennight.jpg"
+    // },
+    // {
+    //   name: "stag night",
+    //   id: 11,
+    //   tag: "Something informal with friends in pubs, bars or clubs.",
+    //   url: "/img/stagnight.jpeg"
     }];
 });
