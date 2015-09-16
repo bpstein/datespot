@@ -1,17 +1,23 @@
 <ion-view view-title="Shortlist">
+  
+  <!-- NAVIGATION STRIP -->
   <ion-nav-buttons side="right">
     <a class="button button-icon ion-map" 
       ng-href="#/map">
     </a>
   </ion-nav-buttons>
+  
+  <!-- SHORTLIST -->
   <ion-content ng-controller="ShortlistCtrl">
     <ion-list>
       <ion-item 
         class="item-remove-animate item-icon-right" 
         ng-repeat="spot in shortlist"
         type="item-text-wrap"
-        href="#/shortlist/{{spot}}" 
+        href="#/spots/{{spot.vuid}}" 
         >
+
+        <!-- EACH DATESPOT IN THE SHORTLIST -->
         <!-- change ng-repeat to spot in spots for static version -->
         <div class="shortlistImage"
           style="background-image: url({{spot.image_url}})">
@@ -19,11 +25,12 @@
         <div class="shortlistInfo" style="background-image: url({{spot.image_url}})">
             <h2 class="shortlistHeader">{{spot.name}}</h2>
             <h3 class="shortlistAddress">{{spot.address}}</h3>
-          <ion-footer-bar class="shortlistTagline">
+          <!-- <ion-footer-bar class="shortlistTagline">
             <div class="textWrapper">{{spot.description}}</div>
-          </ion-footer-bar>
+          </ion-footer-bar> -->
         </div>
 
+        <!-- SWIPE OPTIONS TO DELETE OR SHARE EACH DATESPOT -->
         <i class="icon ion-chevron-right icon-accessory"></i>
 
         <ion-option-button class="button-assertive" 

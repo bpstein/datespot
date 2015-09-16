@@ -38,8 +38,17 @@ angular.module('datespot', ['ionic', 'datespot.controllers'])
   // Each state's controller can be found in controllers.js.
   $stateProvider
 
-
-  // Set up an abstract state for the tabs directive:
+  // 
+  .state('splash', {
+    url: '/',
+    templateUrl: 'templates/splash.html',
+    controller: 'SplashCtrl',
+    onEnter: function($state, User) {
+      User.checkSession().then(function(hasSession) {
+        if (hasSession) $state.go('tab.discover');
+      });
+    }
+  })
 
   .state('search', {
     url: '/search',
@@ -60,7 +69,7 @@ angular.module('datespot', ['ionic', 'datespot.controllers'])
   })
 
   .state('detail', {
-      url: '/detail',
+      url: '/spots/:spotVuid',
       templateUrl: 'templates/detail.html',
       controller: 'DetailCtrl'
   });

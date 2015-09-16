@@ -10,6 +10,8 @@
  
 angular.module('datespot.controllers', ['ionic', 'datespot.userservices', 'datespot.jsonservices', 'ionic.contrib.ui.tinderCards']  )
 
+
+
 // CONTROLLER FOR TABS NAVIGATION AND SHORTLIST COUNTER
 .controller('TabsCtrl', function($scope, User) {
   $scope.enteringShortlist = function() {
@@ -19,6 +21,21 @@ angular.module('datespot.controllers', ['ionic', 'datespot.userservices', 'dates
   $scope.shortlistCount = User.shortlistCount;
 })
 
+
+
+// CONTROLLER FOR THE SPLASH PAGE 
+.controller('SplashCtrl', function($scope, $state, User) {
+  $scope.submitForm = function (username, signingUp) {
+    User.auth(username, signingUp).then(function(){
+      $state.go('discover');
+    }, function() {
+      alert('Hmmm... try another username.');
+    });
+  }
+})
+
+
+
 // CONTROLLER FOR NAVIGATION BUTTONS
 .controller('ButtonCtrl', function($scope, User) {
   $scope.rightButtons = [{
@@ -27,6 +44,8 @@ angular.module('datespot.controllers', ['ionic', 'datespot.userservices', 'dates
     tap: function(e) {}
   }];
 })
+
+
 
 // CONTROLLER FOR THE SEARCH VIEW
 .controller('SearchCtrl', function($scope, User) {
@@ -41,6 +60,8 @@ angular.module('datespot.controllers', ['ionic', 'datespot.userservices', 'dates
   }
 })
 
+
+
 // CONTROLLER FOR THE DISCOVER/SWIPE VIEW
 .controller('DiscoverCtrl', function($scope, $timeout, $ionicLoading, User, Recommendations, FactoryFuck, TDCardDelegate) {
 	
@@ -48,7 +69,7 @@ angular.module('datespot.controllers', ['ionic', 'datespot.userservices', 'dates
   var showLoading = function() {
     $ionicLoading.show({
       templateUrl: 'templates/loading.html',
-      noBackdrop: false
+      noBackdrop: true
     })
   }
 
@@ -131,6 +152,8 @@ angular.module('datespot.controllers', ['ionic', 'datespot.userservices', 'dates
   };
 })
 
+
+
 // CONTROLLER FOR SHORTLIST VIEW (PREVIOUSLY FAVORITES)
 .controller('ShortlistCtrl', function($scope, User) {
   // With the new view caching in Ionic, Controllers are only called
@@ -143,20 +166,28 @@ angular.module('datespot.controllers', ['ionic', 'datespot.userservices', 'dates
 
   $scope.shortlist = User.shortlist;
 
-  // $scope.spots = Spots.all();
-  // $scope.remove = function(spot) {
-  //   Spots.remove(spot);
-  // };
 
   $scope.removeSpot = function(spot, index) {
     User.removeSpotFromShortlist(spot, index);
   }
+
+  // $scope.spots = Spots.all();
+
+  // $scope.remove = function(spot) {
+  //   Spots.remove(spot);
+  // };
+
 })
 
+
+
 // CONTROLLER FOR DETAILS PAGE
-.controller('DetailCtrl', function($scope, User, Spots) {
-  $scope.spot = Spots.get;
+.controller('DetailCtrl', function($scope, $stateParams, User, Spots) {
+  $scope.spot = Spots.get($stateParams.spotVuid);
+
+  // $scope.spots = Spots.all();
 })
+
 
 
 // CONTROLLER FOR LISTING OF OCCASION TYPES ON SEACH VIEW
@@ -167,7 +198,7 @@ angular.module('datespot.controllers', ['ionic', 'datespot.userservices', 'dates
       tag: "She said 'yes.' Choose a place that'll impress.",
       url: "https://s3-us-west-1.amazonaws.com/datespot/occasions/firstdate2.jpg"
   }, {
-      name: "Just drinks",
+      name: "Fancy a drink?",
       id: 2,
       tag: "Hip spots to grab a drink with a date or friend.",
       url: "https://s3-us-west-1.amazonaws.com/datespot/occasions/justdrinks.jpg"
@@ -193,7 +224,7 @@ angular.module('datespot.controllers', ['ionic', 'datespot.userservices', 'dates
     },
 
     {
-      name: "Get weird",
+      name: "Let's get weird",
       id: 6,
       tag: "Something informal with friends in pubs, bars or clubs.",
       url: "img/letsgetweird.png"

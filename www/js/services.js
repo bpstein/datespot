@@ -62,10 +62,30 @@ angular.module('datespot.userservices', [])
 		}
 	}
 		
-}); // notice the termination here, as we're terminating the factory AND the module! Extra ';'
+}) // notice the termination here, as we're terminating the factory AND the module! Extra ';'
 
+.factory('Spots', function() {
+	var spots = [{
 
+	}];
 
+	return {
+		all: function() {
+			return spots;
+		},
+		remove: function(spot) {
+			spots.splice(spots.indexOf(spot), 1);
+		},
+		get: function(spotVuid) {
+			for (var i = 0; i < spots.length; i++) {
+				if (spots[i].vuid === parseInt(spotVuid)) {
+					return spots[i];
+				}
+			}
+			return null;
+		}
+	};
+});
 
 /* DateSpot Angular Module *******************************************
  * 
@@ -142,6 +162,11 @@ angular.module('datespot.jsonservices', [])
   return o;
   
 });
+
+
+
+
+
 
 /*
 angular.module('datespot.jsonservices', [])

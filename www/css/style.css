@@ -19,7 +19,43 @@
 }
 
 .scroll-content {
-  background-color: #f3f3f3;
+  background-color: #000;
+}
+
+/************************
+/* SPLASH PAGE STYLING */
+/***********************/
+
+.splash-page {
+  background:url(../img/splash-bkg.jpg);
+  background-size: cover;
+  background-repeat: no-repeat;
+}
+
+.splash-page .card {
+  margin-top:40px;
+}
+
+.splash-page .logo h1 {
+  margin-top:30px;
+  text-align:center;
+  color:#fff !important;
+  font-family: Verdana, Geneva, sans-serif;
+  font-weight:bold;
+  letter-spacing: -3px;
+  font-size:42px;
+}
+
+.splash-page .signup-opt {
+  color:#fff;
+  padding:15px;
+  margin-top:20px;
+  font-weight: bold;
+  cursor:pointer;
+}
+
+.splash-page .action-button {
+  font-weight: bolder;
 }
 
 /*****************
@@ -27,16 +63,16 @@
 /****************/
 
 .tab-nav {
-  background-color: #000;
+  background-color: #fff;
   border: none;
 }
 
 .tab-nav-tabs {
-  background-color:#000 !important;
+  background-color:#fff !important;
 }
 
 .tabStyle, .tab-item {
-      background-color:#000  !important;
+      background-color: transparent  !important;
     }
 
 .tab-item-active {
@@ -45,7 +81,7 @@
 }
 
 .tabs-icon {
-  background-color: #444;
+  background-color: #222;
 }
 
 /*************************
@@ -53,13 +89,13 @@
 /************************/
 
 .loadingPage {
-  background-color: #f3f3f3;
+  background-color: #FFF;
 }
 
 .loadingMessage {
-  font-size: 20px;
+  font-size: 16px;
   margin-top: 90px;
-  color: #444;
+  color: #f3f3f3;
    -webkit-box-ordinal-group: 1;
     -moz-box-ordinal-group: 1;
     -webkit-order: 0;
@@ -78,17 +114,15 @@
 .ripple {
   width: 88px;
   height: 88px;
-  stroke: #444;
-  fill: #444;
-  background-color: rgba(240, 50, 50, 0.7) !important;
+  stroke: #FFF;
+  fill: #fff;
+  background-color: #fff !important;
 }
 
 .spinner svg {
   width: 45% !important;
-  height: 155px !important;
+  height: 105px !important;
 }
-
-
 
 /***********************
 /* SEARCH TAB STYLING */
@@ -154,7 +188,7 @@
   font-family: 'Varela Round';
   font-size: 30px;
   color: #fff;
-  text-shadow: 2px 2px #444;
+  text-shadow: 2px 2px #222;
 }
 
 .occasionTagline {
@@ -163,6 +197,8 @@
   color: #fff;
   word-wrap: break-word;
 }
+
+
 
 /**************************
 /* DISCOVER PAGE STYLING */
@@ -184,8 +220,7 @@
 }
 
 .current-spot, .list .card {
-  border-radius: 100%;
-  margin-top: -10px;
+  border-radius: 5%;
   background: no-repeat center;
   background-size: cover!important;
 }
@@ -304,6 +339,7 @@ td-card {
   -webkit-background-size: cover;
   -moz-background-size: cover;
   -o-background-size: cover;
+  height: 300px;
 }
 
 .current-spot {
@@ -410,9 +446,9 @@ td-card img {
   -webkit-background-size: cover;
   -moz-background-size: cover;
   -o-background-size: cover;
-  height: 255px;
+  height: 240px;
   width: 400px;
-  border: none;
+  border: black;
 }
 
 .shortlistInfo:before {
@@ -441,8 +477,8 @@ td-card img {
   font-family: 'Varela Round';
   font-size: 30px;
   position: relative;
-  padding-top: 135px;
-  text-shadow: 1px 1px #444;
+  padding-top: 170px;
+  text-shadow: 1px 1px #222;
   z-index: 2
 }
 
@@ -451,14 +487,14 @@ td-card img {
   font-family: 'Varela Round';
   font-size: 30px;
   position: relative;
-  text-shadow: 1px 1px #444;
+  text-shadow: 1px 1px #222;
   z-index: 2;
 }
 
 .shortlistTagline, .ion-footer-bar {
   font-family: 'Varela Round';
   background-color: #f3f3f3;
-  height: 60px;
+  height: 0px;
   width: 400px;
   padding-left: 15px;
   padding-right: 15px;
@@ -482,6 +518,8 @@ td-card img {
 /*************************
 /* DETAILS PAGE STYLING */
 /************************/
-
+.detailsPageTest {
+  color: #f3f3f3;
+}
 
 

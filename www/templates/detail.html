@@ -37,7 +37,7 @@
   </ion-content>
 </ion-view> -->
 
-<ion-nav-bar class="bar-dark nav-title-slide-ios7">
+<!-- <ion-nav-bar class="bar-dark nav-title-slide-ios7">
   <ion-nav-buttons side="right">
     <a class="button button-icon navicon" 
       ng-href="#/settings">
@@ -51,6 +51,22 @@
       <h2>{{spot.name}}</h2>
       Test test 
       <h3>{{spot.address}}</h3>
+  </ion-content>
+</ion-view> -->
+
+<ion-view view-title="{{spot.name}}">
+  ng-repeat="spot in spots"
+  
+  <ion-nav-buttons side="right">
+    <a class="button button-icon ion-map" 
+      ng-href="#/map">
+    </a>
+  </ion-nav-buttons>
+  <ion-content>
+    <div class="detailsPageTest">
+  This is a test. <br />
+  Details page is working.
+    </div>
   </ion-content>
 </ion-view>
 
