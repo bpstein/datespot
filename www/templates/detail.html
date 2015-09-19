@@ -4,69 +4,49 @@
   The FriendsCtrl pulls data from the Friends service (service.js)
   The Friends service returns an array of friend data
 -->
-<!-- <ion-nav-bar ng-controller="BackCtrl" class="bar-dark nav-title-slide-ios7">
-  <ion-nav-back-button 
-    class="button-clear"
-    ng-click="myGoBack()">
-    <i class="ion-arrow-left-c" href="#/tab/discover"></i>Back
-  </ion-nav-back-button>
-</ion-nav-bar>
 
-<ion-view view-title="{{spot.name}}" class="slider-view">
-  <ion-content class="padding" scroll="true">
-
-    <ion-slide-box show-pager="true">
-      <ion-slide ng-repeat="i in [1,2,3,4,5]">
-        <div class="list card"
-          style="background-image: https://s3-us-west-1.amazonaws.com/datespot/occasions/drinks.jpeg">
-        </div>
-      </ion-slide>
-    </ion-slide-box>
-
-       <div class="item item-body">
-      <h2>{{spot.name}}</h2>
-      <h3>{{spot.address}}</h3>
-      <p>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book.</p>
-      <p>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book.</p>
-    </div>
-
-    <img ng-src="{{spot.face}}" style="width: 64px; height: 64px">
-    <p>
-      {{spot.lastText}}
-    </p>
-  </ion-content>
-</ion-view> -->
-
-<!-- <ion-nav-bar class="bar-dark nav-title-slide-ios7">
-  <ion-nav-buttons side="right">
-    <a class="button button-icon navicon" 
-      ng-href="#/settings">
-    </a>
-  </ion-nav-buttons>
-</ion-nav-bar>
-
-<ion-view ng-repeat="spot in shortlist" view-title="{{ spot.name }}">
-  <ion-content class="padding" scroll="true">
-    <div class="item item-body">
-      <h2>{{spot.name}}</h2>
-      Test test 
-      <h3>{{spot.address}}</h3>
-  </ion-content>
-</ion-view> -->
-
-<ion-view view-title="{{spot.name}}">
-  ng-repeat="spot in spots"
+<ion-view view-title="SPOT NAME HERE"
+  class="slider-view">
+  ng-repeat="spot in spots">
   
   <ion-nav-buttons side="right">
     <a class="button button-icon ion-map" 
       ng-href="#/map">
     </a>
   </ion-nav-buttons>
-  <ion-content>
-    <div class="detailsPageTest">
-  This is a test. <br />
-  Details page is working.
+
+  <ion-content scroll="true">
+    <ion-slide-box show-pager="true">
+      <ion-slide ng-repeat="i in [1,2,3,4,5]">
+        <div class="sliderCard"
+          style="background-image: https://s3-us-west-1.amazonaws.com/datespot/occasions/drinks.jpeg">
+
+        </div>
+      </ion-slide>
+    </ion-slide-box>
+    
+
+    <div class="row spotDetailHeader"> 
+      <div class="col detailsPageTest">
+        <h2 class="spotDetailName">Spot name</h2>
+        <h3 class="spotDetailAddress">Spot address</h3>
+      </div>
     </div>
+    
+    <div class="row spotDetailStrip">
+      <h5 class="padding-left col col-80 spotDetailOccasion">First Date</h5>
+      <h5 class="padding-right col col-20 spotDetailPrice">$$$$</h5>
+    </div>
+
+    <div class="padding row col detailsPageTest">
+      <p class="spotDetailBlurb">Spot blurb goes here. Spot blurb goes here.Spot blurb goes here.Spot blurb goes here.Spot blurb goes here.Spot blurb goes here.Spot blurb goes here.Spot blurb goes here.Spot blurb goes here.Spot blurb goes here.Spot blurb goes here.</p>
+    </div>
+
+    <div class="padding row col detailsPageTest">
+      <p class="spotDetailDescription">Spot description goes here. Spot description goes here.Spot description goes here.Spot description goes here.Spot description goes here.Spot description goes here.Spot description goes here.Spot description goes here.Spot description goes here.Spot description goes here.Spot description goes here.Spot description goes here.Spot description goes here.Spot description goes here.Spot description goes here.Spot description goes here.Spot description goes here.</p>
+    </div>
+
   </ion-content>
 </ion-view>
+
 

@@ -1,17 +1,55 @@
-<ion-view view-title="Discover">
+<ion-view view-title="Discover" class="discover-page">
   <ion-nav-buttons side="right">
     <a class="button button-icon ion-bookmark" 
-      ng-href="#/shortlist">
+      ng-href="#/shortlist"
+      badge="shortlistCount()"
+      badge-style="badge-assertive"
+      on-select="enteringShortlist"
+      on-deselect="leavingShortlist">
     </a>
   </ion-nav-buttons>
- <!--  <ion-nav-title>
-    <div class="padding"> -->
-      <!-- Ben to update logo when ready -->
-      <!-- <img height="30px" src="img/logo.png"> -->
-<!--     </div>
-  </ion-nav-title> -->
+  
+  <ion-content scroll="false">
 
-  <ion-pane class="padding cardBackground" scroll="false" ng-controller="DiscoverCtrl" has-header="true" has-tabs="true">
+    <td-cards>
+
+      <td-card id="td-card"
+       class="list card current-spot"
+        ng-class="{skipped: currentSpot.rated == false,
+                    favorited: currentSpot.rated == true}"
+        ng-show="currentSpot && !currentSpot.hide">
+
+        <div class="item item-image">
+          <img ng-src="{{ currentSpot.image_url }}"
+          href="#/spots/{{spot.vuid}}">
+        </div>
+
+        <div class="item">
+          <h2>{{ currentSpot.title }}</h2>
+          <p>{{ currentSpot.description }}</p>
+        </div>
+
+        <div class="item tabs tabs-secondary tabs-icon-left">
+          <a class="tab-item" ng-click="sendFeedback(false)">
+            <i class="icon ion-close"></i>
+          </a>
+          <a class="tab-item" ng-click="sendFeedback(true)">
+            <i class="icon ion-heart"></i>
+          </a>
+        </div>
+      </td-card>
+
+    </td-cards>
+
+ <!--    <div class="img-lookahead">
+      <img ng-src="{{ nextAlbumImg() }}"/>
+    </div> -->
+  </ion-content>
+</ion-view>
+
+
+
+<!--   <ion-pane class="padding cardBackground" scroll="false" ng-controller="DiscoverCtrl" has-header="true" has-tabs="true">
     
     <td-cards>
       <td-card 
@@ -50,11 +88,7 @@
               <div class="yesBox boxed" on-swipe-right="spotSwipedRight($index)">Yes!</div>
             </div>
 
-       <!--      <div class="item" style="height:100px">
-              <h2>{{ currentSpot.name }}</h2>
-              <p>{{ currentSpot.address }}</p>
-            </div> -->
-             
+            
         
           </div>
 
@@ -64,20 +98,17 @@
 
     </td-cards>
       
-    
+    <div class="item spotInfo" style="height:100px">
+              <span ng-hide="currentSpot.loaded"></span>
+              <h2>{{ currentSpot.name }}</h2>
+
+        <p>{{ currentSpot.description}}</P>
+      </div> -->
 
     <!-- Secondary tabs for liking or skipping each venue -->
-     <div class="item spotInfo" style="height:100px">
-        <span ng-hide="currentSpot.loaded">
-          
-        </span>
-        <h2>{{ currentSpot.name }}</h2>
 
-        <p>{{ currentSpot.address }}</p>
-        <p>{{ currentSpot.description}}</P>
-      </div>
 
-    <div class="item tabs tabs-secondary">
+<!--     <div class="item tabs tabs-secondary">
       <a class="tab-item" ng-click="sendFeedback(false)">
         <i class="icon dark ion-close"></i>
       </a>
@@ -87,9 +118,16 @@
     </div>
   </ion-pane>
   </ion-pane>
-</ion-view>
+</ion-view> -->
 
 
+
+ <!--  <ion-nav-title>
+    <div class="padding"> -->
+      <!-- Ben to update logo when ready -->
+      <!-- <img height="30px" src="img/logo.png"> -->
+<!--     </div>
+  </ion-nav-title> -->
 
 
 

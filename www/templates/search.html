@@ -19,8 +19,9 @@
           href="#/discover"
           ng-repeat="item in items"
           style="background-image: url({{item.url}})">
-          <div class="occasionInfo">
-            <span class="occasionSpan"><h1 class="occasionHeader">{{item.name}}</h1></span>
+          <div class="col occasionInfo">
+            <span class="occasionSpan">
+              <h1 class="occasionHeader">{{item.name}}</h1></span>
             <p class="occasionTagline">{{item.tag}}</p>
           </div>
         </ion-item>

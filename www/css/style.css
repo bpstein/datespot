@@ -93,8 +93,8 @@
 }
 
 .loadingMessage {
-  font-size: 16px;
-  margin-top: 90px;
+  font-size: 14px;
+  margin-top: 60px;
   color: #f3f3f3;
    -webkit-box-ordinal-group: 1;
     -moz-box-ordinal-group: 1;
@@ -163,8 +163,8 @@
 }
 
 .occasionInfo {
-  height: 150px; 
-  line-height: 150px;
+  height: 155px; 
+  line-height: 155px;
   padding: 0px;
   text-align: center;
   background-size: cover;
@@ -203,9 +203,97 @@
 /**************************
 /* DISCOVER PAGE STYLING */
 /*************************/
+.discover-page {
 
-.cardBackground {
-  background-color: #f3f3f3;
+}
+
+.discover-page .current-song {
+  -webkit-transform: scale(1);
+  -ms-transform: scale(1);
+  transform: scale(1);
+  opacity: 1;
+
+  -webkit-transition:all cubic-bezier(0.420, 0.000, 1.000, 1.000) 0.1s;
+  transition:all cubic-bezier(0.420, 0.000, 1.000, 1.000) 0.1s;
+}
+
+.discover-page .current-song .item-image {
+  max-height:300px;
+  overflow:hidden;
+}
+
+@media screen and (max-height: 600px) {
+  .discover-page .current-song .item-image {
+    max-height:200px;
+    overflow:hidden;
+  }
+}
+
+.discover-page .current-song.favorited.ng-hide {
+  -webkit-transform: translateX(1000px) rotate(50deg);
+  -ms-transform: translateX(1000px) rotate(50deg);
+  transform: translateX(1000px) rotate(50deg);
+  opacity:0;
+}
+
+.discover-page .current-song.skipped.ng-hide {
+  -webkit-transform: translateX(-1000px) rotate(-50deg);
+  -ms-transform: translateX(-1000px) rotate(-50deg);
+  transform: translateX(-1000px) rotate(-50deg);
+  opacity:0;
+}
+
+.discover-page .current-song.ng-hide-add {
+  -webkit-transition:all cubic-bezier(0.420, 0.000, 1.000, 1.000) 0.3s;
+  transition:all cubic-bezier(0.420, 0.000, 1.000, 1.000) 0.3s;
+  display:block!important;
+}
+
+.discover-page .current-song.ng-hide-remove {
+  -webkit-transform: scale(0.7) translateX(0px) rotate(0deg);
+  -ms-transform: scale(0.7) translateX(0px) rotate(0deg);
+  transform: scale(0.7) translateX(0px) rotate(0deg);
+  opacity: 0;
+}
+
+
+.discover-page .img-lookahead img {
+  height:1px;
+  width:1px;
+  opacity:0.01;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+/*.cardBackground {
+  background-color: #222;
   border: none;
 }
 
@@ -220,21 +308,31 @@
 }
 
 .current-spot, .list .card {
-  border-radius: 5%;
+  border-radius: 10px 10px 0px 0px;
   background: no-repeat center;
+  background-color: ;
   background-size: cover!important;
 }
 
 .swipeImage {
+  width: auto;
+  height: 320px;
   background: no-repeat center;
   background-size: cover!important;
+  -webkit-background-size: cover!important;
+  -webkit-background-size: cover;
+  -moz-background-size: cover;
+  -o-background-size: cover;
 }
 
 .spotInfo {
-  margin-top: 315px;
+  margin-top: 388px;
+  margin-left: -1px;
   bottom: 0;
   height: 80px;
-  background-color: transparent;
+  width: 382px;
+  background-color: #f3f3f3;
+  border-radius: 0px 0px 10px 10px; 
   border: none;
   text-align: center;
   font-family: 'Varela Round';
@@ -243,7 +341,7 @@
 
 .ng-binding {
   font-family: 'Varela Round';
-}
+}*/
 
 /*.cardCanvas, .cardBack {
   background-color: #444;
@@ -256,7 +354,7 @@
   opacity: 1;
   -webkit-transition:all cubic-bezier(0.420, 0.000, 1.000, 1.000) 0.1s;
   transition:all cubic-bezier(0.420, 0.000, 1.000, 1.000) 0.1s;
-}*/
+}
 
 .tab-item .activated {
   background-color: #000;
@@ -274,7 +372,7 @@
   }
 }
 
-/*.discover-page .current-spot.shortlisted.ng-hide {
+.discover-page .current-spot.shortlisted.ng-hide {
   -webkit-transform: translateX(1000px) rotate(50deg);
   -ms-transform: translateX(1000px) rotate(50deg);
   transform: translateX(1000px) rotate(50deg);
@@ -310,24 +408,23 @@
 
 /* Card styling */
  
-td-cards {
-    display: block;
+/*td-cards {
+    display: block;*/
 /*    margin-top: -5px;
-*/}
+*//*}*/
  
-td-card {
+/*td-card {
     position: absolute;
     left: 50%;
-    margin: 80px 0 40px -150px;
+    margin: 80px 30px 20px -215px;
     width: 300px;
-    height: 200px;
+    height: 280px;
     border: transparent;
-    border-radius: 100%;
     background-color: transparent;
 }
 
 .swipe-card {
-  height: 200px;
+  height: 380px;
   margin-left: 25px;
   margin-top: -10px;
 }
@@ -339,13 +436,13 @@ td-card {
   -webkit-background-size: cover;
   -moz-background-size: cover;
   -o-background-size: cover;
-  height: 300px;
 }
 
 .current-spot {
-  height: 250px;
-  width: 250px;
+  height: 320px;
+  width: 380px;
   margin: 0 auto;
+  background-color: #f3f3f3;
 }
  
 .td-card .title {
@@ -363,12 +460,13 @@ td-card .image {
 td-card img {
     height: 258px;
     width: 100%;
-    border-radius: 6px;
-}
+    border-radius: 10px 10px 0px 0px;
+    border-color: #f3f3f3;
+}*/
  
 /* Overlay styling*/
  
-.overlayBox {
+/*.overlayBox {
     position: absolute;
     left: 50%;
     height: 98%;
@@ -395,9 +493,9 @@ td-card img {
     border: 2px solid #00FF00;
     color: rgb(0, 256, 0);
     -webkit-transform: rotate(-25deg);
-}
+}*/
  
-.no-text {
+/*.no-text {
     background-color: rgba(256,0,0,0.2);
 }
  
@@ -412,9 +510,9 @@ td-card img {
     -webkit-transition: 0.2s opacity linear;
     transition: 0.2s opacity linear;
     opacity: 0;
-}
+}*/
 
-@-webkit-keyframes bounceIn {
+/*@-webkit-keyframes bounceIn {
   0% {
     -webkit-transform: scale(0,0);
   }
@@ -431,7 +529,7 @@ td-card img {
 }
 .td-card.pop-in {
   -webkit-animation: bounceIn 0.4s ease-out;
-}
+}*/
 
 
 /***************************
@@ -520,6 +618,77 @@ td-card img {
 /************************/
 .detailsPageTest {
   color: #f3f3f3;
+  font-family: 'Varela Round';
 }
 
+.slider-view {
+}
 
+.slider-pager {
+  top: 0;
+  margin-top: 20px;
+}
+
+.sliderCard {
+  height: 350px;
+  background-color: #FFF;
+  z-index: ;
+}
+
+.spotDetailHeader {
+  margin-top: -75px;
+  z-index: 1;
+  position: absolute;
+}
+
+.spotDetailName, 
+.spotDetailAddress, 
+.spotDetailCategory, 
+.spotDetailBlurb  
+.spotDetailOccasion 
+.spotDetailPrice 
+.spotDetailStrip {
+  font-family: 'Varela Round';
+  font-size: 22px;
+  color: red;
+  background: ;
+}
+
+.spotDetailStrip {
+  background-color: #f3f3f3;
+  font-family: 'Varela Round';
+  padding-bottom: 0px;
+  margin-bottom: 15px;
+}
+
+.spotDetailAddress {
+  font-size: 16px;
+}
+
+.spotDetailBlurb, .spotDetailDescription {
+  font-size: 14px;
+}
+
+.spotDetailBlurb {
+  font-weight: bold;
+}
+
+.spotDetailDescription, {
+  margin-top: 15px;
+}
+
+.spotDetailCategory {
+  font-size: 14px;
+  color: #444;
+}
+
+.spotDetailPrice, {
+  text-align: right;
+  color: #444;
+}
+
+.spotDetailOccasion, {
+  text-align: left;
+  font-family: 'Varela Round';
+  color: #444;
+}

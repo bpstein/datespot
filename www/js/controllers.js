@@ -10,19 +10,6 @@
  
 angular.module('datespot.controllers', ['ionic', 'datespot.userservices', 'datespot.jsonservices', 'ionic.contrib.ui.tinderCards']  )
 
-
-
-// CONTROLLER FOR TABS NAVIGATION AND SHORTLIST COUNTER
-.controller('TabsCtrl', function($scope, User) {
-  $scope.enteringShortlist = function() {
-    User.newShortlist = 0;
-  }
-
-  $scope.shortlistCount = User.shortlistCount;
-})
-
-
-
 // CONTROLLER FOR THE SPLASH PAGE 
 .controller('SplashCtrl', function($scope, $state, User) {
   $scope.submitForm = function (username, signingUp) {
@@ -64,7 +51,17 @@ angular.module('datespot.controllers', ['ionic', 'datespot.userservices', 'dates
 
 // CONTROLLER FOR THE DISCOVER/SWIPE VIEW
 .controller('DiscoverCtrl', function($scope, $timeout, $ionicLoading, User, Recommendations, FactoryFuck, TDCardDelegate) {
-	
+
+  $scope.shortlistCount = User.shortlistCount;
+
+  $scope.enteringShortlist = function() {
+    User.newShortlist = 0;
+  }
+
+  $scope.leavingShortlist = function() {
+    Recommendations.getVenues();
+  }
+
   // Loading screen while app pulls data form server
   var showLoading = function() {
     $ionicLoading.show({
