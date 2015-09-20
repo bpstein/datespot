@@ -165,20 +165,18 @@ angular.module('datespot.controllers', ['ionic', 'datespot.userservices', 'dates
     console.log('sweetswipe');
     var newSpot = // new spot data
     $scope.spots.push(newSpot);
-    
     $scope.currentSpot.rated = true;
-	
   };
   
 
   $scope.cardSwipedLeft = function(index) {
     console.log('LEFT SWIPE');
-    $scope.addCard();
-
+  //  $scope.addCard();
   };
+  
   $scope.cardSwipedRight = function(index) {
     console.log('RIGHT SWIPE');
-    $scope.addCard();
+//    $scope.addCard();
 	
   };
   

@@ -14,14 +14,29 @@
         <td-cards>
         <td-card ng-repeat="card in cards" on-destroy="cardDestroyed($index)" on-swipe-left="cardSwipedLeft($index)" on-swipe-right="cardSwipedRight($index)" on-partial-swipe="cardPartialSwipe(amt)" class="card-{{$index}}">
 		
-		
+		 <div class="image"><img ng-src="{{card.image_url}}"></div> 
+		 
+		<!--   <div class="background-image-card-test" style="background-image: url({{card.image_url}})"><img ng-src="{{card.image_url}}"></div> -->
+		 
+		 <!--
           <div class="image">
             <div class="no-text">NOPE</div>
-            <img ng-src="{{card.image_url}}">
-            <div class="yes-text">LIKE</div>
+            <img ng-src="{{card.image_url}}"> 	
+           <div class="yes-text">LIKE</div>
           </div>
+		 -->
         </td-card>
       </td-cards>
+	  
+	<div class="spotInfo" style="height:100px">
+              <span ng-hide="currentSpot.loaded"></span>
+              <h2>{{ currentSpot.name }}</h2>
+
+        <p>{{ currentSpot.description}}</P>
+    </div> 
+	  
+	  
+	  
 
  
   </ion-content>
