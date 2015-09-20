@@ -6,7 +6,7 @@
  *	begin			: 30 May 2015
  *	copyright		: Grant Bartlett and Ben Stein
  *  descriptions	: A dirty dirty hack job of HTML and PHP in a single class
- *					  to produce the administrative backend.
+ *					  to produce the administrative back end.
  *
  **********************************************************************/
  
@@ -42,8 +42,12 @@ $venue_scenarios = array
 	
 	'sealthedeal'	=> 'Seal the Deal',
 	'goallout'		=> 'Go All Out',
-	'brunch'	=> 'Brunch'
-
+	'brunch'	=> 'Brunch',
+	
+	'cheapeat'	=> 'Cheap Eat',
+	'stagnight'	=> 'Stag Night',
+	'hennight'	=> 'Hen Night',
+	'funinthesun'	=> 'Fun in the Sun'	
 	
 );
 
@@ -63,13 +67,26 @@ if ( @$_REQUEST['action'] == 'submit_edit_venue' )
 	$failure_message = '';
 	
 	// Prep the SQL variables
-	$_venue_scenario 	= implode(',', $_REQUEST['venue_scenario']);
+	$_venue_scenario  	= '';
+	if ( isset($_REQUEST['venue_scenario']))
+	{
+		$_venue_scenario 	= implode(',', $_REQUEST['venue_scenario']);
+	}
 	
 	/******** OLD LOGIC 
 	$_venue_open_sunday = isset($_REQUEST['venue_open_sunday']) ? 'Y':'N';
 	$_venue_open_monday = isset($_REQUEST['venue_open_monday']) ? 'Y':'N';
 	*/
 	
+	// Description
+	if ( empty($_REQUEST['venue_description_short']) && !empty($_REQUEST['venue_description']) )
+	{
+		$_venue_short_description = clip_string($_REQUEST['venue_description'], 255);		
+	}
+	else
+	{
+		$_venue_short_description = $_REQUEST['venue_description_short'];			
+	}
 	
 	// New Logic just so the database is OK
 	if ( isset($_REQUEST['venue_hour_sunday_open']) &&  isset($_REQUEST['venue_hour_sunday_close'])  )
@@ -146,15 +163,19 @@ if ( @$_REQUEST['action'] == 'submit_edit_venue' )
 	
 		$sql = 'UPDATE '. VENUE_TABLE .' 
 					SET `venue_modified`=NOW(),
-					`venue_name`		=\''. clean_string($_REQUEST['venue_name']) .'\',	
-					`venue_description`	=\''. clean_string($_REQUEST['venue_description']).'\',
+					`venue_name`		=\''. $_REQUEST['venue_name'] .'\',	
+					`venue_description_short`	=\''. $_venue_short_description.'\',					
+					`venue_description`	=\''. $_REQUEST['venue_description'].'\',
 					`venue_postcode`	=\''. clean_string($_REQUEST['venue_postcode']).'\',
 					`venue_address`		=\''. clean_string($_REQUEST['venue_address']).'\',
+					`venue_email_address`		=\''. $_REQUEST['venue_email_address'].'\',
+					`venue_phone_number`		=\''. $_REQUEST['venue_phone_number'].'\',					
 					`venue_rating_general`	=\''. $_venue_rating_general .'\',
 					`venue_rating_quirkiness`	=\''. $_venue_rating_quirkiness .'\', 
 					`venue_rating_cost`		=\''. $_venue_rating_cost .'\',
 					`venue_scenario`		=\''. clean_string($_venue_scenario) .'\',
 					`venue_url`				=\''. clean_string($_REQUEST['venue_url']).'\',
+					`venue_booking_url`				=\''. clean_string($_REQUEST['venue_booking_url']).'\',
 					`venue_open_sunday`		= \''. $_venue_open_sunday .'\',
 					`venue_open_monday`		= \''. $_venue_open_monday .'\',				
 					`venue_hour_open`		=\''. clean_string($_REQUEST['venue_hour_open']) .'\',
@@ -192,9 +213,12 @@ if ( @$_REQUEST['action'] == 'submit_edit_venue' )
 			(	   `venue_created`, `venue_modified`, `venue_unique_id`, 
 				   
 					`venue_name`, 
+					`venue_description_short`,
 					`venue_description`, 
 					`venue_postcode`, 
 					`venue_address`, 
+					`venue_email_address`, 
+					`venue_phone_number`, 					
 					
 					`venue_rating_general`, 
 					`venue_rating_quirkiness`,
@@ -202,6 +226,7 @@ if ( @$_REQUEST['action'] == 'submit_edit_venue' )
 					
 					`venue_scenario`, 
 					`venue_url`, 
+					`venue_booking_url`, 
 					`venue_open_sunday`, 
 					`venue_open_monday`, 
 					`venue_hour_open`, 
@@ -233,10 +258,13 @@ if ( @$_REQUEST['action'] == 'submit_edit_venue' )
 			   ) 
 			   VALUES 
 			   (NOW(), NOW(), MD5(NOW()),
-				\''. clean_string($_REQUEST['venue_name']) .'\',	
-				\''. clean_string($_REQUEST['venue_description']).'\',
+				\''. $_REQUEST['venue_name'] .'\',	
+				\''. $_venue_short_description.'\',				
+				\''. $_REQUEST['venue_description'].'\',
 				\''. clean_string($_REQUEST['venue_postcode']).'\',
 				\''. clean_string($_REQUEST['venue_address']).'\',
+				\''. $_REQUEST['venue_email_address'].'\',
+				\''. $_REQUEST['venue_phone_number'].'\',
 				
 				\''. $_venue_rating_general .'\',
 				\''. $_venue_rating_quirkiness .'\',
@@ -244,6 +272,7 @@ if ( @$_REQUEST['action'] == 'submit_edit_venue' )
 				
 				\''. clean_string($_venue_scenario) .'\',
 				\''. clean_string($_REQUEST['venue_url']).'\',
+				\''. clean_string($_REQUEST['venue_booking_url']).'\',
 				\''. $_venue_open_sunday .'\',
 				\''. $_venue_open_monday .'\',				
 				\''. clean_string($_REQUEST['venue_hour_open']) .'\',
@@ -393,27 +422,43 @@ if ( @$_REQUEST['action'] == 'upload_venue_image')
 	}
 	else
 	{
-			// So we should be OK....
-			$thumb 		= new ThumbNailer();	
-			$fullsize	= new ThumbNailer();			
+	
+			$thumbnailer = new ThumbNailer();	
 			
 			// Try to perform the image conversion
-			if ( !$thumb->process_image($_FILES['imageUpload']['name'], $_FILES['imageUpload']['tmp_name'], true) )
+			if ( !($thumbnailer->check_image($_FILES['imageUpload']['name'], $_FILES['imageUpload']['tmp_name'])) )
 			{
+			
+				// http://php.net/manual/en/features.file-upload.errors.php
 				// Image conversion failed. Let the user known.
-				$failure_msg = 'The image conversion failed. Please try again with a different image.' . $thumb->error;
+				$failure_msg = 'The image conversion failed. Please try again with a different image.' . $thumbnailer->error;
 				
 			}
 			else
-			{
-			
-				// Build the fullsize
-				$fullsize->process_image($_FILES['imageUpload']['name'], $_FILES['imageUpload']['tmp_name'], false);
+			{	// All seems to be OK.
+				
+				// Build the original
+				$thumbnailer->process_image($_FILES['imageUpload']['name'], $_FILES['imageUpload']['tmp_name'], 'original');
+				$venue_image_data_original = $thumbnailer->output_binary;
+				//$venue_image_data_original = 'Original';
+				
+				$thumbnailer->process_image($_FILES['imageUpload']['name'], $_FILES['imageUpload']['tmp_name'], 'square');
+				$venue_image_data_square = $thumbnailer->output_binary;		
+				//$venue_image_data_square = 'Square';
+
+				$thumbnailer->process_image($_FILES['imageUpload']['name'], $_FILES['imageUpload']['tmp_name'], 'fourbythree');
+				$venue_image_data_fourbythree = $thumbnailer->output_binary;		
+				//$venue_image_data_fourbythree = 'Fourbythree';
+
+				$thumbnailer->process_image($_FILES['imageUpload']['name'], $_FILES['imageUpload']['tmp_name'], 'iphone6');
+				$venue_image_data_iphone6 = $thumbnailer->output_binary;				
+				//$venue_image_data_iphone6 = 'iPhone6';
+				
 
 				// Insert into the database
-				$sql = 'INSERT INTO '. VENUE_IMAGE_TABLE .' (`venue_id` ,`venue_image_unique_id`, `venue_image_order` ,`venue_image_data_format` ,`venue_image_description`, `venue_image_data`, `venue_image_thumbnail_data`, `venue_image_hash`) 
-					VALUES ('. $_REQUEST['venue_id'] .', \''. md5(microtime()) .'\', '. $_REQUEST['venue_image_order'] .' ,  \''. $thumb->output_format .'\',  \''. clean_string($_REQUEST['venue_image_description']) .'\', \''. addslashes($fullsize->output_binary) .'\', \''. addslashes($thumb->output_binary) .'\', \''. $fullsize->image_md5_hash .'\' )';
-					
+				$sql = 'INSERT INTO '. VENUE_IMAGE_TABLE .' (`venue_id` ,`venue_image_unique_id`, `venue_image_order` ,`venue_image_data_format` ,`venue_image_description`, `venue_image_data_original`, `venue_image_data_resized_square`, `venue_image_data_resized_fourbythree`, `venue_image_data_resized_iphone6`, `venue_image_hash`) 
+					VALUES ('. $_REQUEST['venue_id'] .', \''. md5(microtime()) .'\', '. $_REQUEST['venue_image_order'] .' ,  \''. $thumb->output_format .'\',  \''. clean_string($_REQUEST['venue_image_description']) .'\', \''. addslashes($venue_image_data_original) .'\', \''. addslashes($venue_image_data_square) .'\', \''. addslashes($venue_image_data_fourbythree) .'\', \''. addslashes($venue_image_data_iphone6) .'\', \''. $fullsize->image_md5_original_hash .'\' )';
+						
 				if (DEBUG_MODE) { debug_message($sql); }
 				
 				// Try to insert the new image stuff
@@ -461,7 +506,7 @@ if ( @$_REQUEST['action'] == 'get_venue_image')
 	header('Content-Type: '. $image_data['venue_image_data_format']);
 	
 	// Are we outputting the thumbnail or fullsize?
-	echo  (isset($_REQUEST['thumbnail'])) ? $image_data['venue_image_thumbnail_data']:$image_data['venue_image_data'];
+	echo  (isset($_REQUEST['thumbnail'])) ? $image_data['venue_image_data_resized_square']:$image_data['venue_image_data_resized_iphone6'];
 	exit(); // make sure we get outta here
 	
 
@@ -679,7 +724,7 @@ if  (!isset($_REQUEST['action']) || empty($_REQUEST['action']) )
             </ul>
 			
 		<ul class="nav navbar-nav navbar-right">
-              <li><a href="" data-toggle="modal" data-target="#myModal">Version 0.00002</a></li>
+              <li><a href="" data-toggle="modal" data-target="#myModal">Version 0.3</a></li>
             </ul>			
            
           </div><!--/.nav-collapse -->
@@ -695,13 +740,13 @@ if  (!isset($_REQUEST['action']) || empty($_REQUEST['action']) )
       <div class="modal-content">
         <div class="modal-header">
           <button type="button" class="close" data-dismiss="modal">&times;</button>
-          <h4 class="modal-title">Yes, it's only the beginning, scrot.</h4>
+          <h4 class="modal-title">Things are nearly done here.</h4>
         </div>
-        <div class="modal-body" style="background-image: url('static/scrot.jpg'); background-repeat:no-repeat; ">
-          <p>Lots of bugs and things needs to be fixed with this. Version 0.00002 just fixed a few.</p>
-		  <ul><li>Geo-Cordinates</li><li>Venue Image Upload</li><li>JSON to actually work</li><li>Events?</li><li>... and heaps of others to list here</li></ul>
+        <div class="modal-body">
+          <p>Lots of bugs and things have been fixed and not a lot more needs to be done here. At some point when it makes sense I'll expand functionality such as:</p>
+		  <ul><li>A user heat map. Need users fist though.</li><li>Statistics on usage. Again, need people to use it.</li><li>... And anything else.</li></ul>
 		  
-		  There's enough to allow us to start filling this place up with venues.
+		  There's more than enough here now to fill the database up with venues.
 		  <br /><br />
 
         </div>
@@ -788,8 +833,8 @@ if  (!isset($_REQUEST['action']) || empty($_REQUEST['action']) )
 		
 		<tr>
 		  <td><?php echo $venue['venue_id']; ?></td>
-		  <td><a href="?action=edit_venue&venue_id=<?php echo $venue['venue_id']; ?>"><?php echo $venue['venue_name']; ?></a></td>
-		 <td><?php echo clip_string($venue['venue_description']); ?></td>
+		  <td><a href="?action=edit_venue&venue_id=<?php echo $venue['venue_id']; ?>"><?php echo htmlspecialchars($venue['venue_name']); ?></a></td>
+		 <td><?php echo htmlspecialchars(clip_string($venue['venue_description'])); ?></td>
 		  <td><a href="?action=edit_venue_image&venue_id=<?php echo $venue['venue_id']; ?>"><button type="button" class="btn btn-default btn-sm"><span class="glyphicon glyphicon-camera" aria-hidden="true"></span> <?php echo $ic['venue_image_count']; ?></button></a></td>		 
 		  <td><?php echo $venue['venue_postcode']; ?></td>
 		  <td><?php echo $venue['venue_address']; ?></td>
@@ -858,14 +903,21 @@ if  (!isset($_REQUEST['action']) || empty($_REQUEST['action']) )
     <div class="form-group">
       <label class="control-label col-sm-2" for="venue_name">Name:</label>
       <div class="col-sm-10">
-        <input type="text" class="form-control" name="venue_name" id="venue_name" value="<?php echo @$data['venue_name']; ?>">
+        <input type="text" class="form-control" name="venue_name" id="venue_name" value="<?php echo htmlspecialchars(@$data['venue_name']); ?>">
       </div>
     </div>
+	
+  <div class="form-group">
+      <label class="control-label col-sm-2" for="venue_description_short">Short Blurb:</label>
+      <div class="col-sm-10">	  
+	<textarea class="form-control" rows="2" name="venue_description_short" id="venue_description_short"><?php echo htmlspecialchars(@$data['venue_description_short']); ?></textarea>
+      </div>
+    </div>	
 	
     <div class="form-group">
       <label class="control-label col-sm-2" for="venue_description">Description:</label>
       <div class="col-sm-10">	  
-	<textarea class="form-control" rows="5" name="venue_description" id="venue_description"><?php echo @$data['venue_description']; ?></textarea>
+	<textarea class="form-control" rows="5" name="venue_description" id="venue_description"><?php echo htmlspecialchars(@$data['venue_description']); ?></textarea>
       </div>
     </div>
 	
@@ -885,25 +937,48 @@ if  (!isset($_REQUEST['action']) || empty($_REQUEST['action']) )
       </div>
     </div>
 
-    <div class="form-group">
-      <label class="control-label col-sm-2" for="venue_postcode">Postcode:</label>
-      <div class="col-sm-5">
-        <input type="text" class="form-control" name="venue_postcode" id="venue_postcode" value="<?php echo @$data['venue_postcode']; ?>">
-      </div>
-    </div>	
-
-    <div class="form-group">
+     <div class="form-group">
       <label class="control-label col-sm-2" for="venue_address">Address:</label>
       <div class="col-sm-5">
         <input type="text" class="form-control" name="venue_address" id="venue_address" value="<?php echo @$data['venue_address']; ?>" />
+		i.e. 32 Eckstein Road
       </div>
     </div>	
 	
+	
+	   <div class="form-group">
+      <label class="control-label col-sm-2" for="venue_postcode">Postcode:</label>
+      <div class="col-sm-5">
+        <input type="text" class="form-control" name="venue_postcode" id="venue_postcode" value="<?php echo @$data['venue_postcode']; ?>">
+		i.e. SW11 1QR
+      </div>
+    </div>	
+
+
+	
+    <div class="form-group">
+      <label class="control-label col-sm-2" for="venue_phone_number">Phone Number:</label>
+      <div class="col-sm-3">
+        <input type="text" class="form-control" name="venue_phone_number" id="venue_phone_number" value="<?php echo @$data['venue_phone_number']; ?>" />
+		Full international number. +447437...
+      </div>
+    </div>	
+	
+	
+	
    <div class="form-group">
-      <label class="control-label col-sm-2" for="venue_url">URL:</label>
+      <label class="control-label col-sm-2" for="venue_url">Website URL:</label>
       <div class="col-sm-5">
         <input type="text" class="form-control" name="venue_url" id="venue_url" value="<?php echo @$data['venue_url']; ?>">
 		The http:// web address of the venue's website.
+      </div>
+    </div>		
+	
+   <div class="form-group">
+      <label class="control-label col-sm-2" for="venue_email_address">Email:</label>
+      <div class="col-sm-5">
+        <input type="text" class="form-control" name="venue_email_address" id="venue_email_address" value="<?php echo htmlspecialchars(@$data['venue_email_address']); ?>">
+		The <a href="mailto:name@email.com.au">name@email.com</a> address of the venue.
       </div>
     </div>		
 	
@@ -1170,7 +1245,7 @@ if  (!isset($_REQUEST['action']) || empty($_REQUEST['action']) )
       <div class="col-sm-1">
         <input type="text" class="form-control" name="venue_rating_quirkiness" id="venue_rating_quirkiness" value="<?php echo @$data['venue_rating_quirkiness']; ?>">
       </div>
-	  <div class="col-sm-4">
+	  <div class="col-sm-6">
 	  		A number from 1 to 10 of the 'Quirky/Weird' a venue is. 10 being ridiculous. Subjective.</div>
     </div>	
 	
@@ -1180,7 +1255,7 @@ if  (!isset($_REQUEST['action']) || empty($_REQUEST['action']) )
       <div class="col-sm-1">
         <input type="text" class="form-control" name="venue_rating_cost" id="venue_rating_cost" value="<?php echo @$data['venue_rating_cost']; ?>">
       </div>
-	    <div class="col-sm-4">
+	    <div class="col-sm-6">
 	  		A number from 1 to 10 of the 'price' of a venue. 1 being inexpensive, 10 being break the bank. Subjective.
 			</div>
     </div>	
@@ -1190,7 +1265,7 @@ if  (!isset($_REQUEST['action']) || empty($_REQUEST['action']) )
       <div class="col-sm-1">
         <input type="text" class="form-control" name="venue_rating_general" id="venue_rating_general" value="<?php echo @$data['venue_rating_general']; ?>">
       </div>
-	    <div class="col-sm-4">
+	    <div class="col-sm-6">
 	  		A number from 1 to 10 of the 'awesomeness' of a venue. 10 being fantastic. Subjective.
 			</div>
     </div>	
@@ -1231,6 +1306,18 @@ if  (!isset($_REQUEST['action']) || empty($_REQUEST['action']) )
 
       </div>
     </div>	
+	
+   <div class="form-group">
+      <label class="control-label col-sm-2" for="venue_booking_url">Booking URL:</label>
+      <div class="col-sm-3">
+        <input type="text" class="form-control" name="venue_booking_url" id="venue_booking_url" value="<?php echo htmlspecialchars(@$data['venue_booking_url']); ?>">
+		</div>
+		 <div class="col-sm-6">
+		The the affiliate booking URL. Note: This will require an identifier so we can extract referral benefits. 
+      </div>
+    </div>		
+	
+	
 	
 
     <div class="form-group">        
@@ -1347,7 +1434,7 @@ if  (!isset($_REQUEST['action']) || empty($_REQUEST['action']) )
   <div class="contentbox">
   <h3 style="border-bottom: thin solid #ccc; padding:10px;">Manage images: <?php echo @$venue['venue_name']; ?></h3>
 
-  <div class="well">I really need to leverage <a href="http://www.w3schools.com/bootstrap/bootstrap_grid_basic.asp">BootStrap</a> more for this page.</div>
+  <div class="well">Below is a list images/photos uploaded for this venue. Adjust the Description and Order accordingly as required.</div>
   
 <?php
 
@@ -1357,7 +1444,6 @@ if  (!isset($_REQUEST['action']) || empty($_REQUEST['action']) )
 	
 ?>	
 		<table class="table">
-		  <caption>Below is a list images/photos uploaded for this venue. Adjust the Description and Order accordingly as required.</caption>
 		  <thead>
 			<tr>
 			  <th>#</th>
@@ -1378,8 +1464,8 @@ if  (!isset($_REQUEST['action']) || empty($_REQUEST['action']) )
 		<tr>
 		  <th scope="row"><?php echo $counter++; ?></th>
 		  <td><img src="<?php echo $_SERVER['PHP_SELF']; ?>?action=get_venue_image&venue_image_id=<?php echo $image['venue_image_id']; ?>&thumbnail=1" width="200" height="180" class="img-thumbnail" alt="Venue Image <?php echo $image['venue_image_id']; ?>" /></td>
-		  <td><i>Not currently used.</i></td>
-		  <td><input type="text" class="form-control" name="venue_image_order" id="venue_image_order" value="<?php echo $image['venue_image_order']; ?>"></td>
+		  <td><?php echo $image['venue_image_description']; ?></td>
+		  <td><input type="text" class="form-control" name="venue_image_order" id="venue_image_order" value="<?php echo $image['venue_image_order']; ?>" size="1"></td>
 		  <td><a href="?action=delete_venue_image&venue_id=<?php echo $_REQUEST['venue_id']; ?>&venue_image_id=<?php echo $image['venue_image_id']; ?>"><button type="button" class="btn btn-default btn-sm"><span class="glyphicon glyphicon-trash"></span> Delete</button></a></td>		  
 		</tr>
 <?php
@@ -1395,22 +1481,58 @@ if  (!isset($_REQUEST['action']) || empty($_REQUEST['action']) )
 			
 	} // end of image count check
 	
+	if ($counter == 1)
+	{
+	
 ?>
 
-	<h3>Upload an image</h3>
-	
-	<form enctype="multipart/form-data" action="<?php echo $_SERVER['PHP_SELF']; ?>" method="POST">    
-	<div class="form-group">
-	<table width="100%">
-	<tr>
-		<td><input type="file" id="imageUpload" name="imageUpload" accept="image/*"><p class="help-block">Select an image file to upload into the database.</p></td>
-		<td><textarea class="form-control" rows="2" name="venue_image_description" id="venue_image_description"></textarea></td>
-		<td><!-- Sneaky little hack to use the counter as the ordering there are existing images --><input type="text" class="form-control" name="venue_image_order" id="venue_image_order" value="<?php echo $counter; ?>" /><p class="help-block">IMPORTANT: A value of '0' will make this the 'mugshot' image that shows for this venue or event in the App!</p></td>
-		<td><input type="hidden" name="venue_id" value="<?php echo $_REQUEST['venue_id']; ?>" /><input type="hidden" name="action" value="upload_venue_image" /><button type="submit" class="btn btn-default">Upload</button></td>
-	</tr>
-	</table>
+	<div class="alert alert-info" role="alert">
+	  Just a reminder that this venue doesn't have any images associated with it. Might need to work on this.
 	</div>
+	
+<?php
+
+		}
+		
+?>
+
+
+	
+	<h4>Upload an image</h4>
+	<div style="background: #F0F5FF; padding: 5px;">		
+	<form class="form-horizontal" enctype="multipart/form-data" action="<?php echo $_SERVER['PHP_SELF']; ?>" method="POST">    
+
+
+	<div class="form-group">
+      <label class="control-label col-sm-2" for="venue_name">Select Image:</label>
+      <div class="col-sm-10">
+        <input type="file" id="imageUpload" name="imageUpload" accept="image/*"></div>
+      <div class="col-sm-8">		
+		<p class="help-block">Select an image file to upload into the database.</p>
+      </div>
+    </div>
+	
+	<div class="form-group">
+      <label class="control-label col-sm-2" for="venue_description_short">Description:</label>
+      <div class="col-sm-10"><textarea class="form-control" rows="2" name="venue_image_description" id="venue_image_description"></textarea>
+      </div>
+    </div>	
+	
+	<div class="form-group">
+      <label class="control-label col-sm-2" for="venue_description_short">Order:</label>
+      <div class="col-sm-1"><input type="text" class="form-control" name="venue_image_order" id="venue_image_order" value="<?php echo $counter; ?>" /></div>
+	   <div class="col-sm-9"><p class="help-block">Note: The lowest value will be the 'mugshot' image that shows for this venue or event in the App!</p>
+      </div>
+    </div>	
+	
+	<div class="form-group">        
+      <div class="col-sm-offset-2 col-sm-10">
+        <input type="hidden" name="venue_id" value="<?php echo $_REQUEST['venue_id']; ?>" /><input type="hidden" name="action" value="upload_venue_image" /><button type="submit" class="btn btn-default">Upload</button>
+      </div>
+    </div>	
 	</form>   	
+	
+	</div>
 
 
 
@@ -1440,7 +1562,6 @@ if  (!isset($_REQUEST['action']) || empty($_REQUEST['action']) )
     <div class="item active">
       <img src="img_chania.jpg" alt="Chania">
     </div>
-
     <div class="item">
       <img src="img_chania2.jpg" alt="Chania">
     </div>

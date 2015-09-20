@@ -17,62 +17,38 @@
 	var $temporary_image_file = '';
 	var $temporary_image_type = '';
 	
-	// 4:3 aspect ratio
-	var $thumbnail_width	= 640;
-	var $thumbnail_height	= 480;
+	var $image_aspects	= array 
+	(
+		'square' 		=> array ( 'width' => 480, 'height' => 480),	// smaller square size
+		'fourbythree'	=> array ( 'width' => 640, 'height' => 480), 	// Usual 4:3 format
+		'iphone6'		=> array ( 'width' => 1334,'height' => 750),	// iPhone 6, 16:9 screen aspect ratio
+		'original'		=> array ( 'width' => 0,'height' => 0)			// hack for the resizer to keep original	
+	);
 	
-	// iPhone 6, 16:9 screen aspect ratio
-	var $fullsize_width 	= 1334;
-	var $fullsize_height	= 750;
 	
 	// We store these as JPEG
-	var $output_format = 'image/jpeg'; 	// or image/png  // or image/gif
-	var $output_binary = ''; 			// the binary of the image
+	var $output_quality = 55;
+	var $output_format  = 'image/jpeg'; 	// or image/png  // or image/gif
+	var $output_binary  = ''; 			// the binary of the image
 
 	// Hash
-	var $image_md5_hash = '';
+	var $image_md5_original_hash = '';
 
-		
 	// Error message should one be required
 	var $error 	=  ''; 
 	
-	
-	// Process the images
-	function process_image($name, $temporary_file, $thumbnail = true)
+	// Load an image that has been uploaded to /tmp via PHP upload fun
+	function check_image($name, $temporary_file)
 	{
+	
 		/*
 		$name= $_FILES["myfile"]["name"]; //of interest
 		$type= $_FILES["myfile"]["type"];
 		$temp= $_FILES["myfile"]["tmp_name"]; // of interest
-te		$size= $_FILES["myfile"]["size"];
+		$size= $_FILES["myfile"]["size"];
 		$error= $_FILES["myfile"]["error"]; // not handled in this class
 		*/
 		
-		
-		if ( !($this->_check_image($name, $temporary_file) ) )
-		{
-			if (DEBUG_MODE)
-			{
-				debug_message('An error exists with the image which has been identified: '. $this->error); 
-			}
-			
-			// whoever is using $class->process_image can check for calso and then see what's in $class->error
-			return false;	
-			
-		}
-		
-		// Generate MD5 hash
-		$this->image_md5_hash = md5_file($temporary_file);
-
-		// Do the last step
-		return $this->_resize_and_crop_imagemagik($thumbnail);
-	
-	}
-
-	
-	// Load an image that has been uploaded to /tmp via PHP upload fun
-	function _check_image($name, $temporary_file)
-	{
 		if (empty($name) || empty($temporary_file) )
 		{
 			$this->error = 'Image name or location of temporary file was not provided.';
@@ -86,6 +62,7 @@ te		$size= $_FILES["myfile"]["size"];
 		if($check !== false) 
 		{
 				$this->error 	= 'File is an image - ' . $check['mime'] . '.';
+				//debug_message('File is an image - ' . $check['mime']);
 		} 
 		else 
 		{
@@ -107,10 +84,108 @@ te		$size= $_FILES["myfile"]["size"];
 		// So all is good, then store this in the class as a valid temporary file
 		$this->temporary_image_file = $temporary_file;
 		$this->temporary_image_type = $imageFileType;
+		
+		// Generate MD5 hash
+		$this->image_md5_original_hash = md5_file($temporary_file);
+		
 
 		return true;
 	
 	} // end check_uploaded_image
+	
+	
+	// Process the images
+	function process_image($name, $temporary_file, $aspect)
+	{
+		/*
+		$name= $_FILES["myfile"]["name"]; //of interest
+		$type= $_FILES["myfile"]["type"];
+		$temp= $_FILES["myfile"]["tmp_name"]; // of interest
+te		$size= $_FILES["myfile"]["size"];
+		$error= $_FILES["myfile"]["error"]; // not handled in this class
+		*/
+		
+		
+		if ( !($this->check_image($name, $temporary_file) ) )
+		{
+			// whoever is using $class->process_image can check for calso and then see what's in $class->error
+			return false;	
+			
+		}
+		
+		// Images aspect sizes.
+		if ( !array_key_exists($aspect, $this->image_aspects) )
+		{
+			$this->error = 'The requested aspect ratio is not a possible option';
+			debug_message($this->error);
+			return false;
+		
+		}
+		
+		// Requested pixel aspect ratio
+		$width 	= $this->image_aspects[$aspect]['width'];
+		$height = $this->image_aspects[$aspect]['height'];
+
+		// Do the last step
+		return $this->_resize_and_crop_imagemagik($width, $height);
+		
+	} // process_image
+	
+
+	// Image Magic Format
+	function _resize_and_crop_imagemagik($width, $height)
+	{
+	
+		//debug_message('The requested resize width is: 	'. $width);
+		//debug_message('The requested resize height is: 	'. $height);	
+
+		// Are we jumping the gun here?
+		if ( empty($this->temporary_image_file) || empty($this->temporary_image_type) )
+		{
+			$this->error 	= 'Cannot perform resize as no image has been checked or loaded yet.';
+			return false;		
+		}
+		
+		
+		
+		// What size of image are we resizing too?
+		/*
+		if ($thumbnail) { $thumb_w = $this->thumbnail_width; $thumb_h = $this->thumbnail_height; }
+		else			{ $thumb_w = $this->fullsize_width;  $thumb_h = $this->fullsize_height; }
+		*/
+		
+	
+	    $imagick = new \Imagick(realpath($this->temporary_image_file));
+//		$imagick->scaleImage($thumb_w, $thumb_h);
+
+		// Don't attempt to be smart and resize / if it's too small, or pointless
+		if ( ($width > 4) && ($height > 4) )
+		{
+			    $imagick->cropThumbnailImage($width, $height);
+				$imagick->setImageCompressionQuality($this->output_quality);		// HACK		
+		}
+		else
+		{
+			$imagick->setImageCompressionQuality(90);		// Keep a high quality original		
+		}		
+		
+		// Output format is according to top
+		switch ($this->output_format)
+		{
+			case 'image/gif': $imagick->setImageFormat('gif'); break;
+			case 'image/png': $imagick->setImageFormat('png'); break;
+			default: $imagick->setImageFormat('jpeg'); break;
+		}
+		
+		// Set the binary into the classes stores
+		$this->output_binary = $imagick->getImageBlob();
+		
+		// All is good so return true
+		return true;
+		
+	} // end ik resize and crop
+	
+	
 	
 	
 	
@@ -362,45 +437,6 @@ te		$size= $_FILES["myfile"]["size"];
 		
 	
 	} // resize and crop
-
-
-
-	// Image Magic Format
-	function _resize_and_crop_imagemagik($thumbnail = true)
-	{
-
-		// Are we jumping the gun here?
-		if ( empty($this->temporary_image_file) || empty($this->temporary_image_type) )
-		{
-			$this->error 	= 'Cannot perform resize as no image has been checked or loaded yet.';
-			return false;		
-		}
-		
-		// What size of image are we resizing too?
-		if ($thumbnail) { $thumb_w = $this->thumbnail_width; $thumb_h = $this->thumbnail_height; }
-		else			{ $thumb_w = $this->fullsize_width;  $thumb_h = $this->fullsize_height; }
-
-	
-	    $imagick = new \Imagick(realpath($this->temporary_image_file));
-//		$imagick->scaleImage($thumb_w, $thumb_h);
-
-	    $imagick->cropThumbnailImage($thumb_w, $thumb_h);
-		
-		// Output format is according to top
-		switch ($this->output_format)
-		{
-			case 'image/gif': $imagick->setImageFormat('gif'); break;
-			case 'image/png': $imagick->setImageFormat('png'); break;
-			default: $imagick->setImageFormat('jpeg'); break;
-		}
-		
-		// Set the binary into the classes stores
-		$this->output_binary = $imagick->getImageBlob();
-		
-		// All is good so return true
-		return true;
-		
-	} // end ik resize and crop
 
 }
 
