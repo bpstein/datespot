@@ -12,6 +12,10 @@ angular.module('datespot.controllers', ['ionic', 'datespot.userservices', 'dates
 
 // CONTROLLER FOR THE SPLASH PAGE 
 .controller('SplashCtrl', function($scope, $state, User) {
+	
+  console.log('Loaded the SplashCtrl controller');
+
+	
   $scope.submitForm = function (username, signingUp) {
     User.auth(username, signingUp).then(function(){
       $state.go('discover');
@@ -21,10 +25,12 @@ angular.module('datespot.controllers', ['ionic', 'datespot.userservices', 'dates
   }
 })
 
-
-
 // CONTROLLER FOR NAVIGATION BUTTONS
 .controller('ButtonCtrl', function($scope, User) {
+	
+  console.log('Loaded the ButtonCtrl controller');
+
+  
   $scope.rightButtons = [{
     type: 'button-clear',
     content: 'Shortlist',
@@ -32,10 +38,11 @@ angular.module('datespot.controllers', ['ionic', 'datespot.userservices', 'dates
   }];
 })
 
-
-
 // CONTROLLER FOR THE SEARCH VIEW
 .controller('SearchCtrl', function($scope, User) {
+	
+  console.log('Loaded the SearchCtrl controller');
+  
   $scope.runFilter = function (bool) {  
     // To be expanded and perform the jSON query when
     // the user has changed the search parameters
@@ -50,20 +57,27 @@ angular.module('datespot.controllers', ['ionic', 'datespot.userservices', 'dates
 
 
 // CONTROLLER FOR THE DISCOVER/SWIPE VIEW
-.controller('DiscoverCtrl', function($scope, $timeout, $ionicLoading, User, Recommendations, FactoryFuck, TDCardDelegate) {
+.controller('DiscoverCtrl', function($scope, $timeout, $ionicLoading, User, Recommendations, TDCardDelegate) {
 
+  console.log('Loaded the DiscoverCtrl controller');
+  /*
   $scope.shortlistCount = User.shortlistCount;
 
   $scope.enteringShortlist = function() {
-    User.newShortlist = 0;
+	console.log('Entering the Shortlist');
+	User.newShortlist = 0;
   }
 
   $scope.leavingShortlist = function() {
+	console.log('Leaving the Shortlist');
     Recommendations.getVenues();
   }
 
   // Loading screen while app pulls data form server
   var showLoading = function() {
+	  
+	console.log('Showing Loading Screen....');
+	
     $ionicLoading.show({
       templateUrl: 'templates/loading.html',
       noBackdrop: true
@@ -71,88 +85,114 @@ angular.module('datespot.controllers', ['ionic', 'datespot.userservices', 'dates
   }
 
   var hideLoading = function() {
+	  
+	console.log('Hiding Loading Screen....');	  
     $ionicLoading.hide();
   }
 
-  showLoading();
+  */
+  
+	
 
-	// Test the factory here. 
-	FactoryFuck.Scrot();
-  
-  $scope.spots = [
-     {
-          
-     }
-  ];  
-  
-	// Get our recommended venues
-	Recommendations.getVenues()
-		.then(function(){
-			
-		  $scope.currentSpot = Recommendations.queue[0];
-		  
-		  console.log($scope.currentSpot);
-	})
+	/*
 
   .then(function(){
+	  
+	console.log('Hiding Loading Screen....');
+	
     // turn loading off
     hideLoading();
     $scope.currentSpot.loaded = true;
-  });
-
 	
-  // fired when we favorite / skip a date spot.
-  $scope.sendFeedback = function (bool) {
-    // first, add to favorites if they favorited
-    if (bool) User.addSpotToShortlist($scope.currentSpot);
-  	$scope.currentSpot.rated = bool;
-  	$scope.currentSpot.hide = true;
-    // $scope.addCard();
-
-    // Drop the current venue from the results list and load the next one.
-	Recommendations.nextVenue();
-
-    $timeout(function() {
-      // $timeout to allow animation to complete
-      $scope.currentSpot = Recommendations.queue[0];
-      $scope.currentSpot.loaded = false;
+  });
+  */
+  
+  // The cards
+  $scope.cards = [];
+  
+  
+	// GET THE VENUES AND BUILD THE CARDS
+	Recommendations.getVenues()
+		.then(function(){
+		  $scope.currentSpot = Recommendations.queue[0]; // set the inital view to this
+		  
+		  console.log('The current spot is....');
+		  console.log($scope.currentSpot);	  
+		  
+		 console.log('The recommended queue length is: ' + Recommendations.queue.length);
+		// console.log('Length is:');
+		// console.log(Recommendations.queue.length);
+		
+	  // Go through the database and add cards
+	 for(var i = 0; i < Recommendations.queue.length; i++) $scope.addCard(i);
 	  
-	  console.log('Loading Venue: ');
-	  console.log( $scope.currentSpot );
-	  
-    }, 250);
+	  console.log('Finished adding cards');		
+  
+	});
+	
+/*
+  var cardTypes = [
+    { image_url: 'max.jpg' },
+    { image_url: 'ben.png' },
+    { image_url: 'perry.jpg' },
+  ];
+  */
 
-  }
+ 
 
-  $scope.spotDestroyed = function(index) {
-    $scope.spots.splice(index, 1);
+  // Remove a card from the stack
+  $scope.cardDestroyed = function(index) {
+    $scope.cards.splice(index, 1);
   };
 
+  // Add a card to the stack
+  $scope.addCard = function(id) {
+	  
+   // var newCard = cardTypes[Math.floor(Math.random() * cardTypes.length)];
+  //  newCard.id = Math.random();
+  //  $scope.cards.unshift(angular.extend({}, newCard));
+	
+	
+	console.log('Adding card from Recommendations array of id: ' + id);
+	$scope.cards.unshift(angular.extend({}, Recommendations.queue[id]));
+  }
+  
+ // for(var i = 0; i < 3; i++) $scope.addCard(1);
+
+  
+  // Spot Liked
   $scope.spotSwiped = function(index) {
     console.log('sweetswipe');
     var newSpot = // new spot data
     $scope.spots.push(newSpot);
     
     $scope.currentSpot.rated = true;
+	
   };
+  
 
-  $scope.spotSwipedLeft = function(index) {
+  $scope.cardSwipedLeft = function(index) {
     console.log('LEFT SWIPE');
-    //$scope.spots[index].rated = false;
-    $scope.sendFeedback(false);
-    //$scope.spotSwiped();
+    $scope.addCard();
+
   };
-  $scope.spotSwipedRight = function(index) {
+  $scope.cardSwipedRight = function(index) {
     console.log('RIGHT SWIPE');
-    //$scope.spotSwiped();
-    $scope.sendFeedback(true);
+    $scope.addCard();
+	
   };
+  
 })
 
 
 
 // CONTROLLER FOR SHORTLIST VIEW (PREVIOUSLY FAVORITES)
 .controller('ShortlistCtrl', function($scope, User) {
+	
+ console.log('Loaded the ShortlistCtrl controller');
+ 
+	
+	
   // With the new view caching in Ionic, Controllers are only called
   // when they are recreated or on app start, instead of every page change.
   // To listen for when this page is active (for example, to refresh data),
@@ -162,8 +202,7 @@ angular.module('datespot.controllers', ['ionic', 'datespot.userservices', 'dates
   //});
 
   $scope.shortlist = User.shortlist;
-
-
+  
   $scope.removeSpot = function(spot, index) {
     User.removeSpotFromShortlist(spot, index);
   }
@@ -180,6 +219,11 @@ angular.module('datespot.controllers', ['ionic', 'datespot.userservices', 'dates
 
 // CONTROLLER FOR DETAILS PAGE
 .controller('DetailCtrl', function($scope, $stateParams, User, Spots) {
+
+	
+ console.log('Loaded the DetailCtrl controller');
+
+ 
   $scope.spot = Spots.get($stateParams.spotVuid);
 
   // $scope.spots = Spots.all();
@@ -189,13 +233,17 @@ angular.module('datespot.controllers', ['ionic', 'datespot.userservices', 'dates
 
 // CONTROLLER FOR LISTING OF OCCASION TYPES ON SEACH VIEW
 .controller('OccasionCtrl', function($scope, $ionicPopup) {
+	
+ console.log('Loaded the OccasionCtrl controller');
+
+ 
   $scope.items = [{
       name: "First Date",
       id: 1,
       tag: "She said 'yes.' Choose a place that'll impress.",
       url: "https://s3-us-west-1.amazonaws.com/datespot/occasions/firstdate2.jpg"
   }, {
-      name: "Fancy a drink?",
+      name: "Fancy a drink",
       id: 2,
       tag: "Hip spots to grab a drink with a date or friend.",
       url: "https://s3-us-west-1.amazonaws.com/datespot/occasions/justdrinks.jpg"
@@ -257,4 +305,49 @@ angular.module('datespot.controllers', ['ionic', 'datespot.userservices', 'dates
     //   tag: "Something informal with friends in pubs, bars or clubs.",
     //   url: "/img/stagnight.jpeg"
     }];
+})
+
+
+/* Geolocation */
+.controller('GeoCtrl', function($cordovaGeolocation) {
+	
+  console.log('Loaded the GeoLocation Factory');	
+
+  var posOptions = {timeout: 10000, enableHighAccuracy: false};
+  $cordovaGeolocation
+    .getCurrentPosition(posOptions)
+    .then(function (position) {
+      var lat  = position.coords.latitude
+      var long = position.coords.longitude
+    }, function(err) {
+      // error
+    });
+
+
+  var watchOptions = {
+    frequency : 1000,
+    timeout : 3000,
+    enableHighAccuracy: false // may cause errors if true
+  };
+
+  var watch = $cordovaGeolocation.watchPosition(watchOptions);
+  watch.then(
+    null,
+    function(err) {
+      // error
+    },
+    function(position) {
+      var lat  = position.coords.latitude
+      var long = position.coords.longitude
+  });
+
+
+  watch.clearWatch();
+  // OR
+  $cordovaGeolocation.clearWatch(watch)
+    .then(function(result) {
+      // success
+      }, function (error) {
+      // error
+    });
 });

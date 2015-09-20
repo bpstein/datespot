@@ -1,4 +1,4 @@
-<ion-view view-title="Discover2" class="discover-page">
+<ion-view view-title="Discover" class="discover-page">
   <ion-nav-buttons side="right">
     <a class="button button-icon ion-bookmark" 
       ng-href="#/shortlist"
@@ -10,40 +10,20 @@
   </ion-nav-buttons>
   
   <ion-content scroll="false">
+  
+        <td-cards>
+        <td-card ng-repeat="card in cards" on-destroy="cardDestroyed($index)" on-swipe-left="cardSwipedLeft($index)" on-swipe-right="cardSwipedRight($index)" on-partial-swipe="cardPartialSwipe(amt)" class="card-{{$index}}">
+		
+		
+          <div class="image">
+            <div class="no-text">NOPE</div>
+            <img ng-src="{{card.image_url}}">
+            <div class="yes-text">LIKE</div>
+          </div>
+        </td-card>
+      </td-cards>
 
-    <td-cards>
-
-      <td-card id="td-card"
-       class="list card current-spot"
-        ng-class="{skipped: currentSpot.rated == false,
-                    favorited: currentSpot.rated == true}"
-        ng-show="currentSpot && !currentSpot.hide">
-
-        <div class="item item-image">
-          <img ng-src="{{ currentSpot.image_url }}"
-          href="#/spots/{{spot.vuid}}">
-        </div>
-
-        <div class="item">
-          <h2>{{ currentSpot.title }}</h2>
-          <p>{{ currentSpot.description }}</p>
-        </div>
-
-        <div class="item tabs tabs-secondary tabs-icon-left">
-          <a class="tab-item" ng-click="sendFeedback(false)">
-            <i class="icon ion-close"></i>
-          </a>
-          <a class="tab-item" ng-click="sendFeedback(true)">
-            <i class="icon ion-heart"></i>
-          </a>
-        </div>
-      </td-card>
-
-    </td-cards>
-
- <!--    <div class="img-lookahead">
-      <img ng-src="{{ nextAlbumImg() }}"/>
-    </div> -->
+ 
   </ion-content>
 </ion-view>
 
