@@ -124,9 +124,13 @@ angular.module('datespot.controllers', ['ionic', 'datespot.userservices', 'dates
 		// console.log(Recommendations.queue.length);
 		
 	  // Go through the database and add cards
-	 for(var i = 0; i < Recommendations.queue.length; i++) $scope.addCard(i);
+	 //for(var i = 0; i < Recommendations.queue.length; i++) $scope.addCard(i);
+	  for(var i = 0; i < 25; i++) $scope.addCard(i); // HACK: only load the first 25 from the database right now
+	  
 	  
 	  console.log('Finished adding cards');		
+	  
+	 
   
 	});
 	
@@ -142,7 +146,19 @@ angular.module('datespot.controllers', ['ionic', 'datespot.userservices', 'dates
 
   // Remove a card from the stack
   $scope.cardDestroyed = function(index) {
+	  
     $scope.cards.splice(index, 1);
+	
+	console.log('Card was destroyed: ' + index);
+	
+	var lastcard = $scope.cards.length-1;
+	
+	console.log('That last card is now: ' + lastcard);
+	
+	$scope.currentSpot = $scope.cards[lastcard]; // last card
+	
+	console.log($scope.cards[lastcard]);
+	
   };
 
   // Add a card to the stack

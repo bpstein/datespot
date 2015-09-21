@@ -191,8 +191,6 @@
 
       ionic.onGesture('drag', function(e) {
         ionic.requestAnimationFrame(function() { self._doDrag(e) });
-        // Indicate we want to stop parents from using this
-        e.gesture.srcEvent.preventDefault();
       }, this.el);
 
       ionic.onGesture('dragend', function(e) {
@@ -249,23 +247,6 @@
   angular.module('ionic.contrib.ui.tinderCards', ['ionic'])
 
   .directive('tdCard', ['$timeout', function($timeout) {
-    /**
-     * A simple non-linear fade function for the text on each card
-     */
-    var fadeFn = function(t) {
-      // Speed up time to ramp up quickly
-      t = Math.min(1, t * 3);
-
-      // This is a simple cubic bezier curve.
-      // http://cubic-bezier.com/#.11,.67,.41,.99
-      var c1 = 0.11,
-          c2 = 0.67,
-          c3 = 0.41,
-          c4 = 0.99;
-
-      return Math.pow((1 - t), 3)*c1 + 3*Math.pow((1 -  t), 2)*t*c2 + 3*(1 - t)*t*t*c3 + Math.pow(t, 3)*c4;
-    };
-
     return {
       restrict: 'E',
       template: '<div class="td-card" ng-transclude></div>',
@@ -287,9 +268,6 @@
           var leftText = el.querySelector('.no-text');
           var rightText = el.querySelector('.yes-text');
           
-          // Force hardware acceleration for animation - better performance on first touch
-          el.style.transform = el.style.webkitTransform = 'translate3d(0px, 0px, 0px)';
-
           // Instantiate our card view
           var swipeableCard = new SwipeableCardView({
             el: el,
@@ -300,11 +278,11 @@
               var self = this;
               $timeout(function() {
                 if (amt < 0) {
-                  if (self.leftText) self.leftText.style.opacity = fadeFn(-amt);
-                  if (self.rightText) self.rightText.style.opacity = 0;
+                  self.leftText.style.opacity = Math.abs(amt) + 0.5;
+                  self.rightText.style.opacity = 0;
                 } else {
-                  if (self.leftText) self.leftText.style.opacity = 0;
-                  if (self.rightText) self.rightText.style.opacity = fadeFn(amt);
+                  self.leftText.style.opacity = 0;
+                  self.rightText.style.opacity = amt + 0.5;
                 }
                 $scope.onPartialSwipe({amt: amt});
               });
@@ -367,8 +345,8 @@
               .on('step', function(v) {
                 //Have the element spring over 400px
                 el.style.transform = el.style.webkitTransform = 'translate3d(' + (startX - startX*v) + 'px, ' + (startY - startY*v) + 'px, 0) rotate(' + (startRotation - startRotation*v) + 'rad)';
-                if (rightText) rightText.style.opacity = 0;
-                if (leftText) leftText.style.opacity = 0;
+                rightText.style.opacity = 0;
+                leftText.style.opacity = 0;
               })
               .start();
 
@@ -396,7 +374,7 @@
       template: '<div class="td-cards" ng-transclude></div>',
       transclude: true,
       scope: {},
-      controller: ['$scope', '$element', function($scope, $element) {
+      controller: function($scope, $element) {
         var cards;
         var firstCard, secondCard, thirdCard;
 
@@ -422,8 +400,14 @@
         });
 
         var bringCardUp = function(card, amt, max) {
-          var position, newTop;
+          var position, top, newTop;
+          if (card === undefined) {
+            console.log('card was undefined in bringCardUp function');
+            return;
+          }
+
           position = card.style.transform || card.style.webkitTransform;
+          top = parseInt(position && position.split(',')[1] || 0);
           newTop = Math.max(0, Math.min(max, max - (max * Math.abs(amt))));
           card.style.transform = card.style.webkitTransform = 'translate3d(0, ' + newTop + 'px, 0)';
         };
@@ -431,13 +415,14 @@
         this.partial = function(amt) {
           cards = $element[0].querySelectorAll('td-card');
           firstCard = cards[0];
-          secondCard = cards.length > 2 && cards[1];
-          thirdCard = cards.length > 3 && cards[2];
+          secondCard = cards[1];
+          thirdCard = cards[2];
+          if(!secondCard) { return; }
 
-          secondCard && bringCardUp(secondCard, amt, 4);
-          thirdCard && bringCardUp(thirdCard, amt, 8);
+          bringCardUp(secondCard, amt, 4);
+          bringCardUp(thirdCard, amt, 8);
         };
-      }]
+      }
     }
   }])
 
