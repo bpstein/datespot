@@ -167,6 +167,9 @@ angular.module('datespot.jsonservices', [])
     // pop the index 0 off
     o.queue.shift();
 
+	// http://learn.ionicframework.com/formulas/infinite-lists/
+	
+	
     // low on the queue? lets fill it up
     if (o.queue.length <= 3) {
      // o.getVenues(); // we don't do this as our JSON provides all venues currently
@@ -177,6 +180,11 @@ angular.module('datespot.jsonservices', [])
   return o;
   
 });
+
+
+
+// TODO: Local Storage
+// http://learn.ionicframework.com/formulas/localstorage/
 
 
 

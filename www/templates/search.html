@@ -1,24 +1,32 @@
-<ion-view view-title="What's the occasion?">
-  <ion-nav-buttons side="left">
-    <!-- <button class="button button-icon ion-navicon" 
-      ng-href="#/settings">
-    </button> -->
-    
-  </ion-nav-buttons>
-  <ion-nav-buttons side="right">
-    <a class="button button-icon ion-bookmark" 
-      ng-href="#/shortlist">
-    </a>
-  </ion-nav-buttons>
+ <ion-view view-title="What's the occasion?"> 
   <ion-content>
-    <div ng-controller="OccasionCtrl">
-
+    <div>
       <ion-list class="OccasionPicker">
+
         <ion-item 
           class="defaultOccasion" 
-          href="#/discover"
           ng-repeat="item in items"
-          style="background-image: url({{item.url}})">
+          style="background-image: url({{item.url}})"
+		  href="#/discover/{{item.id}}">
+		  
+<!--
+        <ion-item 
+          class="defaultOccasion" 
+          ng-repeat="item in items"
+          style="background-image: url({{item.url}})"
+		  ng-click="runFilter('{{item.id}}')"
+		  href="#/discover/{{item.id}}">
+-->		  
+
+
+	  <!--
+        <ion-item 
+          class="defaultOccasion" 
+          ng-repeat="item in items"
+          style="background-image: url({{item.url}})"
+		  ng-click="runFilter('test')">
+	  -->
+
           <div class="col occasionInfo">
             <span class="occasionSpan">
               <h1 class="occasionHeader">{{item.name}}</h1></span>

@@ -10,28 +10,58 @@
  
 angular.module('datespot.controllers', ['ionic', 'datespot.userservices', 'datespot.jsonservices', 'ionic.contrib.ui.tinderCards']  )
 
-/*************** CONTROLLER FOR THE DISCOVER/SWIPE VIEW ***************/
-.controller('DiscoverCtrl', function($scope, $timeout, $stateParams, $ionicLoading, User, Recommendations, TDCardDelegate) {
+// CONTROLLER FOR THE SPLASH PAGE 
+.controller('SplashCtrl', function($scope, $state, User) {
 	
+  console.log('Loaded the SplashCtrl controller');
+
+	
+  $scope.submitForm = function (username, signingUp) {
+    User.auth(username, signingUp).then(function(){
+      $state.go('discover');
+    }, function() {
+      alert('Hmmm... try another username.');
+    });
+  }
+})
+
+// CONTROLLER FOR NAVIGATION BUTTONS
+.controller('ButtonCtrl', function($scope, User) {
+	
+  console.log('Loaded the ButtonCtrl controller');
+
+  
+  $scope.rightButtons = [{
+    type: 'button-clear',
+    content: 'Shortlist',
+    tap: function(e) {}
+  }];
+})
+
+// CONTROLLER FOR THE SEARCH VIEW
+.controller('SearchCtrl', function($scope, User) {
+	
+  console.log('Loaded the SearchCtrl controller');
+  
+  $scope.runFilter = function (bool) {  
+    // To be expanded and perform the jSON query when
+    // the user has changed the search parameters
+    console.log('Runfilter clicked!'); 
+
+    $scope.save = function() {
+      $state.go('shortlist');
+    };
+  }
+})
+
+
+
+// CONTROLLER FOR THE DISCOVER/SWIPE VIEW
+.controller('DiscoverCtrl', function($scope, $timeout, $ionicLoading, User, Recommendations, TDCardDelegate) {
+
   console.log('Loaded the DiscoverCtrl controller');
   
-  // Loading Spinner
-  function showLoading()
-  {
-	  $ionicLoading.show({
-				// template: 'Loading...' + text
-				//templateUrl: 'templates/loading.html',
-				//noBackdrop: true,		 
-				template: '<ion-spinner icon="spiral"></ion-spinner><br /><span>Insert text for occasion.</span>'
-		});  
-  }
   
-  function hideLoading()
-  {
-	  $ionicLoading.hide();
-  }
-
-  showLoading();
   
   
   /*
@@ -92,14 +122,14 @@ angular.module('datespot.controllers', ['ionic', 'datespot.userservices', 'dates
 		  
 		  console.log('The current spot is....');
 		  console.log($scope.currentSpot);	  
-		  hideLoading();
+		  
 		 console.log('The recommended queue length is: ' + Recommendations.queue.length);
 		// console.log('Length is:');
 		// console.log(Recommendations.queue.length);
 		
 	  // Go through the database and add cards
 	 //for(var i = 0; i < Recommendations.queue.length; i++) $scope.addCard(i);
-	  for(var i = 0; i < 5; i++) $scope.addCard(i); // HACK: only load the first 25 from the database right now
+	  for(var i = 0; i < 25; i++) $scope.addCard(i); // HACK: only load the first 25 from the database right now
 	  
 	  
 	  console.log('Finished adding cards');		
@@ -170,11 +200,6 @@ angular.module('datespot.controllers', ['ionic', 'datespot.userservices', 'dates
 	
   };
   
-    $scope.test2 = function() {
-    console.log('testing 123');
-  };
-  
-  
 })
 
 
@@ -221,11 +246,11 @@ angular.module('datespot.controllers', ['ionic', 'datespot.userservices', 'dates
 
 
 // CONTROLLER FOR LISTING OF OCCASION TYPES ON SEACH VIEW
-.controller('SearchCtrl', function($scope, $ionicLoading) {
+.controller('OccasionCtrl', function($scope, $ionicPopup) {
 	
  console.log('Loaded the OccasionCtrl controller');
 
- $scope.items = [{
+  $scope.items = [{
       name: "First Date",
       id: "firstdate",
       tag: "She said 'yes.' Choose a place that'll impress.",
@@ -282,47 +307,18 @@ angular.module('datespot.controllers', ['ionic', 'datespot.userservices', 'dates
       url: "/img/cheapeats.png"
      },
      {
-       name: "Hens night",
+       name: "Hen night",
        id: "hennight",
        tag: "Something informal with friends in pubs, bars or clubs.",
        url: "/img/hennight.jpg"
      },
      {
-       name: "Stag night",
+       name: "stag night",
        id: "stagnight",
        tag: "Something informal with friends in pubs, bars or clubs.",
        url: "/img/stagnight.jpeg"
     }];
-		
-	// Function runFilter
-	$scope.runFilter = function (id) {  
-	 
-		// To be expanded and perform the jSON query when
-		// the user has changed the search parameters
-		console.log('Runfilter clicked!'); 
-		
-		$ionicLoading.show({
-			// template: 'Loading...' + text
-			//templateUrl: 'templates/loading.html',
-			//noBackdrop: true,		 
-			template: '<ion-spinner icon="spiral"></ion-spinner><br /><span>Insert text for ' + id + ' occasion.</span>'
-	});
-	
-	/*
-	$scope.save = function() {
-	  $state.go('shortlist');
-	};
-	*/
-	
-  } // end runFilter
-  
-  
-  
-  
-  
-  
-  
-}) // end SearchCtrl
+})
 
 
 
@@ -369,36 +365,3 @@ angular.module('datespot.controllers', ['ionic', 'datespot.userservices', 'dates
       // error
     });
 });
-
-
-
-/*
-// CONTROLLER FOR THE SPLASH PAGE 
-.controller('SplashCtrl', function($scope, $state, User) {
-	
-  console.log('Loaded the SplashCtrl controller');
-
-	
-  $scope.submitForm = function (username, signingUp) {
-    User.auth(username, signingUp).then(function(){
-      $state.go('discover');
-    }, function() {
-      alert('Hmmm... try another username.');
-    });
-  }
-})
-
-// CONTROLLER FOR NAVIGATION BUTTONS
-.controller('ButtonCtrl', function($scope, User) {
-	
-  console.log('Loaded the ButtonCtrl controller');
-
-  
-  $scope.rightButtons = [{
-    type: 'button-clear',
-    content: 'Shortlist',
-    tap: function(e) {}
-  }];
-})
-*/
-

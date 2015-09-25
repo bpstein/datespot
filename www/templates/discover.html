@@ -1,18 +1,9 @@
-<ion-view view-title="Discover" class="discover-page">
-  <ion-nav-buttons side="right">
-    <a class="button button-icon ion-bookmark" 
-      ng-href="#/shortlist"
-      badge="shortlistCount()"
-      badge-style="badge-assertive"
-      on-select="enteringShortlist"
-      on-deselect="leavingShortlist">
-    </a>
-  </ion-nav-buttons>
-  
+
+<ion-view view-title="Discover" class="discover-page"> 
   <ion-content scroll="false">
   
         <td-cards>
-        <td-card ng-repeat="card in cards" on-destroy="cardDestroyed($index)" on-swipe-left="cardSwipedLeft($index)" on-swipe-right="cardSwipedRight($index)" on-partial-swipe="cardPartialSwipe(amt)" class="card-{{$index}}">
+        <td-card ng-repeat="card in cards" on-destroy="cardDestroyed($index)" on-swipe-left="cardSwipedLeft($index)" on-swipe-right="cardSwipedRight($index)" on-partial-swipe="cardPartialSwipe(amt)" class="card-{{$index}}" ng-click="test2()">
 		
 		 <div class="image"><img ng-src="{{card.image_url}}"></div> 
 		 
