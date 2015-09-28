@@ -198,13 +198,13 @@ angular.module('datespot.controllers', ['ionic', 'datespot.userservices', 'dates
       name: "Fancy a drink?",
       id: 2,
       tag: "Hip spots to grab a drink with a date or friend.",
-      url: "https://s3-us-west-1.amazonaws.com/datespot/occasions/justdrinks.jpg"
+      url: "img/justdrinks.jpg"
   },
      {
       name: "Dinner date",
       id: 3,
       tag: "Suave restaurants, tasty treats and cheap eats.",
-      url: "https://s3-us-west-1.amazonaws.com/datespot/occasions/dinnerdate.jpg"
+      url: "img/dinnerdate.jpg"
   },
     {
       name: "Brunch or coffee",
@@ -224,7 +224,7 @@ angular.module('datespot.controllers', ['ionic', 'datespot.userservices', 'dates
       name: "Let's get weird",
       id: 6,
       tag: "Something informal with friends in pubs, bars or clubs.",
-      url: "img/letsgetweird.png"
+      url: "img/letsgetweird.jpg"
     },
 
     {

@@ -1,0 +1,68 @@
+/*************************
+/* LOADING PAGE STYLING */
+/************************/
+
+.loadingPage {
+  background-color: #FFF;
+}
+
+.loadingMessage {
+  font-size: 14px;
+  color: #f3f3f3;
+   -webkit-box-ordinal-group: 1;
+    -moz-box-ordinal-group: 1;
+    -webkit-order: 0;
+    -ms-flex-order: 0;
+    order: 0;
+    -webkit-box-flex: 0;
+    -moz-box-flex: 0;
+    -webkit-flex: 0 1 auto;
+    -ms-flex: 0 1 auto;
+    flex: 0 1 auto;
+    -webkit-align-self: stretch;
+    -ms-flex-item-align: stretch;
+    align-self: stretch;
+}
+
+/***********************
+/* HEART ICON STYLING */
+/**********************/
+
+.heart {
+  margin-top: 90px;
+  font-size:  70px;
+  text-align: center;
+  color: #e74c3c;
+  animation: beat 1s infinite;
+}
+
+@keyframes beat {
+  from {
+    transform: scale(1);
+    transform-origin: center center;
+    animation-timing-function: ease-out;
+  }
+  10% {
+    transform: scale(1.1);
+    animation-timing-function: ease-in;
+  }
+  15% {
+    transform: scale(1);
+    animation-timing-function: ease-out;
+  }
+  25% {
+    transform: scale(1.05);
+    animation-timing-function: ease-in;
+  }
+  35% {
+    transform: scale(1);
+    animation-timing-function: ease-out;
+  }
+}
+
+
+
+
+
+
+
