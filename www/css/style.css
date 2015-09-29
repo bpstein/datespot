@@ -89,7 +89,7 @@
 /**********************/
 
 .item-complex .item-content {
-  background-color: rgba(0,0,0,0.15);
+  background-color: rgba(0,0,0,0.30);
   border: none;
   border: transparent !important;
   border-top: none;
@@ -98,7 +98,7 @@
 }
 
 .item-complex .item-content:hover {
-  background: rgba(0, 0, 0, 0.65) !important;
+  background: rgba(0, 0, 0, 0.6) !important;
   border: transparent !important;
 }
 
@@ -110,7 +110,7 @@
 }
 
 .item.active, .item.activated, .item-complex.active .item-content, .item-complex.activated .item-content {
-  border-color: #ccc;
+  border-color: none;
   background-color: #FFF;
   border-top: none;
   border-bottom:none
@@ -137,7 +137,7 @@
   -webkit-background-size: cover;
   -moz-background-size: cover;
   -o-background-size: cover;
-  border: none;
+  border: 1px solid #333;
 }
 
 .occasionHeader {

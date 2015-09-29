@@ -198,19 +198,20 @@ angular.module('datespot.controllers', ['ionic', 'datespot.userservices', 'dates
       name: "Fancy a drink?",
       id: 2,
       tag: "Hip spots to grab a drink with a date or friend.",
-      url: "img/justdrinks.jpg"
+      url: "img/justdrinks2.jpg"
   },
      {
       name: "Dinner date",
       id: 3,
       tag: "Suave restaurants, tasty treats and cheap eats.",
-      url: "img/dinnerdate.jpg"
+      url: "img/dinnerdate2.jpg"
   },
     {
       name: "Brunch or coffee",
       id: 4,
       tag: "Casual coffee or brunch ideas.",
-      url: "https://s3-us-west-1.amazonaws.com/datespot/occasions/M1LK-Sweetcorn-fritters-bacon-862x575.jpg"
+      url: "img/brunch2.jpg"
+      // "https://s3-us-west-1.amazonaws.com/datespot/occasions/M1LK-Sweetcorn-fritters-bacon-862x575.jpg"
     },
 
     {
@@ -243,7 +244,7 @@ angular.module('datespot.controllers', ['ionic', 'datespot.userservices', 'dates
       name: "Cheap eats",
       id: 9,
       tag: "Something informal with friends in pubs, bars or clubs.",
-      url: "/img/cheapeats.png"
+      url: "/img/cheapeats.jpg"
     // },
     // {
     //   name: "Hen night",
