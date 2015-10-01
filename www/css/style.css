@@ -225,273 +225,6 @@
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-/*.cardBackground {
-  background-color: #222;
-  border: none;
-}
-
-.tabs-secondary {
-  margin-top: -10px;
-  background-color: transparent;
-  border: none;
-}
-
-.tab-item {
-  background-color: #000;
-}
-
-.current-spot, .list .card {
-  border-radius: 10px 10px 0px 0px;
-  background: no-repeat center;
-  background-color: ;
-  background-size: cover!important;
-}
-
-.swipeImage {
-  width: auto;
-  height: 320px;
-  background: no-repeat center;
-  background-size: cover!important;
-  -webkit-background-size: cover!important;
-  -webkit-background-size: cover;
-  -moz-background-size: cover;
-  -o-background-size: cover;
-}
-
-.spotInfo {
-  margin-top: 388px;
-  margin-left: -1px;
-  bottom: 0;
-  height: 80px;
-  width: 382px;
-  background-color: #f3f3f3;
-  border-radius: 0px 0px 10px 10px; 
-  border: none;
-  text-align: center;
-  font-family: 'Varela Round';
-  word-wrap: word-break;
-}
-
-.ng-binding {
-  font-family: 'Varela Round';
-}*/
-
-/*.cardCanvas, .cardBack {
-  background-color: #444;
-}*/
-
-/*.discover-page .current-spot {
-  -webkit-transform: scale(1);
-  -ms-transform: scale(1);
-  transform: scale(1);
-  opacity: 1;
-  -webkit-transition:all cubic-bezier(0.420, 0.000, 1.000, 1.000) 0.1s;
-  transition:all cubic-bezier(0.420, 0.000, 1.000, 1.000) 0.1s;
-}
-
-.tab-item .activated {
-  background-color: #000;
-}
-
-.discover-page .current-spot .item-image {
-  max-height:300px;
-  overflow:hidden;
-}
-
-@media screen and (max-height: 600px) {
-  .discover-page .current-spot .item-image {
-    max-height:200px;
-    overflow:hidden;
-  }
-}
-
-.discover-page .current-spot.shortlisted.ng-hide {
-  -webkit-transform: translateX(1000px) rotate(50deg);
-  -ms-transform: translateX(1000px) rotate(50deg);
-  transform: translateX(1000px) rotate(50deg);
-  opacity:0;
-}
-
-.discover-page .current-spot.skipped.ng-hide {
-  -webkit-transform: translateX(-1000px) rotate(-50deg);
-  -ms-transform: translateX(-1000px) rotate(-50deg);
-  transform: translateX(-1000px) rotate(-50deg);
-  opacity:0;
-}
-
-.discover-page .current-spot.ng-hide-add {
-  -webkit-transition:all cubic-bezier(0.420, 0.000, 1.000, 1.000) 0.3s;
-  transition:all cubic-bezier(0.420, 0.000, 1.000, 1.000) 0.3s;
-  display:block!important;
-}
-
-.discover-page .current-spot.ng-hide-remove {
-  -webkit-transform: scale(0.7) translateX(0px) rotate(0deg);
-  -ms-transform: scale(0.7) translateX(0px) rotate(0deg);
-  transform: scale(0.7) translateX(0px) rotate(0deg);
-  opacity: 0;
-}
-
-.discover-page .img-lookahead img {
-  height:1px;
-  width:1px;
-  opacity:0.01;
-}*/
-
-
-/* Card styling */
- 
-/*td-cards {
-    display: block;*/
-/*    margin-top: -5px;
-*//*}*/
- 
-/*td-card {
-    position: absolute;
-    left: 50%;
-    margin: 80px 30px 20px -215px;
-    width: 300px;
-    height: 280px;
-    border: transparent;
-    background-color: transparent;
-}
-
-.swipe-card {
-  height: 380px;
-  margin-left: 25px;
-  margin-top: -10px;
-}
-
-.swipeImage {
-  background: no-repeat center;
-  background-size: cover!important;
-  -webkit-background-size: cover!important;
-  -webkit-background-size: cover;
-  -moz-background-size: cover;
-  -o-background-size: cover;
-}
-
-.current-spot {
-  height: 320px;
-  width: 380px;
-  margin: 0 auto;
-  background-color: #f3f3f3;
-}
- 
-.td-card .title {
-    height: 40px;
-    font-size: 15px;
-    padding: 15px;
-}
- 
-td-card .image {
-    position: absolute;
-    top: 40px;
-    width: 100%;
-}
- 
-td-card img {
-    height: 258px;
-    width: 100%;
-    border-radius: 10px 10px 0px 0px;
-    border-color: #f3f3f3;
-}*/
- 
-/* Overlay styling*/
- 
-/*.overlayBox {
-    position: absolute;
-    left: 50%;
-    height: 98%;
-    width: 100%;
-    top: -80px;
-    opacity: 0;
-    margin: 80px 0 0 -149px;
-}
- 
-.boxed {
-    height: 50px;
-    width: 100px;
-    padding: 10px;
-    border-radius: 6px;
-    font-size: 30px;
-}
- 
-.yes-text {
-    background-color: rgba(0,256,0,0.2);
-}
- 
-.yesBox {
-    margin: 10% 60% 0% 10%;
-    border: 2px solid #00FF00;
-    color: rgb(0, 256, 0);
-    -webkit-transform: rotate(-25deg);
-}*/
- 
-/*.no-text {
-    background-color: rgba(256,0,0,0.2);
-}
- 
-.noBox {
-    margin: 10% 10% 0% 60%;
-    border: 2px solid #FF0000;
-    color: rgb(256, 0, 0);
-    -webkit-transform: rotate(25deg);
-}
- 
-.fade {
-    -webkit-transition: 0.2s opacity linear;
-    transition: 0.2s opacity linear;
-    opacity: 0;
-}*/
-
-/*@-webkit-keyframes bounceIn {
-  0% {
-    -webkit-transform: scale(0,0);
-  }
-  70% {
-    -webkit-transform: scale(1.2,1.2);
-  }
-  100% {
-    -webkit-transform: scale(1,1);
-  }
-}
-
-.td-card.pop-in-start {
-  -webkit-transform: scale(0,0);
-}
-.td-card.pop-in {
-  -webkit-animation: bounceIn 0.4s ease-out;
-}*/
-
-
 /***************************
 /* SHORTLIST PAGE STYLING */
 /**************************/
@@ -656,3 +389,94 @@ td-card img {
   font-family: 'Varela Round';
   color: #444;
 }
+
+
+
+/*************************************
+/* VENUE CARDS PAGE STYLING !        */
+/*************************************/
+
+.background-image-card-test {
+  width: auto;
+  height: auto;
+  background: no-repeat center;
+  background-size: cover!important;
+  -webkit-background-size: cover!important;
+  -webkit-background-size: cover;
+  -moz-background-size: cover;
+  -o-background-size: cover;
+}
+
+.spotInfo {
+  margin-top: 388px;
+  margin-left: 5px;
+  margin-right: 5px;
+  padding: 5px;
+  background-color: #f3f3f3;
+  border-radius: 0px 0px 10px 10px; 
+  border: none;
+  text-align: center;
+  font-family: 'Varela Round';
+  word-wrap: word-break;
+}
+
+.ng-binding {
+  font-family: 'Varela Round';
+}
+
+
+
+
+td-cards {
+  display: block;
+
+}
+
+/* absoulte size */
+/*
+td-card {
+
+  position: absolute;
+  left: 50%;
+  margin-top: 40px;
+  margin-bottom: 40px;
+  margin-left: -150px;
+  width: 320px;
+  height: 320px;
+
+  border: 1px solid #999;
+  box-shadow: 0px 1px 3px rgba(0,0,0,0.2);
+  border-radius: 6px;
+}
+*/
+
+/* grant's auto size */
+td-card {
+  margin:10px;
+  width: auto;
+  height: auto;
+
+}
+
+
+
+td-card .image {
+   position: relative; 
+}
+
+td-card img {
+  max-width: 100%;
+  border-radius: 6px;
+}
+
+.fade {
+  -webkit-transition: 0.2s opacity linear;
+  transition: 0.2s opacity linear;
+  opacity: 0;
+}
+
+.no-text { }
+
+.yes-text {  }
+
+

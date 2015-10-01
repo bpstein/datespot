@@ -4,8 +4,9 @@
  * 'datespot' is the name of the angular module example (also set in a <body> attribute in index.html)
  * the 2nd parameter is an array of 'requires'
  */
-
-angular.module('datespot', ['ionic', 'datespot.controllers', 'datespot.services', 'ionic.contrib.ui.tinderCards'])
+ 
+console.log('LOADED APP.JS');
+angular.module('datespot', ['ionic', 'datespot.controllers', 'datespot.services', 'ionic.contrib.ui.tinderCards', 'ngCordova'])
 
 .run(function($ionicPlatform) {
   $ionicPlatform.ready(function() {
@@ -20,11 +21,12 @@ angular.module('datespot', ['ionic', 'datespot.controllers', 'datespot.services'
         StatusBar.styleLightContent();
       }
   });
-})
+});
+
+
+
 
 angular.module('datespot', ['ionic', 'datespot.controllers'])
-
-
 
 /* 
  * GUI State Provider Code - Link the various tabs to the relevant
@@ -55,9 +57,9 @@ angular.module('datespot', ['ionic', 'datespot.controllers'])
     templateUrl: 'templates/search.html',
     controller: 'SearchCtrl'
   })
-
+  
   .state('discover', {
-    url: '/discover',
+    url: '/discover/:id',
     templateUrl: 'templates/discover.html',
     controller: 'DiscoverCtrl'
   })
@@ -96,20 +98,7 @@ angular.module('datespot', ['ionic', 'datespot.controllers'])
 })
 
 .constant('SERVER', {
-
-  // DateSpot Public URL
-  //url: 'http://192.168.0.17'
-  
+	
   url: 'http://ds.urandom.info'
-  
+
 });
-
-// var $range = $(".js-range-slider");
-
-// $range.ionRangeSlider({
-//     type: "single",
-//     postfix: " $",
-//     grid: true,
-//     values: ["7.5", "15", "35", "65", "99", "125", "150", "199", "299", "399", "499"]
-// });
-

@@ -14,7 +14,7 @@ body    {
       /*  background-image: url('background.jpg'); */
 	    background-repeat:repeat-x; 
 		background-position:left top;	
-		background-color: #aaa;
+		background-color: #85A3FF;
         margin: 15px;
 	
 }
@@ -22,7 +22,7 @@ body    {
 /* Additions */
 
 
-th { background: #ccc; color: #fff; }
+th { background: #F0F5FF; color: #000; }
 br.clear { width: 100%; height: 0; clear: both; }
 
 
@@ -71,8 +71,8 @@ th a {
 	/* Box Style */
     border-radius: 0.4em;	
 	background: #fff; 
-    opacity:0.8;
-    filter:alpha(opacity=85); /* For IE8 and earlier */
+   /* opacity:0.8;
+    filter:alpha(opacity=85);  For IE8 and earlier */
 	
     box-shadow: 
         inset 0 0 2px 1px rgba(255,255,255,0.08), 

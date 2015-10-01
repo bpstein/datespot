@@ -50,7 +50,9 @@ angular.module('datespot.userservices', [])
   
 }) // notice the termination here, as we're terminating the factory ONLY
 
-// Recommendations Factory
+
+/*
+// Test factory
 .factory('FactoryFuck', function() {
 	
     console.log('Loaded the FactoryFuck Factory');	
@@ -63,8 +65,12 @@ angular.module('datespot.userservices', [])
 	}
 		
 }) // notice the termination here, as we're terminating the factory AND the module! Extra ';'
-
+*/
+/*
 .factory('Spots', function() {
+	
+	console.log('Loaded the Spots Factory');
+	  
 	var spots = [{
 
 	}];
@@ -86,17 +92,19 @@ angular.module('datespot.userservices', [])
 		}
 	};
 });
+*/
 
 /* DateSpot Angular Module *******************************************
  * 
  * 	name 	:	datespot.jsonservices
  *  purpose	:   Datespot JSON Services, contains the following
- * 				factories: Recommendations, GetImage
+ * 				factories: Recommendations
  **********************************************************************/
  
 angular.module('datespot.jsonservices', [])
 .factory('Recommendations', function($http, SERVER) {
 	
+
   console.log('Loaded the Recommendations Factory');	
   console.log('The Server Address is at: ' + SERVER.url);
   
@@ -105,6 +113,8 @@ angular.module('datespot.jsonservices', [])
     queue: [],
     newShortlist: 0
   }
+  
+  console.log(o);
 
   // Function: Get Venues 
   o.getVenues = function() {
@@ -135,11 +145,16 @@ angular.module('datespot.jsonservices', [])
 		//o.queue = o.queue.concat(data.points); // get the array of 'points'
 
 		// OK so we've apparently received something here, we need to loop through the results
-		console.log('Looping through results...');
+		console.log('Receiving the results from the server.');
+		
+		/*
+		var counter = 0;
 		for(i in data.points) 
 		{	
-			console.log(data.points[i]);
+		console.log(++counter);
+			//console.log(data.points[i]);
 		}
+		*/
 	 	
 	 // console.log(data.points); 
     });
@@ -152,6 +167,9 @@ angular.module('datespot.jsonservices', [])
     // pop the index 0 off
     o.queue.shift();
 
+	// http://learn.ionicframework.com/formulas/infinite-lists/
+	
+	
     // low on the queue? lets fill it up
     if (o.queue.length <= 3) {
      // o.getVenues(); // we don't do this as our JSON provides all venues currently
@@ -162,6 +180,13 @@ angular.module('datespot.jsonservices', [])
   return o;
   
 });
+
+
+
+// TODO: Local Storage
+// http://learn.ionicframework.com/formulas/localstorage/
+
+
 
 
 

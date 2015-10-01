@@ -256,7 +256,7 @@ class ClientHandler
         // We'll be outputting an image of type.... like a JPEG
         header('Content-Type: '. $image_data['venue_image_data_format']);
 		
-		echo $image_data['venue_image_thumbnail_data'];
+		echo $image_data['venue_image_data_resized_square'];
 
 		return true;
 
