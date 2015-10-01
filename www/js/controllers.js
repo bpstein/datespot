@@ -41,52 +41,6 @@ angular.module('datespot.controllers', ['ionic', 'datespot.userservices', 'dates
 
 
 
-
-// DIRECTIVE FOR SHRINKING HEADER ON SCROLL 
-// .directive('headerShrink', function($document) {
-//   var fadeAmt;
-
-//   var shrink = function(header, content, amt, max) {
-//     amt = Math.min(44, amt);
-//     fadeAmt = 1 - amt / 44;
-//     ionic.requestAnimationFrame(function() {
-//       header.style[ionic.CSS.TRANSFORM] = 'translate3d(0, -' + amt + 'px, 0)';
-//       for(var i = 0, j = header.children.length; i < j; i++) {
-//         header.children[i].style.opacity = fadeAmt;
-//       }
-//     });
-//   };
-
-//   return {
-//     restrict: 'A',
-//     link: function($scope, $element, $attr) {
-//       var starty = $scope.$eval($attr.headerShrink) || 0;
-//       var shrinkAmt;
-      
-//       var header = $document[0].body.querySelector('.bar-header');
-//       var headerHeight = header.offsetHeight;
-      
-//       $element.bind('scroll', function(e) {
-//         var scrollTop = null;
-//         if(e.detail){
-//           scrollTop = e.detail.scrollTop;
-//         }else if(e.target){
-//           scrollTop = e.target.scrollTop;
-//         }
-//         if(scrollTop > starty){
-//           // Start shrinking
-//           shrinkAmt = headerHeight - Math.max(0, (starty + headerHeight) - scrollTop);
-//           shrink(header, $element[0], shrinkAmt, headerHeight);
-//         } else {
-//           shrink(header, $element[0], 0, headerHeight);
-//         }
-//       });
-//     }
-//   }
-// })
-
-
-
 // CONTROLLER FOR THE SEARCH VIEW
 .controller('SearchCtrl', function($scope, User) {
   $scope.runFilter = function (bool) {  
@@ -303,18 +257,22 @@ angular.module('datespot.controllers', ['ionic', 'datespot.userservices', 'dates
       name: "First Date",
       id: "firstdate",
       tag: "She said 'yes.' Choose a place that'll impress.",
-      url: "img/firstdate.jpg"
-      // url: "https://s3-us-west-1.amazonaws.com/datespot/occasions/firstdate2.jpg"
+      url: "https://s3-us-west-1.amazonaws.com/datespot/occasions/firstdate2.jpg"
   }, {
 <<<<<<< HEAD
+<<<<<<< HEAD
       name: "Dinner date",
+=======
+      name: "Fancy a drink?",
+>>>>>>> parent of 9d530dc... Compressed ioccasion imagesn images for faster load
       id: 2,
-      tag: "Suave restaurants, tasty treats and cheap eats.",
-      url: "img/dinnerdate2.jpg"
+      tag: "Hip spots to grab a drink with a date or friend.",
+      url: "img/justdrinks2.jpg"
   },
      {
-      name: "Fancy a drink?",
+      name: "Dinner date",
       id: 3,
+<<<<<<< HEAD
       tag: "Hip spots to grab a drink with a date or friend.",
       url: "img/justdrinks.jpg"
 =======
@@ -329,14 +287,11 @@ angular.module('datespot.controllers', ['ionic', 'datespot.userservices', 'dates
       tag: "Suave restaurants, tasty treats and cheap eats.",
       url: "https://s3-us-west-1.amazonaws.com/datespot/occasions/dinnerdate.jpg"
 >>>>>>> 3d15cb28ea5c87f3d20fafdf3573140f5dd7314d
+=======
+      tag: "Suave restaurants, tasty treats and cheap eats.",
+      url: "img/dinnerdate2.jpg"
+>>>>>>> parent of 9d530dc... Compressed ioccasion imagesn images for faster load
   },
-    {
-      name: "Cheap eats",
-      id: 4,
-      tag: "Something informal with friends in pubs, bars or clubs.",
-      url: "/img/cheapeats.jpg"
-    },
-
     {
       name: "Brunch or coffee",
       id: "brunch",
@@ -347,14 +302,19 @@ angular.module('datespot.controllers', ['ionic', 'datespot.userservices', 'dates
 
     {
 <<<<<<< HEAD
+<<<<<<< HEAD
       name: "Fun in the sun",
       id: 8,
 =======
       name: "Fun with friends",
       id: "friends",
 >>>>>>> 3d15cb28ea5c87f3d20fafdf3573140f5dd7314d
+=======
+      name: "Fun with friends",
+      id: 5,
+>>>>>>> parent of 9d530dc... Compressed ioccasion imagesn images for faster load
       tag: "Something informal with friends in pubs, bars or clubs.",
-      url: "/img/funinthesun.jpg"
+      url: "img/funwithfriends.jpg"
     },
 
     {
@@ -364,6 +324,7 @@ angular.module('datespot.controllers', ['ionic', 'datespot.userservices', 'dates
 <<<<<<< HEAD
       url: "img/letsgetweird.jpg"
     },
+<<<<<<< HEAD
     {
       name: "Fun with friends",
       id: 5,
@@ -384,12 +345,27 @@ angular.module('datespot.controllers', ['ionic', 'datespot.userservices', 'dates
       tag: "Something informal with friends in pubs, bars or clubs.",
       url: "img/funwithfriends.jpg"
     },
+=======
+
+>>>>>>> parent of 9d530dc... Compressed ioccasion imagesn images for faster load
     {
 <<<<<<< HEAD
       name: "Go all out",
       id: 7,
       tag: "Something informal with friends in pubs, bars or clubs.",
       url: "https://s3-us-west-1.amazonaws.com/datespot/occasions/goallout.jpg"
+    },
+    {
+      name: "Fun in the sun",
+      id: 8,
+      tag: "Something informal with friends in pubs, bars or clubs.",
+      url: "/img/somethingsunny.jpg"
+    },
+    {
+      name: "Cheap eats",
+      id: 9,
+      tag: "Something informal with friends in pubs, bars or clubs.",
+      url: "/img/cheapeats.jpg"
     // },
     // {
     //   name: "Hen night",

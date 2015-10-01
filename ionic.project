@@ -1,6 +1,10 @@
 {
   "name": "datespot",
+<<<<<<< HEAD
   "app_id": "",
+=======
+  "app_id": "d6d8da87",
+>>>>>>> parent of 9d530dc... Compressed ioccasion imagesn images for faster load
   "gulpStartupTasks": [
     "sass",
     "watch"
