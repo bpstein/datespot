@@ -34,6 +34,52 @@ angular.module('datespot.controllers', ['ionic', 'datespot.userservices', 'dates
 
 
 
+
+// DIRECTIVE FOR SHRINKING HEADER ON SCROLL 
+// .directive('headerShrink', function($document) {
+//   var fadeAmt;
+
+//   var shrink = function(header, content, amt, max) {
+//     amt = Math.min(44, amt);
+//     fadeAmt = 1 - amt / 44;
+//     ionic.requestAnimationFrame(function() {
+//       header.style[ionic.CSS.TRANSFORM] = 'translate3d(0, -' + amt + 'px, 0)';
+//       for(var i = 0, j = header.children.length; i < j; i++) {
+//         header.children[i].style.opacity = fadeAmt;
+//       }
+//     });
+//   };
+
+//   return {
+//     restrict: 'A',
+//     link: function($scope, $element, $attr) {
+//       var starty = $scope.$eval($attr.headerShrink) || 0;
+//       var shrinkAmt;
+      
+//       var header = $document[0].body.querySelector('.bar-header');
+//       var headerHeight = header.offsetHeight;
+      
+//       $element.bind('scroll', function(e) {
+//         var scrollTop = null;
+//         if(e.detail){
+//           scrollTop = e.detail.scrollTop;
+//         }else if(e.target){
+//           scrollTop = e.target.scrollTop;
+//         }
+//         if(scrollTop > starty){
+//           // Start shrinking
+//           shrinkAmt = headerHeight - Math.max(0, (starty + headerHeight) - scrollTop);
+//           shrink(header, $element[0], shrinkAmt, headerHeight);
+//         } else {
+//           shrink(header, $element[0], 0, headerHeight);
+//         }
+//       });
+//     }
+//   }
+// })
+
+
+
 // CONTROLLER FOR THE SEARCH VIEW
 .controller('SearchCtrl', function($scope, User) {
   $scope.runFilter = function (bool) {  
@@ -193,19 +239,27 @@ angular.module('datespot.controllers', ['ionic', 'datespot.userservices', 'dates
       name: "First Date",
       id: 1,
       tag: "She said 'yes.' Choose a place that'll impress.",
-      url: "https://s3-us-west-1.amazonaws.com/datespot/occasions/firstdate2.jpg"
+      url: "img/firstdate.jpg"
+      // url: "https://s3-us-west-1.amazonaws.com/datespot/occasions/firstdate2.jpg"
   }, {
-      name: "Fancy a drink?",
-      id: 2,
-      tag: "Hip spots to grab a drink with a date or friend.",
-      url: "img/justdrinks2.jpg"
-  },
-     {
       name: "Dinner date",
-      id: 3,
+      id: 2,
       tag: "Suave restaurants, tasty treats and cheap eats.",
       url: "img/dinnerdate2.jpg"
   },
+     {
+      name: "Fancy a drink?",
+      id: 3,
+      tag: "Hip spots to grab a drink with a date or friend.",
+      url: "img/justdrinks.jpg"
+  },
+    {
+      name: "Cheap eats",
+      id: 4,
+      tag: "Something informal with friends in pubs, bars or clubs.",
+      url: "/img/cheapeats.jpg"
+    },
+
     {
       name: "Brunch or coffee",
       id: 4,
@@ -215,10 +269,10 @@ angular.module('datespot.controllers', ['ionic', 'datespot.userservices', 'dates
     },
 
     {
-      name: "Fun with friends",
-      id: 5,
+      name: "Fun in the sun",
+      id: 8,
       tag: "Something informal with friends in pubs, bars or clubs.",
-      url: "img/funwithfriends.jpg"
+      url: "/img/funinthesun.jpg"
     },
 
     {
@@ -227,24 +281,17 @@ angular.module('datespot.controllers', ['ionic', 'datespot.userservices', 'dates
       tag: "Something informal with friends in pubs, bars or clubs.",
       url: "img/letsgetweird.jpg"
     },
-
+    {
+      name: "Fun with friends",
+      id: 5,
+      tag: "Something informal with friends in pubs, bars or clubs.",
+      url: "img/funwithfriends.jpg"
+    },
     {
       name: "Go all out",
       id: 7,
       tag: "Something informal with friends in pubs, bars or clubs.",
       url: "https://s3-us-west-1.amazonaws.com/datespot/occasions/goallout.jpg"
-    },
-    {
-      name: "Fun in the sun",
-      id: 8,
-      tag: "Something informal with friends in pubs, bars or clubs.",
-      url: "/img/somethingsunny.jpg"
-    },
-    {
-      name: "Cheap eats",
-      id: 9,
-      tag: "Something informal with friends in pubs, bars or clubs.",
-      url: "/img/cheapeats.jpg"
     // },
     // {
     //   name: "Hen night",

@@ -123,8 +123,8 @@
 }
 
 .occasionInfo {
-  height: 155px; 
-  line-height: 155px;
+  height: 175px; 
+  line-height: 175px;
   padding: 0px;
   text-align: center;
   background-size: cover;
@@ -148,7 +148,7 @@
   font-family: 'Varela Round';
   font-size: 30px;
   color: #fff;
-  text-shadow: 2px 2px #222;
+  text-shadow: 1px 1px #222;
 }
 
 .occasionTagline {
@@ -506,7 +506,11 @@ td-card img {
   -o-background-size: cover;
   height: 240px;
   width: 400px;
-  border: black;
+  -webkit-background-size: cover!important;
+  -webkit-background-size: cover;
+  -moz-background-size: cover;
+  -o-background-size: cover;
+  border: 1px solid #333;
 }
 
 .shortlistInfo:before {
