@@ -15,48 +15,25 @@ angular.module('datespot.controllers', ['ionic', 'datespot.userservices', 'dates
 	
   console.log('Loaded the DiscoverCtrl controller');
   
-  // Loading Spinner
+  // Show the loading page.
   function showLoading()
   {
 	  $ionicLoading.show({
 				// template: 'Loading...' + text
-				//templateUrl: 'templates/loading.html',
+				templateUrl: 'templates/loading.html'
 				//noBackdrop: true,		 
-				template: '<ion-spinner icon="spiral"></ion-spinner><br /><span>Insert text for occasion.</span>'
+				//template: '<div class="heart"><i class="icon ion-heart"></i></div><div class="loadingMessage">Seducing...</div>'
 		});  
   }
-})
 
-
-
-// CONTROLLER FOR NAVIGATION BUTTONS
-.controller('ButtonCtrl', function($scope, User) {
-  $scope.rightButtons = [{
-    type: 'button-clear',
-    content: 'Shortlist',
-    tap: function(e) {}
-  }];
-})
-
-
-
-// CONTROLLER FOR THE SEARCH VIEW
-.controller('SearchCtrl', function($scope, User) {
-  $scope.runFilter = function (bool) {
-    // To be expanded and to perform the jSON query when the user has changed search parameters
-    console.log('Runfilter clicked!');
-
-    $scope.save = function() {
-      $state.go('shortlist');
-    };
-
-    function hideLoading() {
-      $ionicLoading.hide();
-    }
-
-    showLoading();
+  // Hide the loading page.
+  function hideLoading()
+  {
+	  $ionicLoading.hide();
   }
-})
+
+  // We will load this page.
+  showLoading();
   
   
   /*
@@ -126,7 +103,11 @@ angular.module('datespot.controllers', ['ionic', 'datespot.userservices', 'dates
 	 //for(var i = 0; i < Recommendations.queue.length; i++) $scope.addCard(i);
 	  for(var i = 0; i < 5; i++) $scope.addCard(i); // HACK: only load the first 25 from the database right now
 	  
+	  
 	  console.log('Finished adding cards');		
+	  
+	 
+  
 	});
 	
 /*
@@ -138,63 +119,65 @@ angular.module('datespot.controllers', ['ionic', 'datespot.userservices', 'dates
   */
 
  
+
   // Remove a card from the stack
-//   $scope.cardDestroyed = function(index) {
+  $scope.cardDestroyed = function(index) {
 	  
-//     $scope.cards.splice(index, 1);
+    $scope.cards.splice(index, 1);
 	
-// 	console.log('Card was destroyed: ' + index);
+	console.log('Card was destroyed: ' + index);
 	
-// 	var lastcard = $scope.cards.length-1;
+	var lastcard = $scope.cards.length-1;
 	
-// 	console.log('That last card is now: ' + lastcard);
+	console.log('That last card is now: ' + lastcard);
 	
-// 	$scope.currentSpot = $scope.cards[lastcard]; // last card
+	$scope.currentSpot = $scope.cards[lastcard]; // last card
 	
-// 	console.log($scope.cards[lastcard]);
+	console.log($scope.cards[lastcard]);
 	
-//   };
+  };
 
-//   // Add a card to the stack
-//   $scope.addCard = function(id) {
+  // Add a card to the stack
+  $scope.addCard = function(id) {
 	  
-//    // var newCard = cardTypes[Math.floor(Math.random() * cardTypes.length)];
-//   //  newCard.id = Math.random();
-//   //  $scope.cards.unshift(angular.extend({}, newCard));
+   // var newCard = cardTypes[Math.floor(Math.random() * cardTypes.length)];
+  //  newCard.id = Math.random();
+  //  $scope.cards.unshift(angular.extend({}, newCard));
 	
 	
-// 	console.log('Adding card from Recommendations array of id: ' + id);
-// 	$scope.cards.unshift(angular.extend({}, Recommendations.queue[id]));
-//   }
+	console.log('Adding card from Recommendations array of id: ' + id);
+	$scope.cards.unshift(angular.extend({}, Recommendations.queue[id]));
+  }
   
-//  // for(var i = 0; i < 3; i++) $scope.addCard(1);
+ // for(var i = 0; i < 3; i++) $scope.addCard(1);
 
   
-//   // Spot Liked
-//   $scope.spotSwiped = function(index) {
-//     console.log('sweetswipe');
-//     var newSpot = // new spot data
-//     $scope.spots.push(newSpot);
-//     $scope.currentSpot.rated = true;
-//   };
+  // Spot Liked
+  $scope.spotSwiped = function(index) {
+    console.log('sweetswipe');
+    var newSpot = // new spot data
+    $scope.spots.push(newSpot);
+    $scope.currentSpot.rated = true;
+  };
   
 
-//   $scope.cardSwipedLeft = function(index) {
-//     console.log('LEFT SWIPE');
-//   //  $scope.addCard();
-//   };
+  $scope.cardSwipedLeft = function(index) {
+    console.log('LEFT SWIPE');
+  //  $scope.addCard();
+  };
   
-//   $scope.cardSwipedRight = function(index) {
-//     console.log('RIGHT SWIPE');
-//   //  $scope.addCard();
+  $scope.cardSwipedRight = function(index) {
+    console.log('RIGHT SWIPE');
+//    $scope.addCard();
 	
-//   };
+  };
   
-//     $scope.test2 = function() {
-//     console.log('testing 123');
-//   };
+    $scope.test2 = function() {
+    console.log('testing 123');
+  };
   
-// })
+  
+})
 
 
 
@@ -242,42 +225,30 @@ angular.module('datespot.controllers', ['ionic', 'datespot.userservices', 'dates
 // CONTROLLER FOR LISTING OF OCCASION TYPES ON SEACH VIEW
 .controller('SearchCtrl', function($scope, $ionicLoading) {
 	
-  console.log('Loaded the SearchCtrl controller');
+ console.log('Loaded the OccasionCtrl controller');
 
-  $scope.items = [
-
-    {
+ $scope.items = [{
       name: "First Date",
       id: "firstdate",
       tag: "She said 'yes.' Choose a place that'll impress.",
       url: "https://s3-us-west-1.amazonaws.com/datespot/occasions/firstdate2.jpg"
-    }, 
-
-    {
-      name: "Dinner date",
-      id: "dinnerdate",
-      tag: "Suave restaurants, tasty treats and cheap eats.",
-      url: "img/dinnerdate2.jpg"
-    },
-
+  }, {
       name: "Fancy a drink",
       id: "drinksonly",
       tag: "Hip spots to grab a drink with a date or friend.",
-      url: "img/justdrinks.jpg"
-    },
-
-    {
+      url: "https://s3-us-west-1.amazonaws.com/datespot/occasions/justdrinks.jpg"
+  },
+     {
       name: "Dinner date",
       id: "dinnerdate",
       tag: "Suave restaurants, tasty treats and cheap eats.",
-      url: "img/dinnerdate2.jpg"
-    },
-
+      url: "https://s3-us-west-1.amazonaws.com/datespot/occasions/dinnerdate.jpg"
+  },
     {
       name: "Brunch or coffee",
       id: "brunch",
       tag: "Casual coffee or brunch ideas.",
-      url: "img/brunch2.jpg"
+      url: "https://s3-us-west-1.amazonaws.com/datespot/occasions/M1LK-Sweetcorn-fritters-bacon-862x575.jpg"
     },
 
     {
@@ -291,7 +262,7 @@ angular.module('datespot.controllers', ['ionic', 'datespot.userservices', 'dates
       name: "Let's get weird",
       id: "activedate",
       tag: "Something informal with friends in pubs, bars or clubs.",
-      url: "img/letsgetweird.jpg"
+      url: "img/letsgetweird.png"
     },
 
     {
@@ -300,35 +271,30 @@ angular.module('datespot.controllers', ['ionic', 'datespot.userservices', 'dates
       tag: "Something informal with friends in pubs, bars or clubs.",
       url: "https://s3-us-west-1.amazonaws.com/datespot/occasions/goallout.jpg"
     },
-
     {
       name: "Fun in the sun",
       id: "funinthesun",
       tag: "Something informal with friends in pubs, bars or clubs.",
-      url: "img/funwithfriends.jpg"
+      url: "/img/somethingsunny.jpg"
     },
-
     {
       name: "Cheap eats",
       id: "cheapeat",
       tag: "Something informal with friends in pubs, bars or clubs.",
       url: "/img/cheapeats.png"
      },
-
      {
        name: "Hens night",
        id: "hennight",
        tag: "Something informal with friends in pubs, bars or clubs.",
        url: "/img/hennight.jpg"
      },
-
      {
        name: "Stag night",
        id: "stagnight",
        tag: "Something informal with friends in pubs, bars or clubs.",
-       url: "/img/stagnight.jpeg" 
-    }
-  ];
+       url: "/img/stagnight.jpeg"
+    }];
 		
 	// Function runFilter
 	$scope.runFilter = function (id) {  
@@ -350,9 +316,38 @@ angular.module('datespot.controllers', ['ionic', 'datespot.userservices', 'dates
 	};
 	*/
 	
-   // end runFilter
-  
+  } // end runFilter
+ 
 }) // end SearchCtrl
+
+
+/* Map Controller */
+.controller('MapController', function($scope, $ionicLoading) {
+ 
+    google.maps.event.addDomListener(window, 'load', function() {
+        var myLatlng = new google.maps.LatLng(37.3000, -120.4833);
+ 
+        var mapOptions = {
+            center: myLatlng,
+            zoom: 16,
+            mapTypeId: google.maps.MapTypeId.ROADMAP
+        };
+ 
+        var map = new google.maps.Map(document.getElementById("map"), mapOptions);
+ 
+        navigator.geolocation.getCurrentPosition(function(pos) {
+            map.setCenter(new google.maps.LatLng(pos.coords.latitude, pos.coords.longitude));
+            var myLocation = new google.maps.Marker({
+                position: new google.maps.LatLng(pos.coords.latitude, pos.coords.longitude),
+                map: map,
+                title: "My Location"
+            });
+        });
+ 
+        $scope.map = map;
+    });
+ 
+})
 
 
 
@@ -398,7 +393,7 @@ angular.module('datespot.controllers', ['ionic', 'datespot.userservices', 'dates
       }, function (error) {
       // error
     });
-})
+});
 
 
 

@@ -2,7 +2,7 @@
 angular.module('ngCordova', [
   'ngCordova.plugins'
 ]);
-angular.module('ngCordova.plugins', [	 'facebook',	 'geolocation',	 'googleMap']);//#### Begin Individual Plugin Code ####// install   :   cordova -d plugin add https://github.com/Wizcorp/phonegap-facebook-plugin.git --variable APP_ID="123456789" --variable APP_NAME="myApplication"
+angular.module('ngCordova.plugins', [	 'geolocation',	 'googleMap']);//#### Begin Individual Plugin Code ####// install   :   cordova -d plugin add https://github.com/Wizcorp/phonegap-facebook-plugin.git --variable APP_ID="123456789" --variable APP_NAME="myApplication"
 // link      :   https://github.com/Wizcorp/phonegap-facebook-plugin
 
 /* globals facebookConnectPlugin: true */

@@ -1,10 +1,6 @@
 {
   "name": "datespot",
   "app_id": "",
-  "gulpStartupTasks": [
-    "sass",
-    "watch"
-  ],
 
   "watchPatterns": [
     "www/**/*",

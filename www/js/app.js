@@ -6,7 +6,8 @@
  */
  
 console.log('LOADED APP.JS');
-angular.module('datespot', ['ionic', 'datespot.controllers', 'datespot.services', 'ionic.contrib.ui.tinderCards', 'ngCordova'])
+
+angular.module('datespot', ['ionic'])
 
 .run(function($ionicPlatform) {
   $ionicPlatform.ready(function() {
@@ -22,6 +23,7 @@ angular.module('datespot', ['ionic', 'datespot.controllers', 'datespot.services'
       }
   });
 });
+
 
 
 
@@ -74,6 +76,13 @@ angular.module('datespot', ['ionic', 'datespot.controllers'])
       url: '/spots/:spotVuid',
       templateUrl: 'templates/detail.html',
       controller: 'DetailCtrl'
+  })
+  
+  
+   .state('map', {
+      url: '/map',
+      templateUrl: 'templates/map.html',
+      controller: 'GeoCtrl'
   });
 	
   // The default or the first (on load) state/controller that the application will load
