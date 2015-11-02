@@ -28,7 +28,7 @@ angular.module('datespot', ['ionic'])
 
 
 
-angular.module('datespot', ['ionic', 'datespot.controllers'])
+angular.module('datespot', ['ionic', 'datespot.controllers', 'ngCordova.plugins.geolocation'])
 
 /* 
  * GUI State Provider Code - Link the various tabs to the relevant
@@ -82,7 +82,7 @@ angular.module('datespot', ['ionic', 'datespot.controllers'])
    .state('map', {
       url: '/map',
       templateUrl: 'templates/map.html',
-      controller: 'GeoCtrl'
+      controller: 'MapController'
   });
 	
   // The default or the first (on load) state/controller that the application will load
