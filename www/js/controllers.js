@@ -324,6 +324,8 @@ angular.module('datespot.controllers', ['ionic', 'datespot.userservices', 'dates
 /* Map Controller */
 .controller('MapController', function($scope, $ionicLoading, $cordovaGeolocation) {
 	
+	console.log('Loaded MapController');
+	
 	
 	
     // onSuccess Callback
@@ -341,12 +343,29 @@ angular.module('datespot.controllers', ['ionic', 'datespot.userservices', 'dates
               'Timestamp: '         + position.timestamp                + '\n');
     };
 
+
     // onError Callback receives a PositionError object
     //
     function onError(error) {
         alert('code: '    + error.code    + '\n' +
               'message: ' + error.message + '\n');
     }
+	
+	// var posOptions = { timeout: 5000, enableHighAccuracy: false, maximumAge: 5000 };
+	
+	
+	console.log($cordovaGeolocation.getCurrentPosition());
+	
+	// Another new JavaScript development I have no idea about....
+	// Promises? http://www.html5rocks.com/en/tutorials/es6/promises/
+	$cordovaGeolocation.getCurrentPosition().then(onSuccess, onError);
+	
+	
+	
+	
+	 //  navigator.geolocation.getCurrentPosition(onSuccess, onError);
+		
+	//console.log(position);
 	
 	
 	
