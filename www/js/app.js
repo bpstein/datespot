@@ -73,7 +73,7 @@ angular.module('datespot', ['ionic', 'datespot.controllers', 'ngCordova.plugins.
   })
 
   .state('detail', {
-      url: '/spots/:spotVuid',
+      url: '/spot/:spotVuid',
       templateUrl: 'templates/detail.html',
       controller: 'DetailCtrl'
   })

@@ -2,8 +2,17 @@
 <ion-view view-title="Discover" class="discover-page"> 
   <ion-content scroll="false">
   
+  		<ion-list>
+        <ion-item  ng-repeat="attribute in position_data">
+		{{attribute.name}}: {{attribute.value}}		
+		</ion-item>
+        <ion-item>
+		<a href="{{postion_link}}">Your location in Google Maps</a>	
+		</ion-item>		
+		</ion-list>
+  
         <td-cards>
-        <td-card ng-repeat="card in cards" on-destroy="cardDestroyed($index)" on-swipe-left="cardSwipedLeft($index)" on-swipe-right="cardSwipedRight($index)" on-partial-swipe="cardPartialSwipe(amt)" class="card-{{$index}}" ng-click="test2()">
+        <td-card ng-repeat="card in cards" on-destroy="cardDestroyed($index)" on-swipe-left="cardSwipedLeft($index)" on-swipe-right="cardSwipedRight($index)" on-partial-swipe="cardPartialSwipe(amt)" class="card-{{$index}}" ng-click="test2();" href="#/detail/{{card.vuid}}">
 		
 		 <div class="image"><img ng-src="{{card.image_url}}"></div> 
 		 

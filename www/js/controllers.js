@@ -10,20 +10,75 @@
  
 angular.module('datespot.controllers', ['ionic', 'datespot.userservices', 'datespot.jsonservices', 'ionic.contrib.ui.tinderCards']  )
 
+.controller('DiscoverCtrl', function($scope, $timeout, $stateParams, $ionicLoading, User, Recommendations, $cordovaGeolocation, $state) {
 /*************** CONTROLLER FOR THE DISCOVER/SWIPE VIEW ***************/
-.controller('DiscoverCtrl', function($scope, $timeout, $stateParams, $ionicLoading, User, Recommendations, TDCardDelegate) {
 	
   console.log('Loaded the DiscoverCtrl controller');
+    
+    // onSuccess Callback
+    // This method accepts a Position object, which contains the
+    // current GPS coordinates
+    //
+		var onSuccess = function(position) {
+		
+		$scope.position_data = [{
+		  name: "Latitude",
+		  value: position.coords.latitude
+		},
+		 {
+		   name: "Longitude",
+		   value: position.coords.longitude
+		}
+		];
+		
+		$scope.postion_link = 'http://maps.google.co.uk/?q=' + position.coords.latitude + ',' + position.coords.longitude;
+		
+		/*
+        alert('Latitude: '          + position.coords.latitude          + '\n' +
+              'Longitude: '         + position.coords.longitude         + '\n' +
+              'Altitude: '          + position.coords.altitude          + '\n' +
+              'Accuracy: '          + position.coords.accuracy          + '\n' +
+              'Altitude Accuracy: ' + position.coords.altitudeAccuracy  + '\n' +
+              'Heading: '           + position.coords.heading           + '\n' +
+              'Speed: '             + position.coords.speed             + '\n' +
+              'Timestamp: '         + position.timestamp                + '\n');
+			  
+		*/
+		
+		}; // end onSuccess
+	
+
+    // onError Callback receives a PositionError object
+    //
+    function onError(error) {
+        alert('code: '    + error.code    + '\n' +
+              'message: ' + error.message + '\n');
+    }
+	
+	// var posOptions = { timeout: 5000, enableHighAccuracy: false, maximumAge: 5000 };
+	
   
-  // Show the loading page.
-  function showLoading()
-  {
-	  $ionicLoading.show({
+	// Show the loading page.
+	  function showLoading()
+	  {
+		$ionicLoading.show({
 				// template: 'Loading...' + text
 				templateUrl: 'templates/loading.html'
 				//noBackdrop: true,		 
 				//template: '<div class="heart"><i class="icon ion-heart"></i></div><div class="loadingMessage">Seducing...</div>'
 		});  
+		
+		
+	
+	
+	
+	console.log($cordovaGeolocation.getCurrentPosition());
+	
+	// Another new JavaScript development I have no idea about....
+	// Promises? http://www.html5rocks.com/en/tutorials/es6/promises/
+	$cordovaGeolocation.getCurrentPosition().then(onSuccess, onError);
+
+	
   }
 
   // Hide the loading page.
@@ -101,7 +156,7 @@ angular.module('datespot.controllers', ['ionic', 'datespot.userservices', 'dates
 		
 	  // Go through the database and add cards
 	 //for(var i = 0; i < Recommendations.queue.length; i++) $scope.addCard(i);
-	  for(var i = 0; i < 5; i++) $scope.addCard(i); // HACK: only load the first 25 from the database right now
+	  for(var i = 5; i < 15; i++) $scope.addCard(i); // HACK: only load the first 5 from the database right now
 	  
 	  
 	  console.log('Finished adding cards');		
@@ -153,27 +208,35 @@ angular.module('datespot.controllers', ['ionic', 'datespot.userservices', 'dates
 
   
   // Spot Liked
+  /*
+  // This code isn't used with this tinder cards library
   $scope.spotSwiped = function(index) {
     console.log('sweetswipe');
     var newSpot = // new spot data
     $scope.spots.push(newSpot);
     $scope.currentSpot.rated = true;
   };
+  */
   
-
+  // Spot Rejected
   $scope.cardSwipedLeft = function(index) {
     console.log('LEFT SWIPE');
-  //  $scope.addCard();
+   // $scope.addCard(index);
+   
   };
   
+  // Spot Liked
   $scope.cardSwipedRight = function(index) {
     console.log('RIGHT SWIPE');
-//    $scope.addCard();
+  //  $scope.addCard(index);
+   User.addSpotToShortlist($scope.cards[index]);  
 	
   };
   
     $scope.test2 = function() {
-    console.log('testing 123');
+		console.log('Showing Detail');
+		
+		$state.go('detail');
   };
   
   

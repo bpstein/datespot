@@ -27,6 +27,9 @@ angular.module('datespot.userservices', [])
   }
 
   o.addSpotToShortlist = function(spot) {
+	  
+	console.log("Adding Spot to Shortlist: " + spot);
+	
     // make sure there's a date spot to add
     if (!spot) return false;
 
@@ -66,7 +69,7 @@ angular.module('datespot.userservices', [])
 		
 }) // notice the termination here, as we're terminating the factory AND the module! Extra ';'
 */
-/*
+
 .factory('Spots', function() {
 	
 	console.log('Loaded the Spots Factory');
@@ -92,7 +95,7 @@ angular.module('datespot.userservices', [])
 		}
 	};
 });
-*/
+
 
 /* DateSpot Angular Module *******************************************
  * 
