@@ -1,7 +1,6 @@
 {
   "name": "datespot",
-  "app_id": "",
-
+  "app_id": "d60351ff",
   "watchPatterns": [
     "www/**/*",
     "!www/lib/**/*"

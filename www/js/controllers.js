@@ -294,25 +294,40 @@ angular.module('datespot.controllers', ['ionic', 'datespot.userservices', 'dates
       name: "First Date",
       id: "firstdate",
       tag: "She said 'yes.' Choose a place that'll impress.",
-      url: "https://s3-us-west-1.amazonaws.com/datespot/occasions/firstdate2.jpg"
+      url: "img/firstdate.jpg"
   }, {
-      name: "Fancy a drink",
+      name: "Fancy a drink?",
       id: "drinksonly",
       tag: "Hip spots to grab a drink with a date or friend.",
-      url: "https://s3-us-west-1.amazonaws.com/datespot/occasions/justdrinks.jpg"
+      url: "img/justdrinks.jpg"
   },
      {
       name: "Dinner date",
       id: "dinnerdate",
       tag: "Suave restaurants, tasty treats and cheap eats.",
-      url: "https://s3-us-west-1.amazonaws.com/datespot/occasions/dinnerdate.jpg"
+      url: "img/dinnerdate.jpg"
   },
+
+      {
+      name: "Fun in the sun",
+      id: "funinthesun",
+      tag: "Something informal with friends in pubs, bars or clubs.",
+      url: "/img/funinthesun.jpg"
+  },
+
     {
       name: "Brunch or coffee",
       id: "brunch",
       tag: "Casual coffee or brunch ideas.",
-      url: "https://s3-us-west-1.amazonaws.com/datespot/occasions/M1LK-Sweetcorn-fritters-bacon-862x575.jpg"
+      url: "img/brunch.jpg"
     },
+
+    {
+      name: "Cheap eats",
+      id: "cheapeat",
+      tag: "Something informal with friends in pubs, bars or clubs.",
+      url: "/img/cheapeats.jpg"
+     },
 
     {
       name: "Fun with friends",
@@ -325,39 +340,31 @@ angular.module('datespot.controllers', ['ionic', 'datespot.userservices', 'dates
       name: "Let's get weird",
       id: "activedate",
       tag: "Something informal with friends in pubs, bars or clubs.",
-      url: "img/letsgetweird.png"
+      url: "img/letsgetweird.jpg"
     },
 
-    {
-      name: "Go all out",
-      id: "goallout",
-      tag: "Something informal with friends in pubs, bars or clubs.",
-      url: "https://s3-us-west-1.amazonaws.com/datespot/occasions/goallout.jpg"
-    },
-    {
-      name: "Fun in the sun",
-      id: "funinthesun",
-      tag: "Something informal with friends in pubs, bars or clubs.",
-      url: "/img/somethingsunny.jpg"
-    },
-    {
-      name: "Cheap eats",
-      id: "cheapeat",
-      tag: "Something informal with friends in pubs, bars or clubs.",
-      url: "/img/cheapeats.png"
-     },
-     {
-       name: "Hens night",
-       id: "hennight",
-       tag: "Something informal with friends in pubs, bars or clubs.",
-       url: "/img/hennight.jpg"
-     },
-     {
-       name: "Stag night",
-       id: "stagnight",
-       tag: "Something informal with friends in pubs, bars or clubs.",
-       url: "/img/stagnight.jpeg"
-    }];
+    // {
+    //   name: "Go all out",
+    //   id: "goallout",
+    //   tag: "Something informal with friends in pubs, bars or clubs.",
+    //   url: "https://s3-us-west-1.amazonaws.com/datespot/occasions/goallout.jpg"
+    // },
+
+
+
+    //  {
+    //    name: "Hens night",
+    //    id: "hennight",
+    //    tag: "Something informal with friends in pubs, bars or clubs.",
+    //    url: "/img/hennight.jpg"
+    //  },
+    //  {
+    //    name: "Stag night",
+    //    id: "stagnight",
+    //    tag: "Something informal with friends in pubs, bars or clubs.",
+    //    url: "/img/stagnight.jpeg"
+    // }
+    ];
 		
 	// Function runFilter
 	$scope.runFilter = function (id) {  
