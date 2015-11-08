@@ -2,44 +2,41 @@
 <ion-view view-title="Discover" class="discover-page"> 
   <ion-content scroll="false">
   
-  		<ion-list>
-        <ion-item  ng-repeat="attribute in position_data">
-		{{attribute.name}}: {{attribute.value}}		
-		</ion-item>
-        <ion-item>
-		<a href="{{postion_link}}">Your location in Google Maps</a>	
-		</ion-item>		
-		</ion-list>
+<!--   	<ion-list>
+      <ion-item  ng-repeat="attribute in position_data">
+		    {{attribute.name}}: {{attribute.value}}		
+		  </ion-item>
+      <ion-item>
+		    <a href="{{postion_link}}">Your location in Google Maps</a>	
+		  </ion-item>		
+		</ion-list> -->
   
-        <td-cards>
-        <td-card ng-repeat="card in cards" on-destroy="cardDestroyed($index)" on-swipe-left="cardSwipedLeft($index)" on-swipe-right="cardSwipedRight($index)" on-partial-swipe="cardPartialSwipe(amt)" class="card-{{$index}}" ng-click="test2();" href="#/detail/{{card.vuid}}">
+    <td-cards>
+      <td-card ng-repeat="card in cards" 
+          on-destroy="cardDestroyed($index)" 
+          on-swipe-left="cardSwipedLeft($index)" 
+          on-swipe-right="cardSwipedRight($index)" 
+          on-partial-swipe="cardPartialSwipe(amt)" 
+          class="card-{{$index}}" 
+          ng-click="test2();" 
+          href="#/detail/{{card.vuid}}">
 		
-		 <div class="image"><img ng-src="{{card.image_url}}"></div> 
+		  <div class="image">
+        <img ng-src="{{card.image_url}}">
+      </div> 
 		 
-		<!--   <div class="background-image-card-test" style="background-image: url({{card.image_url}})"><img ng-src="{{card.image_url}}"></div> -->
+		    <!--   <div class="background-image-card-test" style="background-image: url({{card.image_url}})"><img ng-src="{{card.image_url}}"></div> -->
 		 
-		 <!--
-          <div class="image">
-            <div class="no-text">NOPE</div>
-            <img ng-src="{{card.image_url}}"> 	
-           <div class="yes-text">LIKE</div>
-          </div>
-		 -->
-        </td-card>
-      </td-cards>
+      </td-card>
+    </td-cards>
 	  
-	<div class="spotInfo" style="height:100px">
-              <span ng-hide="currentSpot.loaded"></span>
-              <h2>{{ currentSpot.name }}</h2>
-
+	  <div class="spotInfo" style="height:100px">
+      <span ng-hide="currentSpot.loaded"></span>
+        <h2>{{ currentSpot.name }}</h2>
         <p>{{ currentSpot.description}}</P>
     </div> 
 	  
-	  
-	  
-
- 
-  </ion-content>
+	</ion-content>
 </ion-view>
 
 

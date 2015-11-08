@@ -6,7 +6,8 @@
 -->
 
 <ion-view view-title="SPOT NAME HERE" class="slider-view">
-  ng-repeat="spot in spots">
+
+  <!-- ng-repeat="card in cards"> -->
   
   <ion-nav-buttons side="right">
     <a class="button button-icon ion-map" 
@@ -15,36 +16,40 @@
   </ion-nav-buttons>
 
   <ion-content scroll="true">
-    <ion-slide-box show-pager="true">
-      <ion-slide ng-repeat="i in [1,2,3,4,5]">
-        <div class="sliderCard"
-          style="background-image: https://s3-us-west-1.amazonaws.com/datespot/occasions/drinks.jpeg">
+    <td-cards>
+     <!--  <td-card ng-repeat="card in cards" -->
+           <!--     class="card-{{$index}}" > -->
+      <ion-slide-box show-pager="true">
+        <ion-slide ng-repeat="i in [1,2,3,4,5]">
+          <div class="sliderCard"
+            style="background-image: https://s3-us-west-1.amazonaws.com/datespot/occasions/drinks.jpeg">
 
+          </div>
+        </ion-slide>
+      </ion-slide-box>
+    
+
+      <div class="row spotDetailHeader"> 
+        <div class="col detailsPageTest">
+          <h2 class="spotDetailName">{{spot.name}}</h2>
+          <h3 class="spotDetailAddress">Spot address</h3>
         </div>
-      </ion-slide>
-    </ion-slide-box>
-    
-
-    <div class="row spotDetailHeader"> 
-      <div class="col detailsPageTest">
-        <h2 class="spotDetailName">Spot name</h2>
-        <h3 class="spotDetailAddress">Spot address</h3>
       </div>
-    </div>
-    
-    <div class="row spotDetailStrip">
-      <h5 class="padding-left col col-80 spotDetailOccasion">First Date</h5>
-      <h5 class="padding-right col col-20 spotDetailPrice">$$$$</h5>
-    </div>
+      
+      <div class="row spotDetailStrip">
+        <h5 class="padding-left col col-80 spotDetailOccasion">First Date</h5>
+        <h5 class="padding-right col col-20 spotDetailPrice">$$$$</h5>
+      </div>
 
-    <div class="padding row col detailsPageTest">
-      <p class="spotDetailBlurb">Spot blurb goes here. Spot blurb goes here.Spot blurb goes here.Spot blurb goes here.Spot blurb goes here.Spot blurb goes here.Spot blurb goes here.Spot blurb goes here.Spot blurb goes here.Spot blurb goes here.Spot blurb goes here.</p>
-    </div>
+      <div class="padding row col detailsPageTest">
+        <p class="spotDetailBlurb">Spot blurb goes here. Spot blurb goes here.Spot blurb goes here.Spot blurb goes here.Spot blurb goes here.Spot blurb goes here.Spot blurb goes here.Spot blurb goes here.Spot blurb goes here.Spot blurb goes here.Spot blurb goes here.</p>
+      </div>
 
-    <div class="padding row col detailsPageTest">
-      <p class="spotDetailDescription">Spot description goes here. Spot description goes here.Spot description goes here.Spot description goes here.Spot description goes here.Spot description goes here.Spot description goes here.Spot description goes here.Spot description goes here.Spot description goes here.Spot description goes here.Spot description goes here.Spot description goes here.Spot description goes here.Spot description goes here.Spot description goes here.Spot description goes here.</p>
-    </div>
-
+      <div class="padding row col detailsPageTest">
+        <p class="spotDetailDescription">Spot description goes here. Spot description goes here.Spot description goes here.Spot description goes here.Spot description goes here.Spot description goes here.Spot description goes here.Spot description goes here.Spot description goes here.Spot description goes here.Spot description goes here.Spot description goes here.Spot description goes here.Spot description goes here.Spot description goes here.Spot description goes here.Spot description goes here.</p>
+      </div>
+    </td-card>
+    </td-cards>
   </ion-content>
 </ion-view>
 

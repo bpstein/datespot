@@ -8,6 +8,7 @@
 * {
   font: 20px 'Varela Round';
   /*Other fonts to consider: 'Adelle Bold', 'Helvetica Neue', sans-serif;*/
+
 }
 
 .customBar {
@@ -89,7 +90,7 @@
 /**********************/
 
 .item-complex .item-content {
-  background-color: rgba(0,0,0,0.30);
+  background-color: rgba(0,0,0,0.45);
   border: none;
   border: transparent !important;
   border-top: none;
@@ -98,7 +99,7 @@
 }
 
 .item-complex .item-content:hover {
-  background: rgba(0, 0, 0, 0.6) !important;
+  background: rgba(0, 0, 0, 0.75) !important;
   border: transparent !important;
 }
 
@@ -120,11 +121,19 @@
   padding: 0px !important;
   margin: 0px !important;
   border: none;
+  display: flex;
+  flex-direction: column;
+  flex-wrap: nowrap;
+  justify-content: space-around;
+  align-content: center;
+  align-items: stretch;
+  min-height: 100% !important;
+  height: 100% !important;
 }
 
 .occasionInfo {
-  height: 185px; 
-  line-height: 185px;
+  height: 190px; 
+  line-height: 190px;
   padding: 0px;
   text-align: center;
   background-size: cover;
@@ -137,7 +146,8 @@
   -webkit-background-size: cover;
   -moz-background-size: cover;
   -o-background-size: cover;
-  border: 1px solid #333;
+  border: 0.5px solid #333;
+  height: 100%;
 }
 
 .occasionHeader {
@@ -146,9 +156,9 @@
   line-height: normal;
   text-transform: uppercase;
   font-family: 'Varela Round';
-  font-size: 22px;
+  font-size: 18px;
   color: #fff;
-  text-shadow: 2px 1px #333;
+  text-shadow: 1px 1px #333;
 }
 
 .occasionTagline {
@@ -261,7 +271,7 @@
 }
 
 .item-remove-animate .item-icon-right {
-  border: none;
+  border: 0.5px solid #333;
 }
 
 /*.shortlistInfo:hover {
@@ -310,6 +320,23 @@
 
 .item-complex .item-content, .item-radio .item-content {
   padding: 0px;
+}
+
+.shortlist.button-assertive {
+  width: 70px;
+  font-size: 10px;
+}
+
+.shortlist-text {
+  font-size: 14px;
+  left: auto;
+  right: auto;
+  display: block;
+  text-align: center;
+}
+
+.ion-paper-airplane, .ion-trash-a {
+  font-size: 28px;
 }
 
 /*************************

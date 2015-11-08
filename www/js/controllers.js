@@ -300,47 +300,36 @@ angular.module('datespot.controllers', ['ionic', 'datespot.userservices', 'dates
       id: "drinksonly",
       tag: "Hip spots to grab a drink with a date or friend.",
       url: "img/justdrinks.jpg"
-  },
-     {
-      name: "Dinner date",
-      id: "dinnerdate",
-      tag: "Suave restaurants, tasty treats and cheap eats.",
-      url: "img/dinnerdate.jpg"
-  },
-
-      {
-      name: "Fun in the sun",
-      id: "funinthesun",
-      tag: "Something informal with friends in pubs, bars or clubs.",
-      url: "/img/funinthesun.jpg"
-  },
-
-    {
+  }, {
       name: "Brunch or coffee",
       id: "brunch",
       tag: "Casual coffee or brunch ideas.",
       url: "img/brunch.jpg"
-    },
-
-    {
-      name: "Cheap eats",
-      id: "cheapeat",
+  }, {
+      name: "Fun in the sun",
+      id: "funinthesun",
       tag: "Something informal with friends in pubs, bars or clubs.",
-      url: "/img/cheapeats.jpg"
-     },
-
-    {
+      url: "img/funinthesun.jpg"
+  }, {
+      name: "Dinner date",
+      id: "dinnerdate",
+      tag: "Suave restaurants, tasty treats and cheap eats.",
+      url: "img/dinnerdate.jpg"
+  }, {
       name: "Fun with friends",
       id: "friends",
       tag: "Something informal with friends in pubs, bars or clubs.",
       url: "img/funwithfriends.jpg"
-    },
-
-    {
+  }, {
       name: "Let's get weird",
       id: "activedate",
       tag: "Something informal with friends in pubs, bars or clubs.",
       url: "img/letsgetweird.jpg"
+  }, {
+      name: "Cheap eats",
+      id: "cheapeat",
+      tag: "Something informal with friends in pubs, bars or clubs.",
+      url: "img/cheapeats.jpg"
     },
 
     // {
@@ -350,14 +339,13 @@ angular.module('datespot.controllers', ['ionic', 'datespot.userservices', 'dates
     //   url: "https://s3-us-west-1.amazonaws.com/datespot/occasions/goallout.jpg"
     // },
 
-
-
     //  {
     //    name: "Hens night",
     //    id: "hennight",
     //    tag: "Something informal with friends in pubs, bars or clubs.",
     //    url: "/img/hennight.jpg"
     //  },
+
     //  {
     //    name: "Stag night",
     //    id: "stagnight",
