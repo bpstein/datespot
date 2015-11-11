@@ -10,7 +10,7 @@
  
 angular.module('datespot.controllers', ['ionic', 'datespot.userservices', 'datespot.jsonservices', 'ionic.contrib.ui.tinderCards']  )
 
-.controller('DiscoverCtrl', function($scope, $timeout, $stateParams, $ionicLoading, User, Search, $cordovaGeolocation, $state, $ionicPopup) {
+.controller('DiscoverCtrl', function($scope, $timeout, $stateParams, $ionicLoading, User, Recommendations, $cordovaGeolocation, $state) {
 /*************** CONTROLLER FOR THE DISCOVER/SWIPE VIEW ***************/
 	
   console.log('Loaded the DiscoverCtrl controller');
@@ -19,108 +19,159 @@ angular.module('datespot.controllers', ['ionic', 'datespot.userservices', 'dates
     // This method accepts a Position object, which contains the
     // current GPS coordinates
     //
-	var onGPSLockSuccess = function(position) {
+		var onSuccess = function(position) {
 		
-		$scope.position_latitude 	= position.coords.latitude;
-		$scope.position_longitude	= position.coords.longitude;
+		$scope.position_data = [{
+		  name: "Latitude",
+		  value: position.coords.latitude
+		},
+		 {
+		   name: "Longitude",
+		   value: position.coords.longitude
+		}
+		];
 		
-		console.log('------------------------ LOCATION DATA -------------------------');
-		console.log(  'Latitude: '          + position.coords.latitude          + '\n' +
-					  'Longitude: '         + position.coords.longitude         + '\n' +
-					  'Altitude: '          + position.coords.altitude          + '\n' +
-					  'Accuracy: '          + position.coords.accuracy          + '\n' +
-					  'Altitude Accuracy: ' + position.coords.altitudeAccuracy  + '\n' +
-					  'Heading: '           + position.coords.heading           + '\n' +
-					  'Speed: '             + position.coords.speed             + '\n' +
-					  'Timestamp: '         + position.timestamp                + '\n');
-		console.log('----------------------------------------------------------------');
-
+		$scope.postion_link = 'http://maps.google.co.uk/?q=' + position.coords.latitude + ',' + position.coords.longitude;
 		
-		$scope.showAlert();
+		/*
+        alert('Latitude: '          + position.coords.latitude          + '\n' +
+              'Longitude: '         + position.coords.longitude         + '\n' +
+              'Altitude: '          + position.coords.altitude          + '\n' +
+              'Accuracy: '          + position.coords.accuracy          + '\n' +
+              'Altitude Accuracy: ' + position.coords.altitudeAccuracy  + '\n' +
+              'Heading: '           + position.coords.heading           + '\n' +
+              'Speed: '             + position.coords.speed             + '\n' +
+              'Timestamp: '         + position.timestamp                + '\n');
+			  
+		*/
 		
-	}; // end onSuccess
+		}; // end onSuccess
 	
 
     // onError Callback receives a PositionError object
     //
-    function onGPSLockError(error) {
-		console.log('ERROR OBTAINING LOCATION');
-		console.log('code: '    + error.code    + '\n' +
-					'message: ' + error.message + '\n');				
+    function onError(error) {
+        alert('code: '    + error.code    + '\n' +
+              'message: ' + error.message + '\n');
     }
 	
+	// var posOptions = { timeout: 5000, enableHighAccuracy: false, maximumAge: 5000 };
 	
-	// An alert dialog for debug purposes only
-	//
-	$scope.showAlert = function() {
-	   var alertPopup = $ionicPopup.alert({
-		 title: 'Some important stuff!',
-		 template: 'Occasion ID: ' + $stateParams.occasion + '<br />Your Lat: ' + $scope.position_latitude + '<br />Your Lon: ' + $scope.position_longitude
-	   });
-	   alertPopup.then(function(res) {
-		 console.log('Thank you for not eating my delicious ice cream cone');
-	   });
-	 };
-	 
-
-	// Hide the loading page.
-	function hideLoading()
-	{
-	  $ionicLoading.hide();
-	}	 
-	
-
-	// OK... Lets get things rolling
+  
 	// Show the loading page.
-	function showLoading()
-	{
+	  function showLoading()
+	  {
 		$ionicLoading.show({
-			// template: 'Loading...' + text
-			templateUrl: 'templates/loading.html'
-			//noBackdrop: true,		 
-			//template: '<div class="heart"><i class="icon ion-heart"></i></div><div class="loadingMessage">Seducing...</div>'
+				// template: 'Loading...' + text
+				templateUrl: 'templates/loading.html'
+				//noBackdrop: true,		 
+				//template: '<div class="heart"><i class="icon ion-heart"></i></div><div class="loadingMessage">Seducing...</div>'
 		});  
-	} // end showLoading
-
-
-	  
-	// OK. Lets kick things off.. Show Loading
-	//
-	showLoading();
+		
+		
 	
-	// The cards variable for the template...
-	$scope.cards = [];
-	  
-
-	// Now get the location asynchronously
+	
+	
+	console.log($cordovaGeolocation.getCurrentPosition());
+	
 	// Another new JavaScript development I have no idea about....
 	// Promises? http://www.html5rocks.com/en/tutorials/es6/promises/
-	$cordovaGeolocation.getCurrentPosition().then(onGPSLockSuccess, onGPSLockError)
-	.then(function() {
-		
-		// Once we have GPS lock, get the closest venues and build the cards
-		Search.getVenues($scope.occasion,  $scope.position_latitude, $scope.position_longitude )
-			.then(function(){
-			  $scope.currentSpot = Search.queue[0]; // set the inital view to this
-			  
-			  console.log('The current spot is....');
-			  console.log($scope.currentSpot);	  
-			  hideLoading();
-			 console.log('The recommended queue length is: ' + Search.queue.length);
-			// console.log('Length is:');
-			// console.log(Search.queue.length);
-			
-		  // Go through the database and add cards
-		 for(var i = 0; i < Search.queue.length; i++) $scope.addCard(i);
-		  //for(var i = 5; i < 15; i++) $scope.addCard(i); // HACK: only load the first 5 from the database right now
+	$cordovaGeolocation.getCurrentPosition().then(onSuccess, onError);
 
-		  console.log('Finished adding cards');		
+	
+  }
 
-		});
+  // Hide the loading page.
+  function hideLoading()
+  {
+	  $ionicLoading.hide();
+  }
+
+  // We will load this page.
+  showLoading();
+  
+  
+  /*
+  $scope.shortlistCount = User.shortlistCount;
+
+  $scope.enteringShortlist = function() {
+	console.log('Entering the Shortlist');
+	User.newShortlist = 0;
+  }
+
+  $scope.leavingShortlist = function() {
+	console.log('Leaving the Shortlist');
+    Recommendations.getVenues();
+  }
+
+  // Loading screen while app pulls data form server
+  var showLoading = function() {
+	  
+	console.log('Showing Loading Screen....');
+	
+    $ionicLoading.show({
+      templateUrl: 'templates/loading.html',
+      noBackdrop: true
+    })
+  }
+
+  var hideLoading = function() {
+	  
+	console.log('Hiding Loading Screen....');	  
+    $ionicLoading.hide();
+  }
+
+  */
+  
+	
+
+	/*
+
+  .then(function(){
+	  
+	console.log('Hiding Loading Screen....');
+	
+    // turn loading off
+    hideLoading();
+    $scope.currentSpot.loaded = true;
+	
+  });
+  */
+  
+  // The cards
+  $scope.cards = [];
+  
+  
+	// GET THE VENUES AND BUILD THE CARDS
+	Recommendations.getVenues()
+		.then(function(){
+		  $scope.currentSpot = Recommendations.queue[0]; // set the inital view to this
+		  
+		  console.log('The current spot is....');
+		  console.log($scope.currentSpot);	  
+		  hideLoading();
+		 console.log('The recommended queue length is: ' + Recommendations.queue.length);
+		// console.log('Length is:');
+		// console.log(Recommendations.queue.length);
 		
-		
+	  // Go through the database and add cards
+	 //for(var i = 0; i < Recommendations.queue.length; i++) $scope.addCard(i);
+	  for(var i = 5; i < 15; i++) $scope.addCard(i); // HACK: only load the first 5 from the database right now
+	  
+	  
+	  console.log('Finished adding cards');		
+	  
+	 
+  
 	});
 	
+/*
+  var cardTypes = [
+    { image_url: 'max.jpg' },
+    { image_url: 'ben.png' },
+    { image_url: 'perry.jpg' },
+  ];
+  */
 
  
 
@@ -150,7 +201,7 @@ angular.module('datespot.controllers', ['ionic', 'datespot.userservices', 'dates
 	
 	
 	console.log('Adding card from Recommendations array of id: ' + id);
-	$scope.cards.unshift(angular.extend({}, Search.queue[id]));
+	$scope.cards.unshift(angular.extend({}, Recommendations.queue[id]));
   }
   
  // for(var i = 0; i < 3; i++) $scope.addCard(1);
@@ -182,25 +233,10 @@ angular.module('datespot.controllers', ['ionic', 'datespot.userservices', 'dates
 	
   };
   
-  
-  // Spot Clicked, we can't use a href at this stage for
-  // some reason so we need to use the ionic state director
-  // and pass the appropriate parameters
-  $scope.cardClicked = function(index) 
-  {
-		console.log('Click request for  card of index:' + index);
+    $scope.test2 = function() {
+		console.log('Showing Detail');
 		
-		var vuidOfClicked = $scope.cards[index]['vuid'];
-		console.log('.. which has a VUID of: ' + vuidOfClicked);
-		
-		// use the vuid as the key to viewing the venue
-		// http://learn.ionicframework.com/formulas/sharing-data-between-views/
-		// http://forum.ionicframework.com/t/pass-data-with-state-go/2897/2
-		
-		$state.go('detail', {vuid:  vuidOfClicked });
-
-		
-		
+		$state.go('detail');
   };
   
   
@@ -239,24 +275,11 @@ angular.module('datespot.controllers', ['ionic', 'datespot.userservices', 'dates
 
 
 // CONTROLLER FOR DETAILS PAGE
-.controller('DetailCtrl', function($scope, $stateParams, User, Spots, Search) {
+.controller('DetailCtrl', function($scope, $stateParams, User, Spots) {
 
 	console.log('Loaded the DetailCtrl controller');
-	
-	console.log('The state vuid param :-):');
-	console.log($stateParams.vuid);
-	
-	$scope.spot = Search.getVenue($stateParams.vuid);
-	
-	console.log($scope.spot);
-	/*
 
-	$scope.spot = Spots.get($stateParams.vuid);
-	
-	console.log('The selected spot details are as follows:');
-	console.log($scope.spot);
-	
-	*/
+	$scope.spot = Spots.get($stateParams.spotVuid);
 
   // $scope.spots = Spots.all();
 })
@@ -267,72 +290,71 @@ angular.module('datespot.controllers', ['ionic', 'datespot.userservices', 'dates
 	
  console.log('Loaded the OccasionCtrl controller');
 
- $scope.occasions = [{
+ $scope.items = [{
       name: "First Date",
       id: "firstdate",
       tag: "She said 'yes.' Choose a place that'll impress.",
-      imgurl: "img/firstdate.jpg"
+      url: "img/firstdate.jpg"
   }, {
       name: "Fancy a drink?",
       id: "drinksonly",
       tag: "Hip spots to grab a drink with a date or friend.",
-      imgurl: "img/justdrinks.jpg"
+      url: "img/justdrinks.jpg"
   }, {
       name: "Brunch or coffee",
       id: "brunch",
       tag: "Casual coffee or brunch ideas.",
-      imgurl: "img/brunch.jpg"
+      url: "img/brunch.jpg"
   }, {
       name: "Fun in the sun",
       id: "funinthesun",
       tag: "Something informal with friends in pubs, bars or clubs.",
-      imgurl: "img/funinthesun.jpg"
+      url: "img/funinthesun.jpg"
   }, {
       name: "Dinner date",
       id: "dinnerdate",
       tag: "Suave restaurants, tasty treats and cheap eats.",
-      imgurl: "img/dinnerdate.jpg"
+      url: "img/dinnerdate.jpg"
   }, {
       name: "Fun with friends",
       id: "friends",
       tag: "Something informal with friends in pubs, bars or clubs.",
-      imgurl: "img/funwithfriends.jpg"
+      url: "img/funwithfriends.jpg"
   }, {
       name: "Let's get weird",
       id: "activedate",
       tag: "Something informal with friends in pubs, bars or clubs.",
-      imgurl: "img/letsgetweird.jpg"
+      url: "img/letsgetweird.jpg"
   }, {
       name: "Cheap eats",
       id: "cheapeat",
       tag: "Something informal with friends in pubs, bars or clubs.",
-      imgurl: "img/cheapeats.jpg"
-    }
+      url: "img/cheapeats.jpg"
+    },
 
     // {
     //   name: "Go all out",
     //   id: "goallout",
     //   tag: "Something informal with friends in pubs, bars or clubs.",
-    //   imgurl: "https://s3-us-west-1.amazonaws.com/datespot/occasions/goallout.jpg"
+    //   url: "https://s3-us-west-1.amazonaws.com/datespot/occasions/goallout.jpg"
     // },
 
     //  {
     //    name: "Hens night",
     //    id: "hennight",
     //    tag: "Something informal with friends in pubs, bars or clubs.",
-    //    imgurl: "/img/hennight.jpg"
+    //    url: "/img/hennight.jpg"
     //  },
 
     //  {
     //    name: "Stag night",
     //    id: "stagnight",
     //    tag: "Something informal with friends in pubs, bars or clubs.",
-    //    imgurl: "/img/stagnight.jpeg"
+    //    url: "/img/stagnight.jpeg"
     // }
     ];
 		
 	// Function runFilter
-	/*
 	$scope.runFilter = function (id) {  
 	 
 		// To be expanded and perform the jSON query when
@@ -346,13 +368,13 @@ angular.module('datespot.controllers', ['ionic', 'datespot.userservices', 'dates
 			template: '<ion-spinner icon="spiral"></ion-spinner><br /><span>Insert text for ' + id + ' occasion.</span>'
 	});
 	
-	
-		$scope.save = function() {
-		  $state.go('shortlist');
-		};
-		
-	} // end runFilter
+	/*
+	$scope.save = function() {
+	  $state.go('shortlist');
+	};
 	*/
+	
+  } // end runFilter
  
 }) // end SearchCtrl
 

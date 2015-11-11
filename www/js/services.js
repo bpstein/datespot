@@ -54,22 +54,6 @@ angular.module('datespot.userservices', [])
 }) // notice the termination here, as we're terminating the factory ONLY
 
 
-/*
-// Test factory
-.factory('FactoryFuck', function() {
-	
-    console.log('Loaded the FactoryFuck Factory');	
-	
-	return {
-		Scrot: function(){
-			
-			  console.log('So we managed to load some fucking factory. It worked?');
-		}
-	}
-		
-}) // notice the termination here, as we're terminating the factory AND the module! Extra ';'
-*/
-
 .factory('Spots', function() {
 	
 	console.log('Loaded the Spots Factory');
@@ -87,6 +71,9 @@ angular.module('datespot.userservices', [])
 		},
 		get: function(spotVuid) {
 			for (var i = 0; i < spots.length; i++) {
+				
+				console.log(spots[i].vuid);
+				
 				if (spots[i].vuid === parseInt(spotVuid)) {
 					return spots[i];
 				}
@@ -101,14 +88,17 @@ angular.module('datespot.userservices', [])
  * 
  * 	name 	:	datespot.jsonservices
  *  purpose	:   Datespot JSON Services, contains the following
- * 				factories: Recommendations
+ * 				factories: Search
  **********************************************************************/
  
 angular.module('datespot.jsonservices', [])
-.factory('Recommendations', function($http, SERVER) {
-	
+.factory('Search', function($http, SERVER) {
+	 
+	 
+  // http://learn.ionicframework.com/formulas/data-the-right-way/
+  // http://mcgivery.com/ionic-using-factories-and-web-services-for-dynamic-data/
 
-  console.log('Loaded the Recommendations Factory');	
+  console.log('Loaded the Search Factory');	
   console.log('The Server Address is at: ' + SERVER.url);
   
   // We need to insure we are always returing a value from a factory definition
@@ -117,13 +107,14 @@ angular.module('datespot.jsonservices', [])
     newShortlist: 0
   }
   
-  console.log(o);
+  //console.log(o);
 
-  // Function: Get Venues 
-  o.getVenues = function() {
+  // Function: getVenues
+  o.getVenues = function(scenarioid, lat, lon) {
 	  
 	var url = SERVER.url + '/client.php?a=all';
-	console.log('Getting venues from ' + url);
+	//var url = SERVER.url + '/client.php?sid=' + scenarioid +'&originLat=' + lat + '&originLong=' + lon + '&scrotmode=1';
+	console.log('Server query: ' + url);
 	
     return $http({
       method: 'GET',
@@ -141,6 +132,7 @@ angular.module('datespot.jsonservices', [])
 		  			}
 		  	}
 		  	if(!found){
+				console.log('Pushing result element from server onto search results queue array.');
 		  		o.queue.push(dataPoint);
 		  	}
 		  }
@@ -149,35 +141,44 @@ angular.module('datespot.jsonservices', [])
 
 		// OK so we've apparently received something here, we need to loop through the results
 		console.log('Receiving the results from the server.');
-		
-		/*
-		var counter = 0;
-		for(i in data.points) 
-		{	
-		console.log(++counter);
-			//console.log(data.points[i]);
-		}
-		*/
-	 	
+
 	 // console.log(data.points); 
     });
 	
   } // end getVenues
 
   
-  // Function: Next Venue 
+  // Function: Next Venue -> Need to persist the start point, lat and long from the server.
   o.nextVenue = function() {
     // pop the index 0 off
     o.queue.shift();
 
 	// http://learn.ionicframework.com/formulas/infinite-lists/
-	
-	
+
     // low on the queue? lets fill it up
     if (o.queue.length <= 3) {
      // o.getVenues(); // we don't do this as our JSON provides all venues currently
     }
-  }
+  } // nextVenue
+  
+  
+  o.getVenue = function(vuid)
+  {
+		for (var i = 0; i < o.queue.length; i++) {
+			
+			//console.log('Inspecting queue element ' + i);
+			
+			//console.log(o.queue[i].vuid);
+			
+			if (o.queue[i].vuid === vuid) {
+				console.log('Found a match to vuid '+ vuid + '! Happy days.');
+				return o.queue[i];
+			}
+		}
+		
+		return null;  
+		
+  } // end getVenue
   
   // Return the function definitions
   return o;

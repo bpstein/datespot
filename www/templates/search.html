@@ -20,24 +20,13 @@
 
         <ion-item 
           class="defaultOccasion" 
-          ng-repeat="item in items"
-          style="background-image: url({{item.url}})"
-		      href="#/discover/{{item.id}}">
-		  
-
-
-	  <!--
-        <ion-item 
-          class="defaultOccasion" 
-          ng-repeat="item in items"
-          style="background-image: url({{item.url}})"
-		  ng-click="runFilter('test')">
-	  -->
-
+          ng-repeat="occasion in occasions"
+          style="background-image: url({{occasion.imgurl}})"
+		      href="#/discover/{{occasion.id}}">
+			  
           <div class="col occasionInfo">
             <span class="occasionSpan">
-              <h1 class="occasionHeader">{{item.name}}</h1></span>
-            <!-- <p class="occasionTagline">{{item.tag}}</p> -->
+              <h1 class="occasionHeader">{{occasion.name}}</h1></span>
           </div>
         </ion-item>
       </ion-list>

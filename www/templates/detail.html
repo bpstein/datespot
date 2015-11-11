@@ -5,7 +5,7 @@
   The Friends service returns an array of friend data
 -->
 
-<ion-view view-title="SPOT NAME HERE" class="slider-view">
+<ion-view view-title="{{spot.name}}" class="slider-view">
 
   <!-- ng-repeat="card in cards"> -->
   
@@ -21,9 +21,7 @@
            <!--     class="card-{{$index}}" > -->
       <ion-slide-box show-pager="true">
         <ion-slide ng-repeat="i in [1,2,3,4,5]">
-          <div class="sliderCard"
-            style="background-image: https://s3-us-west-1.amazonaws.com/datespot/occasions/drinks.jpeg">
-
+          <div class="sliderCard" style="background-image: url({{spot.image_url}})">
           </div>
         </ion-slide>
       </ion-slide-box>
@@ -32,7 +30,7 @@
       <div class="row spotDetailHeader"> 
         <div class="col detailsPageTest">
           <h2 class="spotDetailName">{{spot.name}}</h2>
-          <h3 class="spotDetailAddress">Spot address</h3>
+          <h3 class="spotDetailAddress">{{spot.address}}</h3>
         </div>
       </div>
       
@@ -40,13 +38,13 @@
         <h5 class="padding-left col col-80 spotDetailOccasion">First Date</h5>
         <h5 class="padding-right col col-20 spotDetailPrice">$$$$</h5>
       </div>
-
+	  <!--
       <div class="padding row col detailsPageTest">
         <p class="spotDetailBlurb">Spot blurb goes here. Spot blurb goes here.Spot blurb goes here.Spot blurb goes here.Spot blurb goes here.Spot blurb goes here.Spot blurb goes here.Spot blurb goes here.Spot blurb goes here.Spot blurb goes here.Spot blurb goes here.</p>
-      </div>
+      </div-->
 
       <div class="padding row col detailsPageTest">
-        <p class="spotDetailDescription">Spot description goes here. Spot description goes here.Spot description goes here.Spot description goes here.Spot description goes here.Spot description goes here.Spot description goes here.Spot description goes here.Spot description goes here.Spot description goes here.Spot description goes here.Spot description goes here.Spot description goes here.Spot description goes here.Spot description goes here.Spot description goes here.Spot description goes here.</p>
+        <p class="spotDetailDescription">{{spot.description}}.</p>
       </div>
     </td-card>
     </td-cards>

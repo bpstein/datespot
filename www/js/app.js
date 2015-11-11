@@ -61,7 +61,7 @@ angular.module('datespot', ['ionic', 'datespot.controllers', 'ngCordova.plugins.
   })
   
   .state('discover', {
-    url: '/discover/:id',
+    url: '/discover/:occasion',
     templateUrl: 'templates/discover.html',
     controller: 'DiscoverCtrl'
   })
@@ -73,7 +73,7 @@ angular.module('datespot', ['ionic', 'datespot.controllers', 'ngCordova.plugins.
   })
 
   .state('detail', {
-      url: '/spot/:spotVuid',
+      url: '/detail/:vuid',
       templateUrl: 'templates/detail.html',
       controller: 'DetailCtrl'
   })

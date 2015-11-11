@@ -2,15 +2,19 @@
 <ion-view view-title="Discover" class="discover-page"> 
   <ion-content scroll="false">
   
-<!--   	<ion-list>
-      <ion-item  ng-repeat="attribute in position_data">
-		    {{attribute.name}}: {{attribute.value}}		
-		  </ion-item>
-      <ion-item>
-		    <a href="{{postion_link}}">Your location in Google Maps</a>	
-		  </ion-item>		
-		</ion-list> -->
+  <!--
   
+	Only to be used with the tdcards.js etc 
+	
+	-->
+	<!--
+	  <swipe-cards>
+	  <swipe-card ng-repeat="card in cards" on-destroy="cardDestroyed($index)" on-card-swipe="cardSwiped($index)">
+		 <img ng-src="{{card.image_url}}">
+	  </swipe-card>
+	</swipe-cards>
+	-->
+
     <td-cards>
       <td-card ng-repeat="card in cards" 
           on-destroy="cardDestroyed($index)" 
@@ -18,108 +22,30 @@
           on-swipe-right="cardSwipedRight($index)" 
           on-partial-swipe="cardPartialSwipe(amt)" 
           class="card-{{$index}}" 
-          ng-click="test2();" 
-          href="#/detail/{{card.vuid}}">
+          ng-click="cardClicked($index);">
 		
-		  <div class="image">
-        <img ng-src="{{card.image_url}}">
-      </div> 
-		 
+		  <div class="image"><img ng-src="{{card.image_url}}"></div> 
+		  <div style="background-color:#ffcc00; padding: 5px;">       
+			<p>{{ card.name }} </p>
+			<p>This bit will be replaced with a short description.</P>
+		  </div>
+		
+ 
 		    <!--   <div class="background-image-card-test" style="background-image: url({{card.image_url}})"><img ng-src="{{card.image_url}}"></div> -->
 		 
       </td-card>
     </td-cards>
-	  
-	  <div class="spotInfo" style="height:100px">
+	
+	<!--
+	
+	<div class="spotInfo" style="height:100px">
       <span ng-hide="currentSpot.loaded"></span>
-        <h2>{{ currentSpot.name }}</h2>
-        <p>{{ currentSpot.description}}</P>
+        <h2>{{ card.name }}</h2>
+        <p>{{ card.description}}</P>
     </div> 
-	  
+	-->
+
+	
 	</ion-content>
 </ion-view>
-
-
-
-<!--   <ion-pane class="padding cardBackground" scroll="false" ng-controller="DiscoverCtrl" has-header="true" has-tabs="true">
-    
-    <td-cards>
-      <td-card 
-        id="td-card"
-        ng-repeat="spot in spots track by 'vuid'"
-        on-destroy="spotDestroyed($index)"
-        on-swipe-left="spotSwipedLeft($index)"
-        on-swipe-right="spotSwipedRight($index)"
-        on-partial-swipe="spotPartialSwipe(amt)">
-        
-
-        <div class="list card current-spot"
-
-          ng-class="{skipped: currentSpot.rated == false,
-                    shortlisted: currentSpot.rated == true}"
-                    ng-show="currentSpot && !currentSpot.hide">
-
-
-
-          <div class="swipeImage" 
-            style="background-image: ({{curentSpot.image_url}})">
-
-            <div class="no-text overlayBox">
-              <div class="noBox boxed"
-                on-swipe-left="spotSwipedLeft($index)">Skip it  
-              </div>
-            </div>
-          
-            <img ng-src="{{ currentSpot.image_url }}" 
-              ng-style="{'height':'100%'}"
-              ng-repeat="spot in spots track by 'vuid'"
-              class="swipeImage"
-              style="background: no-repeat center;
-  background-size: cover!important;">
-            <div class="yes-text overlayBox">
-              <div class="yesBox boxed" on-swipe-right="spotSwipedRight($index)">Yes!</div>
-            </div>
-
-            
-        
-          </div>
-
-        </div>
-
-      </td-card>
-
-    </td-cards>
-      
-    <div class="item spotInfo" style="height:100px">
-              <span ng-hide="currentSpot.loaded"></span>
-              <h2>{{ currentSpot.name }}</h2>
-
-        <p>{{ currentSpot.description}}</P>
-      </div> -->
-
-    <!-- Secondary tabs for liking or skipping each venue -->
-
-
-<!--     <div class="item tabs tabs-secondary">
-      <a class="tab-item" ng-click="sendFeedback(false)">
-        <i class="icon dark ion-close"></i>
-      </a>
-      <a class="tab-item" ng-click="sendFeedback(true)">
-        <i class="icon assertive ion-heart"></i>
-      </a>
-    </div>
-  </ion-pane>
-  </ion-pane>
-</ion-view> -->
-
-
-
- <!--  <ion-nav-title>
-    <div class="padding"> -->
-      <!-- Ben to update logo when ready -->
-      <!-- <img height="30px" src="img/logo.png"> -->
-<!--     </div>
-  </ion-nav-title> -->
-
-
 
