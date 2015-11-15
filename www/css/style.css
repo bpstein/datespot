@@ -425,6 +425,8 @@
 /* VENUE CARDS PAGE STYLING !        */
 /*************************************/
 
+/*
+
 .background-image-card-test {
   width: auto;
   height: auto;
@@ -449,63 +451,8 @@
   word-wrap: word-break;
 }
 
+
 .ng-binding {
   font-family: 'Varela Round';
 }
-
-
-
-
-td-cards {
-  display: block;
-
-}
-
-/* absoulte size */
-/*
-td-card {
-
-  position: absolute;
-  left: 50%;
-  margin-top: 40px;
-  margin-bottom: 40px;
-  margin-left: -150px;
-  width: 320px;
-  height: 320px;
-
-  border: 1px solid #999;
-  box-shadow: 0px 1px 3px rgba(0,0,0,0.2);
-  border-radius: 6px;
-}
 */
-
-/* grant's auto size */
-td-card {
-  margin:10px;
-  width: auto;
-  height: auto;
-
-}
-
-
-
-td-card .image {
-   position: relative; 
-}
-
-td-card img {
-  max-width: 100%;
-  border-radius: 6px;
-}
-
-.fade {
-  -webkit-transition: 0.2s opacity linear;
-  transition: 0.2s opacity linear;
-  opacity: 0;
-}
-
-.no-text { }
-
-.yes-text {  }
-
-

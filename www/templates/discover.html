@@ -2,20 +2,7 @@
 <ion-view view-title="Discover" class="discover-page"> 
   <ion-content scroll="false">
   
-  <!--
-  
-	Only to be used with the tdcards.js etc 
-	
-	-->
-	<!--
-	  <swipe-cards>
-	  <swipe-card ng-repeat="card in cards" on-destroy="cardDestroyed($index)" on-card-swipe="cardSwiped($index)">
-		 <img ng-src="{{card.image_url}}">
-	  </swipe-card>
-	</swipe-cards>
-	-->
-
-    <td-cards>
+   <td-cards>
       <td-card ng-repeat="card in cards" 
           on-destroy="cardDestroyed($index)" 
           on-swipe-left="cardSwipedLeft($index)" 
@@ -24,17 +11,20 @@
           class="card-{{$index}}" 
           ng-click="cardClicked($index);">
 		
-		  <div class="image"><img ng-src="{{card.image_url}}"></div> 
+  <div class="image"><img ng-src="{{card.image_url}}"></div> 
 		  <div style="background-color:#ffcc00; padding: 5px;">       
 			<p>{{ card.name }} </p>
 			<p>This bit will be replaced with a short description.</P>
 		  </div>
-		
+
  
 		    <!--   <div class="background-image-card-test" style="background-image: url({{card.image_url}})"><img ng-src="{{card.image_url}}"></div> -->
 		 
       </td-card>
     </td-cards>
+	
+	
+		  
 	
 	<!--
 	

@@ -13,8 +13,8 @@
 //
 // Page initiation
 //
-define ('IN_APPLICATION', TRUE);
-define ('DEBUG_MODE', FALSE);
+define ('IN_APPLICATION', 	TRUE);
+define ('DEBUG_MODE', 		FALSE);
 
 include('../include/common.php');
 include('../include/class_datespot.php'); 		// can't do much without this one
@@ -36,19 +36,17 @@ $venue_scenarios = array
 	'firstdate' 	=> 'First Date',	
 	'drinksonly'	=> 'Drinks Date',
 	'dinnerdate'	=> 'Dinner Date',
-	'activedate'	=> 'Active Date (do something fun)', 	// new
-	'visitor'		=> 'Visitor to Town', 					// new
-	'friends'		=> 'Drinks with Friends', 				// new
+	'activedate'	=> 'Active Date (get weird)', 	// new
+	'visitor'		=> 'Visitor to Town', 			// new
+	'friends'		=> 'Fun with Friends', 			// new
 	
-	'sealthedeal'	=> 'Seal the Deal',
 	'goallout'		=> 'Go All Out',
-	'brunch'	=> 'Brunch',
+	'brunch'		=> 'Brunch',
 	
-	'cheapeat'	=> 'Cheap Eat',
-	'stagnight'	=> 'Stag Night',
-	'hennight'	=> 'Hen Night',
-	'funinthesun'	=> 'Fun in the Sun'	
-	
+	'cheapeat'		=> 'Cheap Eat',
+	'stagnight'		=> 'Stag Night',
+	'hennight'		=> 'Hen Night',
+	'funinthesun'	=> 'Fun in the Sun'
 );
 
 // Seem stupid that I have to declare this
@@ -158,24 +156,23 @@ if ( @$_REQUEST['action'] == 'submit_edit_venue' )
 	{
 		
 		// Prime the message so far
-		$success_msg = 'Updated database successfully with: '. clean_string($_REQUEST['venue_name']);	
+		$success_msg = 'Updated database successfully with: '. clean_string($_REQUEST['venue_name']);
 
-	
 		$sql = 'UPDATE '. VENUE_TABLE .' 
-					SET `venue_modified`=NOW(),
-					`venue_name`		=\''. $_REQUEST['venue_name'] .'\',	
-					`venue_description_short`	=\''. $_venue_short_description.'\',					
-					`venue_description`	=\''. $_REQUEST['venue_description'].'\',
-					`venue_postcode`	=\''. clean_string($_REQUEST['venue_postcode']).'\',
-					`venue_address`		=\''. clean_string($_REQUEST['venue_address']).'\',
-					`venue_email_address`		=\''. $_REQUEST['venue_email_address'].'\',
-					`venue_phone_number`		=\''. $_REQUEST['venue_phone_number'].'\',					
-					`venue_rating_general`	=\''. $_venue_rating_general .'\',
+					SET `venue_modified`= NOW(),
+					`venue_name`				='. $conn->quote($_REQUEST['venue_name']) .',	
+					`venue_description_short`	='. $conn->quote($_venue_short_description) .',					
+					`venue_description`	='. $conn->quote($_REQUEST['venue_description']) .',
+					`venue_postcode`	=\''. clean_string($_REQUEST['venue_postcode']) .'\',
+					`venue_address`		=\''. clean_string($_REQUEST['venue_address']) .'\',
+					`venue_email_address`		='. $conn->quote($_REQUEST['venue_email_address']) .',
+					`venue_phone_number`		='. $conn->quote($_REQUEST['venue_phone_number']) .',					
+					`venue_rating_general`		=\''. $_venue_rating_general .'\',
 					`venue_rating_quirkiness`	=\''. $_venue_rating_quirkiness .'\', 
 					`venue_rating_cost`		=\''. $_venue_rating_cost .'\',
 					`venue_scenario`		=\''. clean_string($_venue_scenario) .'\',
-					`venue_url`				=\''. clean_string($_REQUEST['venue_url']).'\',
-					`venue_booking_url`				=\''. clean_string($_REQUEST['venue_booking_url']).'\',
+					`venue_url`				=\''. clean_string($_REQUEST['venue_url']) .'\',
+					`venue_booking_url`				=\''. clean_string($_REQUEST['venue_booking_url']) .'\',
 					`venue_open_sunday`		= \''. $_venue_open_sunday .'\',
 					`venue_open_monday`		= \''. $_venue_open_monday .'\',				
 					`venue_hour_open`		=\''. clean_string($_REQUEST['venue_hour_open']) .'\',
@@ -258,13 +255,13 @@ if ( @$_REQUEST['action'] == 'submit_edit_venue' )
 			   ) 
 			   VALUES 
 			   (NOW(), NOW(), MD5(NOW()),
-				\''. $_REQUEST['venue_name'] .'\',	
-				\''. $_venue_short_description.'\',				
-				\''. $_REQUEST['venue_description'].'\',
-				\''. clean_string($_REQUEST['venue_postcode']).'\',
-				\''. clean_string($_REQUEST['venue_address']).'\',
-				\''. $_REQUEST['venue_email_address'].'\',
-				\''. $_REQUEST['venue_phone_number'].'\',
+				'. $conn->quote($_REQUEST['venue_name']) .',	
+				'. $conn->quote($_venue_short_description) .',				
+				'. $conn->quote($_REQUEST['venue_description']) .',
+				\''. clean_string($_REQUEST['venue_postcode']) .'\',
+				\''. clean_string($_REQUEST['venue_address']) .'\',
+				'. $conn->quote($_REQUEST['venue_email_address']) .',
+				'. $conn->quote($_REQUEST['venue_phone_number']) .',
 				
 				\''. $_venue_rating_general .'\',
 				\''. $_venue_rating_quirkiness .'\',

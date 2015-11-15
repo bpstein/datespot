@@ -1,0 +1,3 @@
+UPDATE ds_venue
+SET `venue_description_short` = CONCAT(MID(venue_description, 1, 110), ' ...')
+WHERE `venue_description_short` = ""

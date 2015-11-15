@@ -112,8 +112,8 @@ angular.module('datespot.jsonservices', [])
   // Function: getVenues
   o.getVenues = function(scenarioid, lat, lon) {
 	  
-	var url = SERVER.url + '/client.php?a=all';
-	//var url = SERVER.url + '/client.php?sid=' + scenarioid +'&originLat=' + lat + '&originLong=' + lon + '&scrotmode=1';
+	//var url = SERVER.url + '/client.json.php?a=all';
+	var url = SERVER.url + '/client.json.php?sid=' + scenarioid +'&originLat=' + lat + '&originLong=' + lon + '&scrotmode=1';
 	console.log('Server query: ' + url);
 	
     return $http({

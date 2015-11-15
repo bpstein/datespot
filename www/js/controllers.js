@@ -10,7 +10,7 @@
  
 angular.module('datespot.controllers', ['ionic', 'datespot.userservices', 'datespot.jsonservices', 'ionic.contrib.ui.tinderCards']  )
 
-.controller('DiscoverCtrl', function($scope, $timeout, $stateParams, $ionicLoading, User, Search, $cordovaGeolocation, $state, $ionicPopup) {
+.controller('DiscoverCtrl', function($scope, $state, $stateParams, $ionicLoading, $cordovaGeolocation, $ionicPopup, $localstorage, User, Search) {
 /*************** CONTROLLER FOR THE DISCOVER/SWIPE VIEW ***************/
 	
   console.log('Loaded the DiscoverCtrl controller');
@@ -98,8 +98,9 @@ angular.module('datespot.controllers', ['ionic', 'datespot.userservices', 'dates
 	$cordovaGeolocation.getCurrentPosition().then(onGPSLockSuccess, onGPSLockError)
 	.then(function() {
 		
+	
 		// Once we have GPS lock, get the closest venues and build the cards
-		Search.getVenues($scope.occasion,  $scope.position_latitude, $scope.position_longitude )
+		Search.getVenues($stateParams.occasion,  $scope.position_latitude, $scope.position_longitude )
 			.then(function(){
 			  $scope.currentSpot = Search.queue[0]; // set the inital view to this
 			  

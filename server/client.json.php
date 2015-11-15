@@ -12,10 +12,15 @@
 //
 // Page initiation
 //
-define ('IN_APPLICATION', TRUE);
-define ('DEBUG_MODE', FALSE);
+define ('IN_APPLICATION', 	TRUE);
+define ('DEBUG_MODE', 		FALSE);
 
 include('./include/common.php');
+
+
+// Allow accesss to this script from another domain for development.
+header('Access-Control-Allow-Origin: http://localhost:8100');
+
 
 // Example URLS:
 // http://192.168.0.17/client.php?originLat=51.462165299999995&originLong=-0.1691684
@@ -30,26 +35,33 @@ class ClientHandler
 	 *	function	: JSONQueryHandler
 	 *  purpose     : Entry point for client requests to the database. This is where
 	 *	 			  more of the logic has to be developed especially in regards to 
-	 *				  mobile client actions and session management. Current actions:
+	 *				  mobile client actions and session management.
 	 *
 	 ********************************************************************************
 	 */
 	 
-    // Variables used internally
-	var $success 		= true;	// We'll be positive and assume all is well.
-	var $error_messages	= array();
-	var $result_array 	= array();
-	
-	var $venue_base_sql_select_attributes	= 'v.venue_unique_id 		AS vuid,
-											   v.venue_name 			AS name,
-											   v.venue_description		AS description,
-											   v.venue_address			AS address,
-											   v.venue_location_lon		AS longitude,
-											   v.venue_location_lat		AS latitude, vi.venue_image_unique_id, MIN(vi.venue_image_order) AS image_order'; // base attributes that we query across the board
-											   
-								
 	// Change as appropriate
-	var $venue_image_url_base =	'http://ds.urandom.info/client.php?a=img&viuid=';
+	//var $venue_image_url_base =	'http://ds.urandom.info/client.json.php?a=img&viuid=';
+    var $venue_image_url_base	=	'http://192.168.56.101/client.json.php?a=img&viuid=';
+	var $limit 	= 5; // Maximum number of results in one hit
+	var $offset = 0;
+	
+	 
+    // Variables used internally
+	var $success 		= false;	// By default, it's a fail until proven otherwise.
+	var $error_message	= '';
+	var $result_array 	= array();	// What we JSON encode and send back to the client.
+	
+	var $venue_base_sql_select_attributes	= 'v.venue_id,
+											   v.venue_unique_id 			AS vuid,
+											   v.venue_name 				AS name,
+											   v.venue_description			AS desc_long,
+											   v.venue_description_short	AS desc_short,
+											   v.venue_address				AS address,
+											   v.venue_postcode			 	AS postcode,
+											   v.venue_location_lon			AS longitude,
+											   v.venue_location_lat			AS latitude';
+											   
 
 	function ClientHandler()
 	{
@@ -61,28 +73,45 @@ class ClientHandler
 		 originLat	= Latitude
 		 originLong = Longitude
 		 viuid		= The venue_image_unique_id
+		 sid		= scenario/situation id					
+		 o			= offset (MySQL Start and End Point)		
+		 nolimit	= no limit (no MySQL Start and End Point)
 		 
 		 */
+		 
+		// Calculate offset if required for sql
+		if ( isset($_REQUEST['o']) )
+		{
+				$offset = $_REQUEST['o'];
+				if ( is_numeric($offset) )
+				{
+						if ($offset > $limit) $this->offset = $offset;
+				}					
+		} // end offset calc
 
 		 
 		switch (@$_REQUEST['a'])
 		{
-	
-			// For testing purposes only - Get ALL venues
-			case 'all': 
-				$this->GetAll();
-				break;
-				
+
 			// Get venue image binary
 			case 'img':
 				$this->GetImage();
+				exit(); // get straight out after sending binary
 				break;
 				
-			// Get the nearest venues
+		
+			// For testing purposes only - Get ALL venues
+			case 'all': 
+				$this->GetAll(false);
+				break;
+
+			// Get the nearest and suggested venues
 			default:
-				$this->GetNearest(); // Get the Nearest Venues		
+				$this->GetSuggested(); // Get the Suggested Venues		
 				break;
 		}
+		
+		$this->_output_JSON();
 		
 		// Get outta here.
 		exit();
@@ -91,15 +120,16 @@ class ClientHandler
 	
 	
 	// Our first ever function to get the venues... we'll start with everything for the time being.
-	function GetNearest($nolimit = true)
+	function GetSuggested()
 	{
 		global $conn;
 		
-		$_origin_lat = clean_string(@$_REQUEST['originLat']); // should keep 0.00 etc.
-		$_origin_long = clean_string(@$_REQUEST['originLong']); // should keep 0.00 etc.	
+		// Mandatory Requirements
+		$_origin_lat 	= clean_string(@$_REQUEST['originLat']); 	// should keep 0.00 etc.
+		$_origin_long 	= clean_string(@$_REQUEST['originLong']); 	// should keep 0.00 etc.
+		$_scenario 		= clean_string(@$_REQUEST['sid']); 			// firstdate etc.
 
-		if (DEBUG_MODE) { debug_message('Requested updated to Latitude: '. $_origin_lat .' Requested updated to Longitude: '. $_origin_long ); }			
-
+		$_scenario = null;
 		
 		// lat and log co-ords OK?
 		// http://stackoverflow.com/questions/5756232/moving-lat-lon-text-columns-into-a-point-type-column
@@ -108,13 +138,14 @@ class ClientHandler
 			if (DEBUG_MODE) { debug_message('Latitude and Longitude were OK.'); }
 		}
 		else
-		{
-		
-			$this->success = false;		
+		{	
 			if (DEBUG_MODE) { debug_message('Latitude and Longitude were not OK.'); }
+			$this->error_message = 'Your position could not be found. Please try again later';
 			
-			return false; // exit function here
+			return false; // FAIL - exit function here
 		}
+
+		if (DEBUG_MODE) { debug_message('Requested updated to Latitude: '. $_origin_lat .' Requested updated to Longitude: '. $_origin_long ); }			
 
 
 		// From: http://www.tec20.co.uk/working-with-postcodes-and-spatial-data-in-mysql/
@@ -134,18 +165,19 @@ class ClientHandler
 		 * Also note that MySQL's spatial functions X() and Y(), stores the Latitude (North to South) as the X, and Longitude as the Y, which is contrary to what you think 
 		 * think it should be. ie. Y = Up, so should be Latitude. Not too worry, the main thing is it comes out as at the right key=>value pair.
 		 */
-		 
-		// We need to make sure a venue doesn't have multiple images with a rank of 0 or we'll get duplicates!
 		$sql = 'SELECT '. $this->venue_base_sql_select_attributes .'
-				FROM   '. VENUE_TABLE .' v LEFT JOIN '. VENUE_IMAGE_TABLE .' vi ON v.venue_id = vi.venue_id
-				WHERE venue_location_spatial_point IS NOT NULL 
-				GROUP BY v.venue_id
-				ORDER BY GLENGTH(GEOMFROMTEXT(CONCAT(\'LINESTRING(' . $_origin_lat . ' '. $_origin_long. ',\' ,X(venue_location_spatial_point),\' \',Y(venue_location_spatial_point),\')\'))) ASC';
-				
-				
-		if ($nolimit == false)
+				FROM   '. VENUE_TABLE .' v
+				WHERE v.venue_location_spatial_point IS NOT NULL ';
+		
+		// If we have a scenario
+		if ( !empty($_scenario) ) $sql .= 'AND v.venue_scenario = \''. $_scenario .'\'';
+		
+		$sql .= 'ORDER BY GLENGTH(GEOMFROMTEXT(CONCAT(\'LINESTRING(' . $_origin_lat . ' '. $_origin_long. ',\' ,X(venue_location_spatial_point),\' \',Y(venue_location_spatial_point),\')\'))) ASC';
+			
+		// Limit results as required	
+		if ( !isset($_REQUEST['nolimit']) )
 		{
-			$sql .= ' LIMIT 10'; 
+			$sql .= ' LIMIT '. $this->offset .', '. $this->limit; 
 		}
 		
 				
@@ -155,8 +187,36 @@ class ClientHandler
 			$query = $conn->query($sql); $count = 1;
 			while ($data = $query->fetch(PDO::FETCH_ASSOC)) 
 			{ 
-				$this->result_array[] = $this->_venue_data_last_chance_saloon($data); 
-			}
+				 $result = array();
+
+				 // Build Images
+  				 $result['images'] 			= $this->_get_venue_image_URLs($data['venue_id']);
+				 $result['image_url'] 		= $result['images'][0]; // The first main image, other the default as _get_venue_image_URLs will always return at least one image
+				 
+				 // Build Distance Data
+				 $_distance_in_miles		= distance($data['latitude'], $data['longitude'], $_origin_lat, $_origin_long, 'M');
+				 $_distance_in_km			= $_distance_in_miles * 1.609344; // we do this here to avoid a complete recalcuation in the distance() function.
+				 
+				 $_distance_in_miles		= round($_distance_in_miles, 2);
+				 $_distance_in_km			= round($_distance_in_km, 2);
+
+				 $result['distance_miles'] 		= $_distance_in_miles;
+				 $result['distance_km'] 		= $_distance_in_km;
+				 
+				 // TODO Re-weight the rankings
+				 //$result['dsr']
+				 //`venue_rating_general` ,  `venue_rating_cost` ,  `venue_rating_quirkiness` 
+				 
+				 
+				 // IMPORTANT: We don't want to expose this data in JSON
+				 unset($data['latitude']); unset($data['longitude']); unset($data['venue_id']);
+				 
+				 // Build the specific JSON results array;
+				 $this->result_array[] = array_merge($result, $data);
+				 
+				//$this->result_array[] = $this->_venue_data_last_chance_saloon($data); 	
+				
+			} // end the loop through each event
 			
 			// Debug Mode
 			if (DEBUG_MODE){ debug_message($sql); }	
@@ -170,10 +230,14 @@ class ClientHandler
 			return false; // fail.
 		}
 		
+		
+		// Happy Days
+		$this->success = true;
+		
 		// Sent JsonOutput
-		$this->_output_JSON();		
+		//$this->_output_JSON();		
 
-	} // end GetNearest
+	} // end GetSuggested
 	
 	
 	function GetAll()
@@ -207,8 +271,11 @@ class ClientHandler
 		}
 		
 		// Sent JsonOutput
-		$this->_output_JSON();		
+		//$this->_output_JSON();	
 
+		// Happy Days
+		$this->success = true;
+		
 	} // end GetNearest
 	
 	
@@ -231,7 +298,11 @@ class ClientHandler
 			return false;		
 		}
 		
-        $sql = 'SELECT * FROM '. VENUE_IMAGE_TABLE .' WHERE venue_image_unique_id = \''. clean_string($_REQUEST['viuid']) .'\'';
+		// Get resized square binary compressed image.
+        $sql = 'SELECT venue_image_data_resized_square
+				FROM '. VENUE_IMAGE_TABLE .' 
+				WHERE venue_image_unique_id = \''. $_REQUEST['viuid'] .'\'';
+				
         if (DEBUG_MODE) { debug_message($sql); }
 		
 		try
@@ -254,12 +325,9 @@ class ClientHandler
 
 
         // We'll be outputting an image of type.... like a JPEG
-        header('Content-Type: '. $image_data['venue_image_data_format']);
-		
+        header('Content-Type: '. $image_data['venue_image_data_format']);	
 		echo $image_data['venue_image_data_resized_square'];
-
-		return true;
-
+		
 	} // end GetImage
 	
 	
@@ -269,8 +337,51 @@ class ClientHandler
 	/*************************************************************************************
 	 * Internal Functions
 	 *************************************************************************************/
+	
+	function _get_venue_image_URLs($venue_id)
+	{
+		global $conn;	
+	
+		// We need to make sure a venue doesn't have multiple images with a rank of 0 or we'll get duplicates!
+		$sql = 'SELECT vi.venue_image_unique_id 
+				FROM '. VENUE_IMAGE_TABLE .' vi  
+				WHERE vi.venue_id = '. $venue_id .' 
+				ORDER BY vi.venue_image_order ASC';
+	
+		try
+		{		
+			// Do the query
+			$query = $conn->query($sql); $count = 0; $images = array();
+			while ($image = $query->fetch(PDO::FETCH_ASSOC)) 
+			{ 
+				$count++;
+				$images[] = $this->__generate_venue_image_url($image['venue_image_unique_id']);
+			}
+			
+			// Debug Mode
+			if (DEBUG_MODE){ debug_message($sql); }	
+				
+		}
+		catch(PDOException $e)
+		{
+			if (DEBUG_MODE){ debug_message('Failed to execute database query: ' . $e->getMessage()); }	
+			return false; // fail.
+		}
+		
+		// Don't have a single image for this event? Send the questions mark!
+		if ( $count == 0 )
+		{
+			$images[] = $this->__generate_venue_image_url('aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa');
+			
+		}
+		
+		return $images;
+		
+	} // _get_venue_images
+	
 	 
 	 // Check the venue row to see if there's anything we need to fix before it gets JSONified
+	 // Depreciated function
 	function _venue_data_last_chance_saloon($row)
 	{
 	
@@ -306,13 +417,10 @@ class ClientHandler
 	// That the result of the activities undertaken in this class and spit out the result
 	function _output_JSON()
 	{
-
-		$response = array('success' => $this->success, 'points' => $this->result_array);
 		
-		if ( !isset($_REQUEST['nojsonheader']))
+		$response = array('success' => $this->success, 'points' => $this->result_array, 'error_message' => $this->error_message);
+		
 		header('Content-Type: application/json');
-		
-		header('Access-Control-Allow-Origin: http://localhost:8100');
 		echo json_encode(utf8_encode_all($response));
 		
 	}	
@@ -331,6 +439,10 @@ class ClientHandler
  
 // Let us do this.
 new ClientHandler();
+
+
+
+
 
 
 
@@ -462,4 +574,8 @@ $sql = 'SELECT 'v.venue_name as Name, X(v.venue_location_spatial_point) Latitude
 				
 */
 
+
+
+/// Calculate Distance
+//http://www.movable-type.co.uk/scripts/latlong.html
 

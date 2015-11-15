@@ -28,7 +28,7 @@ angular.module('datespot', ['ionic'])
 
 
 
-angular.module('datespot', ['ionic', 'datespot.controllers', 'ngCordova.plugins.geolocation'])
+angular.module('datespot', ['ionic', 'datespot.controllers', 'ngCordova.plugins.geolocation', 'ionic.utils'])
 
 /* 
  * GUI State Provider Code - Link the various tabs to the relevant
@@ -108,6 +108,9 @@ angular.module('datespot', ['ionic', 'datespot.controllers', 'ngCordova.plugins.
 
 .constant('SERVER', {
 	
-  url: 'http://ds.urandom.info'
+  // url: 'http://ds.urandom.info'
+  
+  url: 			 'http://192.168.56.101',
+  clientversion: '0.1'
 
 });
