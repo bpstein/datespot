@@ -6,8 +6,8 @@
  *	begin			: 30 May 2015
  *	copyright		: Grant Bartlett and Ben Stein
  *  descriptions	: A dirty dirty hack job of HTML and PHP in a single class
- *					  to produce the administrative back end.
  *
+ *					  to produce the administrative back end.
  **********************************************************************/
  
 //
@@ -19,6 +19,7 @@ define ('DEBUG_MODE', 		FALSE);
 include('../include/common.php');
 include('../include/class_datespot.php'); 		// can't do much without this one
 include('../include/class_thumbnailer.php'); 	// for image resizing
+include('../include/class_geocoding.php'); 		// for geocoding
 
 if (DEBUG_MODE)
 {
@@ -336,8 +337,36 @@ if ( @$_REQUEST['action'] == 'submit_edit_venue' )
 		
 			$_venue_location_lat = clean_string($_REQUEST['venue_location_lat']); // should keep 0.00 etc.
 			$_venue_location_lon = clean_string($_REQUEST['venue_location_lon']); // should keep 0.00 etc.	
-
 			
+			// Try and perform a geocoding if we think we have enough information
+			if ( (empty($_venue_location_lat) || empty ($_venue_location_lon)) && (!empty($_REQUEST['venue_postcode']) || !empty($_REQUEST['venue_address'])) )
+			{
+				$GoogleGeocoding = geocode($_REQUEST['venue_address'] .', '. $_REQUEST['venue_postcode']);
+				
+			 /* Returns:
+				Array
+				(
+					[lat] => 37.7749295
+					[lng] => -122.4194155
+				)		
+			  */
+  
+				// Success
+				if ( is_array($GoogleGeocoding) )
+				{
+					$_venue_location_lat = $GoogleGeocoding['lat'];
+					$_venue_location_lon = $GoogleGeocoding['lng'];
+					
+					$info_msg = 'Google API successfully GeoCoded this venue automatically from the Address and Postcode provided. Check to see if it is right <a href="http://maps.google.com/?q='. $_venue_location_lat.','. $_venue_location_lon.'" target=_"scrot">here</a>.';
+				}
+				else
+				{
+					$info_msg = 'An attempt was made to automatically obtain geo-cordinates for this venue from Google. Unfortunately this failed. Please check the address and postcode provided.';					
+
+				}
+			} // google geocoding attempt
+				
+
 			if (DEBUG_MODE) { debug_message('Requested updated to Latitude: '. $_venue_location_lat .' Requested updated to Longitude: '. $_venue_location_lon ); }			
 
 			
@@ -351,7 +380,7 @@ if ( @$_REQUEST['action'] == 'submit_edit_venue' )
 						SET 
 						`venue_location_lat` = '. $_venue_location_lat .',
 						`venue_location_lon` = '. $_venue_location_lon .',
-						`venue_location_spatial_point` = GeomFromText(CONCAT(\'POINT (\', '. $_REQUEST['venue_location_lat']  .', \' \', '. $_REQUEST['venue_location_lon'] .', \')\'))
+						`venue_location_spatial_point` = GeomFromText(CONCAT(\'POINT (\', '. $_venue_location_lat  .', \' \', '. $_venue_location_lon .', \')\'))
 						WHERE venue_id = '. $_venue_id;
 						
 				if (DEBUG_MODE)
@@ -503,7 +532,23 @@ if ( @$_REQUEST['action'] == 'get_venue_image')
 	header('Content-Type: '. $image_data['venue_image_data_format']);
 	
 	// Are we outputting the thumbnail or fullsize?
-	echo  (isset($_REQUEST['thumbnail'])) ? $image_data['venue_image_data_resized_square']:$image_data['venue_image_data_resized_iphone6'];
+	// Need to keep this consistent with the class_thumbnailer.php
+	switch($_REQUEST['aspect'])
+	{
+		case 'fourbythree':
+			echo $image_data['venue_image_data_resized_fourbythree'];
+			break;			
+		case 'iphone6':
+			echo $image_data['venue_image_data_resized_iphone6'];
+			break;			
+		case 'original':
+			echo $image_data['venue_image_data_original'];
+			break;
+		default:
+			echo $image_data['venue_image_data_resized_square'];
+			break;	
+	}
+
 	exit(); // make sure we get outta here
 	
 
@@ -642,10 +687,11 @@ if  (!isset($_REQUEST['action']) || empty($_REQUEST['action']) )
 		  .click(function( event ) {
 			  
 			  // Query and the query attributes
-			  $.get( "../client.json.php", { originLat : "51.4621653", originLong : "-0.1691684", nojsonheader : "true"  },  function( data ) 
+			  $.get( "../client.json.php", { originLat : "51.4621653", originLong : "-0.1691684", nojsonheader : "true", ver: 2, token: 1, sid: "dinnerdate"  },  function( data ) 
 				{
-
-					$( "#jsontest-textarea" ).val(data);
+									
+					// String it
+					$( "#jsontest-textarea" ).val(JSON.stringify(data));
 					
 					console.log(data);
 					///alert( "Data Loaded: " + data );
@@ -767,8 +813,15 @@ if  (!isset($_REQUEST['action']) || empty($_REQUEST['action']) )
 	
 	if ( !empty($failure_msg))
 	{
-		echo '<div class="alert alert-danger" role="alert"><strong>Error!</strong> '. $failure_msg.' .</div>';		
+		echo '<div class="alert alert-danger" role="alert"><strong>Error!</strong> '. $failure_msg.'.</div>';		
 	}	
+	
+	
+	if ( !empty($info_msg))
+	{
+		echo '<div class="alert alert-info" role="alert"><strong>FYI!</strong> '. $info_msg.'..</div>';		
+	}	
+	
 
 	
 	
@@ -1042,9 +1095,9 @@ if  (!isset($_REQUEST['action']) || empty($_REQUEST['action']) )
 		
 		
 		var contentString = '<div id="content">'+
-		  '<h5><?php echo $data['venue_name']; ?></h5>'+
+		  '<h5><?php echo clean_string($data['venue_name']); ?></h5>'+
 		  '<div id="bodyContent">'+
-		  '<p><?php echo $data['venue_description']; ?></p>'+
+		  '<p><?php echo clip_string(clean_string($data['venue_description']), 150); ?></p>'+
 		  '</div>';
 
 		var infowindow = new google.maps.InfoWindow({
@@ -1055,7 +1108,7 @@ if  (!isset($_REQUEST['action']) || empty($_REQUEST['action']) )
 		var marker = new google.maps.Marker({
 			position: new google.maps.LatLng(venue_form_lat, venue_form_lon),
 			map: map,
-			title: '<?php echo $data['venue_name']; ?>'
+			title: '<?php echo clean_string($data['venue_name']); ?>'
 		});
 	
 	  google.maps.event.addListener(marker, 'click', function() {
@@ -1447,7 +1500,8 @@ if  (!isset($_REQUEST['action']) || empty($_REQUEST['action']) )
 			<tr>
 			  <th>#</th>
 			  <th>Image</th>
-			  <th>Description</th>
+			  <th>Other Sizes</th>
+			  <!-- <th>Description</th> -->
 			  <th>Rank</th>
 			  <th>Action</th>
 			</tr>
@@ -1463,7 +1517,22 @@ if  (!isset($_REQUEST['action']) || empty($_REQUEST['action']) )
 		<tr>
 		  <th scope="row"><?php echo $counter++; ?></th>
 		  <td><img src="<?php echo $_SERVER['PHP_SELF']; ?>?action=get_venue_image&venue_image_id=<?php echo $image['venue_image_id']; ?>&thumbnail=1" width="200" height="180" class="img-thumbnail" alt="Venue Image <?php echo $image['venue_image_id']; ?>" /></td>
-		  <td><?php echo $image['venue_image_description']; ?></td>
+		  <!-- <td><?php echo $image['venue_image_description']; ?></td> -->
+		  
+		  <td>
+				<a href="<?php echo $_SERVER['PHP_SELF']; ?>?action=get_venue_image&venue_image_id=<?php echo $image['venue_image_id']; ?>&aspect=original"  target="_image1">View Original Image</a><br />
+				
+				<a href="<?php echo $_SERVER['PHP_SELF']; ?>?action=get_venue_image&venue_image_id=<?php echo $image['venue_image_id']; ?>&aspect=thumb"  target="_image2">View Thumbail Version (used in App)</a><br />
+				
+
+				
+				<a href="<?php echo $_SERVER['PHP_SELF']; ?>?action=get_venue_image&venue_image_id=<?php echo $image['venue_image_id']; ?>&aspect=fourbythree" target="_image3">View in 4:3 Format (not currently used)</a><br />
+		  
+				<a href="<?php echo $_SERVER['PHP_SELF']; ?>?action=get_venue_image&venue_image_id=<?php echo $image['venue_image_id']; ?>&aspect=iphone6"  target="_image4">View in iPhone Format (not currently used)</a>
+		  
+		  </td>
+		  
+		  
 		  <td><input type="text" class="form-control" name="venue_image_order" id="venue_image_order" value="<?php echo $image['venue_image_order']; ?>" size="1"></td>
 		  <td><a href="?action=delete_venue_image&venue_id=<?php echo $_REQUEST['venue_id']; ?>&venue_image_id=<?php echo $image['venue_image_id']; ?>"><button type="button" class="btn btn-default btn-sm"><span class="glyphicon glyphicon-trash"></span> Delete</button></a></td>		  
 		</tr>
@@ -1853,10 +1922,10 @@ if  (!isset($_REQUEST['action']) || empty($_REQUEST['action']) )
     <div class="contentbox">
     <p>
 	<div style="padding-top:10px; padding-bottom:10px;"><button id="jsontest-button">JSON Query</button></div>
-	<p>HTTP Query: client.php?originLat=51.4621653&originLong=-0.1691684&nojsonheader=true</p>
+	<p>HTTP Query: http://ds.urandom.info/client.json.php?ver=2&sid=dinnerdate&originLat=51.462229099999995&originLong=-0.16918139999999998&o=0&token=187</p>
 	
 	<form>
-		<textarea style="width:100%" id="jsontest-textarea" rows="15">Click 'JSON Query' to make a call to make an AJAX JSON call to 'client.php's and return the result.</textarea>
+		<textarea style="width:100%;font-family:Courier;" id="jsontest-textarea" rows="15">Click 'JSON Query' to make a call to make an AJAX JSON call to 'client.php's and return the result.</textarea>
 	</form>
 	
 	</p>	
