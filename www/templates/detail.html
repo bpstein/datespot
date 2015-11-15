@@ -20,8 +20,8 @@
      <!--  <td-card ng-repeat="card in cards" -->
            <!--     class="card-{{$index}}" > -->
       <ion-slide-box show-pager="true">
-        <ion-slide ng-repeat="i in [1,2,3,4,5]">
-          <div class="sliderCard" style="background-image: url({{spot.image_url}})">
+        <ion-slide ng-repeat="imageurl in spot.images">
+          <div class="sliderCard" style="background-image: url({{imageurl}})">
           </div>
         </ion-slide>
       </ion-slide-box>
@@ -35,8 +35,8 @@
       </div>
       
       <div class="row spotDetailStrip">
-        <h5 class="padding-left col col-80 spotDetailOccasion">First Date</h5>
-        <h5 class="padding-right col col-20 spotDetailPrice">$$$$</h5>
+        <h5 class="padding-left col col-60 spotDetailOccasion">TBC</h5>
+        <h5 class="padding-right col col-20 spotDetailPrice">{{spot.distance_km}} km</h5>
       </div>
 	  <!--
       <div class="padding row col detailsPageTest">
@@ -44,7 +44,7 @@
       </div-->
 
       <div class="padding row col detailsPageTest">
-        <p class="spotDetailDescription">{{spot.description}}.</p>
+        <p class="spotDetailDescription">{{spot.desc_long}}.</p>
       </div>
 
   </ion-content>

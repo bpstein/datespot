@@ -53,7 +53,7 @@ angular.module('datespot.userservices', [])
   
 }) // notice the termination here, as we're terminating the factory ONLY
 
-
+/*
 .factory('Spots', function() {
 	
 	console.log('Loaded the Spots Factory');
@@ -82,6 +82,7 @@ angular.module('datespot.userservices', [])
 		}
 	};
 });
+*/
 
 
 /* DateSpot Angular Module *******************************************
@@ -92,9 +93,8 @@ angular.module('datespot.userservices', [])
  **********************************************************************/
  
 angular.module('datespot.jsonservices', [])
-.factory('Search', function($http, SERVER) {
-	 
-	 
+.factory('Search', function($http, SERVER, $localstorage) {
+
   // http://learn.ionicframework.com/formulas/data-the-right-way/
   // http://mcgivery.com/ionic-using-factories-and-web-services-for-dynamic-data/
 
@@ -103,17 +103,20 @@ angular.module('datespot.jsonservices', [])
   
   // We need to insure we are always returing a value from a factory definition
   var o = {
-    queue: [],
-    newShortlist: 0
+    results: [],
+	lat: null,
+	lon: null,
+	offset: 0
   }
   
-  //console.log(o);
+	// Do we have a token
+	var token = $localstorage.get('dstoken');
 
-  // Function: getVenues
-  o.getVenues = function(scenarioid, lat, lon) {
+   // Function: getVenues
+   o.getResults = function(scenarioid, lat, lon, offset) {
 	  
 	//var url = SERVER.url + '/client.json.php?a=all';
-	var url = SERVER.url + '/client.json.php?sid=' + scenarioid +'&originLat=' + lat + '&originLong=' + lon + '&scrotmode=1';
+	var url = SERVER.url + '/client.json.php?ver=' + SERVER.clientversion + '&sid=' + scenarioid +'&originLat=' + lat + '&originLong=' + lon + '&o=' + offset + '&token=' + token;
 	console.log('Server query: ' + url);
 	
     return $http({
@@ -121,58 +124,63 @@ angular.module('datespot.jsonservices', [])
       url: url
     }).success(function(data)
 	{
-		  // merge data into the queue
-		  //_.map(data.points,function(dataPoint))
-		  for(var j= 0; j < data.points.length; j++){
-		  	var found = false;
-		  	var dataPoint = data.points[j];
-		  	for(var i= 0; i<o.queue.length; i++){
-		  			if(o.queue[i].vuid === dataPoint.vuid){
-		  				found = true;
-		  			}
-		  	}
-		  	if(!found){
-				console.log('Pushing result element from server onto search results queue array.');
-		  		o.queue.push(dataPoint);
-		  	}
-		  }
-		  
-		//o.queue = o.queue.concat(data.points); // get the array of 'points'
-
-		// OK so we've apparently received something here, we need to loop through the results
-		console.log('Receiving the results from the server.');
-
-	 // console.log(data.points); 
+		if ( data.success == true)
+		{
+			console.log('We got ' + data.queryresults.length + ' results from the server!');
+			
+			// Persis these
+			o.lat 		= lat;
+			o.lon 		= lon;
+			o.offset 	= offset;
+			
+			$localstorage.set('dstoken', data.token);
+			token = data.token;
+			
+						
+			  // Iterate through the results
+			  for(var j= 0; j < data.queryresults.length; j++)
+			  {
+					var found = false;
+					var dataPoint = data.queryresults[j];
+					
+					// ignore any dupes
+					for(var i= 0; i<o.results.length; i++)
+					{
+						if(o.results[i].vuid === dataPoint.vuid){
+							found = true;
+						}
+					}
+					
+					if(!found){
+						console.log('Pushing result element from server onto search results queue array.');
+						o.results.push(dataPoint);
+					}
+			  } // loop through results			  
+		 } // end succcess
+			  
     });
 	
   } // end getVenues
 
   
   // Function: Next Venue -> Need to persist the start point, lat and long from the server.
-  o.nextVenue = function() {
+  // http://learn.ionicframework.com/formulas/infinite-lists/
+  o.dropResult = function() 
+  {
     // pop the index 0 off
-    o.queue.shift();
+    o.results.shift();
 
-	// http://learn.ionicframework.com/formulas/infinite-lists/
-
-    // low on the queue? lets fill it up
-    if (o.queue.length <= 3) {
-     // o.getVenues(); // we don't do this as our JSON provides all venues currently
-    }
   } // nextVenue
   
   
-  o.getVenue = function(vuid)
+  o.getVenueByVUID = function(vuid)
   {
-		for (var i = 0; i < o.queue.length; i++) {
-			
-			//console.log('Inspecting queue element ' + i);
-			
-			//console.log(o.queue[i].vuid);
-			
-			if (o.queue[i].vuid === vuid) {
+		for (var i = 0; i < o.results.length; i++) 
+		{
+			if (o.results[i].vuid === vuid) 
+			{
 				console.log('Found a match to vuid '+ vuid + '! Happy days.');
-				return o.queue[i];
+				return o.results[i];
 			}
 		}
 		
@@ -184,14 +192,6 @@ angular.module('datespot.jsonservices', [])
   return o;
   
 });
-
-
-
-// TODO: Local Storage
-// http://learn.ionicframework.com/formulas/localstorage/
-
-
-
 
 
 

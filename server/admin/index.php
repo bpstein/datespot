@@ -642,10 +642,12 @@ if  (!isset($_REQUEST['action']) || empty($_REQUEST['action']) )
 		  .click(function( event ) {
 			  
 			  // Query and the query attributes
-			  $.get( "../client.php", { originLat : "51.4621653", originLong : "-0.1691684", nojsonheader : "true"  },  function( data ) 
+			  $.get( "../client.json.php", { originLat : "51.4621653", originLong : "-0.1691684", nojsonheader : "true"  },  function( data ) 
 				{
 
 					$( "#jsontest-textarea" ).val(data);
+					
+					console.log(data);
 					///alert( "Data Loaded: " + data );
 
 				}); // end done
@@ -1620,12 +1622,45 @@ if  (!isset($_REQUEST['action']) || empty($_REQUEST['action']) )
 	 **********************************************************/
 	if ( ($_REQUEST['action'] == 'userlog') || ($_REQUEST['action'] == 'usagelog') ) 
 	{
+		
+		
+	// Get the last 100 post
+	$sql = 'SELECT DISTINCT user_id, user_location_date, user_location_lat, user_location_long  
+			FROM '. USER_SESSION_LOG_TABLE .' ORDER BY user_location_date DESC LIMIT 100';
+	
+	if (DEBUG_MODE) { debug_message($sql); }
+	
+	$query = $conn->query($sql);
+	$data = $query->fetchAll(PDO::FETCH_ASSOC);	
+		
 
 ?>
 
     <div class="contentbox">
-    <p>Mauris eleifend est et turpis. Duis id erat. Suspendisse potenti. Aliquam vulputate, pede vel vehicula accumsan, mi neque rutrum erat, eu congue orci lorem eget lorem. Vestibulum non ante. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos. Fusce sodales. Quisque eu urna vel enim commodo pellentesque. Praesent eu risus hendrerit ligula tempus pretium. Curabitur lorem enim, pretium nec, feugiat nec, luctus a, lacus.</p>
-    <p>Duis cursus. Maecenas ligula eros, blandit nec, pharetra at, semper at, magna. Nullam ac lacus. Nulla facilisi. Praesent viverra justo vitae neque. Praesent blandit adipiscing velit. Suspendisse potenti. Donec mattis, pede vel pharetra blandit, magna ligula faucibus eros, id euismod lacus dolor eget odio. Nam scelerisque. Donec non libero sed nulla mattis commodo. Ut sagittis. Donec nisi lectus, feugiat porttitor, tempor ac, tempor vitae, pede. Aenean vehicula velit eu tellus interdum rutrum. Maecenas commodo. Pellentesque nec elit. Fusce in lacus. Vivamus a libero vitae lectus hendrerit hendrerit.</p>
+
+  <table class="table table-hover">
+    <thead>
+      <tr>
+        <th>ID</th>
+        <th>Timestamp</th>
+        <th>Latitude</th>
+        <th>Longitude</th>		
+        <th>SearchQuery</th>				
+      </tr>
+    </thead>
+    <tbody>
+<?php
+
+	 foreach ($data AS $row) 
+	 {
+		 echo '<tr><td>'. $row['user_id'] .'</td><td>'. $row['user_location_date'] .'</td><td>'. $row['user_location_lat'] .'</td><td>'. $row['user_location_long'] .'</td><td>N/A</td></tr>';
+	 }
+?>
+
+    </tbody>
+  </table>
+  
+	
   </div>
   
 
@@ -1655,6 +1690,31 @@ if  (!isset($_REQUEST['action']) || empty($_REQUEST['action']) )
 	 **********************************************************/
 	if ( $_REQUEST['action'] == 'heatmap' ) 
 	{
+	
+		// Get the Map Midpoint
+		$sql = 'SELECT AVG(user_location_lat) 	AS latitude_middle_point, 
+					   AVG(user_location_long)	AS longitude_middle_point
+				FROM '. USER_SESSION_LOG_TABLE;
+				
+		if (DEBUG_MODE) { debug_message($sql); }
+		
+		$query		= $conn->query($sql);
+		$midpoint	= $query->fetch();
+		
+		
+		// Get the last 100 post
+		$sql = 'SELECT DISTINCT user_location_lat, user_location_long  
+				FROM '. USER_SESSION_LOG_TABLE .' ORDER BY user_location_date DESC LIMIT 100';
+		
+		if (DEBUG_MODE) { debug_message($sql); }
+		
+		$query = $conn->query($sql);
+		$data = $query->fetchAll(PDO::FETCH_ASSOC);	
+			
+
+		
+		
+		
 
 ?>
 
@@ -1712,18 +1772,25 @@ if  (!isset($_REQUEST['action']) || empty($_REQUEST['action']) )
 	var map, pointarray, heatmap;
 
 	var taxiData = [
-	  new google.maps.LatLng(37.782551, -122.445368),
-	  new google.maps.LatLng(37.782745, -122.444586),
-	  new google.maps.LatLng(37.754665, -122.403242),
-	  new google.maps.LatLng(37.753837, -122.403172),
-	  new google.maps.LatLng(37.752986, -122.403112),
+
+<?php
+
+	  foreach ($data AS $row)
+	  {
+		  echo 'new google.maps.LatLng('. $row['user_location_lat'] .', '. $row['user_location_long'] .'),
+		  ';
+	  }
+	  
+?>	  
+	  
 	  new google.maps.LatLng(37.751266, -122.403355)
+	  
 	];
 
 	function initialize() {
 	  var mapOptions = {
 		zoom: 13,
-		center: new google.maps.LatLng(37.774546, -122.433523),
+		center: new google.maps.LatLng(<?php echo $midpoint['latitude_middle_point']; ?>, <?php echo $midpoint['longitude_middle_point']; ?>),
 		mapTypeId: google.maps.MapTypeId.SATELLITE
 	  };
 

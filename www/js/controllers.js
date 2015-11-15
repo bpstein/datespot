@@ -10,38 +10,30 @@
  
 angular.module('datespot.controllers', ['ionic', 'datespot.userservices', 'datespot.jsonservices', 'ionic.contrib.ui.tinderCards']  )
 
-.controller('DiscoverCtrl', function($scope, $state, $stateParams, $ionicLoading, $cordovaGeolocation, $ionicPopup, $localstorage, User, Search) {
+.controller('DiscoverCtrl', function($scope, $state, $stateParams, $ionicLoading, $cordovaGeolocation, $ionicPopup, User, Search, TDCardDelegate) {
 /*************** CONTROLLER FOR THE DISCOVER/SWIPE VIEW ***************/
 	
-  console.log('Loaded the DiscoverCtrl controller');
+	console.log('Loaded the DiscoverCtrl controller');
+	
+	//$localstorage.set('name', 'Max');
+    // console.log($localstorage.get('name'));
+
+	// For querying the database.
+	var query_offset = 0;
+	
     
     // onSuccess Callback
     // This method accepts a Position object, which contains the
     // current GPS coordinates
     //
-	var onGPSLockSuccess = function(position) {
-		
+	function onGPSLockSuccess(position) {		
 		$scope.position_latitude 	= position.coords.latitude;
 		$scope.position_longitude	= position.coords.longitude;
-		
-		console.log('------------------------ LOCATION DATA -------------------------');
-		console.log(  'Latitude: '          + position.coords.latitude          + '\n' +
-					  'Longitude: '         + position.coords.longitude         + '\n' +
-					  'Altitude: '          + position.coords.altitude          + '\n' +
-					  'Accuracy: '          + position.coords.accuracy          + '\n' +
-					  'Altitude Accuracy: ' + position.coords.altitudeAccuracy  + '\n' +
-					  'Heading: '           + position.coords.heading           + '\n' +
-					  'Speed: '             + position.coords.speed             + '\n' +
-					  'Timestamp: '         + position.timestamp                + '\n');
-		console.log('----------------------------------------------------------------');
-
-		
-		$scope.showAlert();
-		
+		///$scope.showAlert();
 	}; // end onSuccess
 	
-
     // onError Callback receives a PositionError object
+
     //
     function onGPSLockError(error) {
 		console.log('ERROR OBTAINING LOCATION');
@@ -54,43 +46,32 @@ angular.module('datespot.controllers', ['ionic', 'datespot.userservices', 'dates
 	//
 	$scope.showAlert = function() {
 	   var alertPopup = $ionicPopup.alert({
-		 title: 'Some important stuff!',
+		 title: 'No venues found!',
 		 template: 'Occasion ID: ' + $stateParams.occasion + '<br />Your Lat: ' + $scope.position_latitude + '<br />Your Lon: ' + $scope.position_longitude
 	   });
 	   alertPopup.then(function(res) {
 		 console.log('Thank you for not eating my delicious ice cream cone');
 	   });
 	 };
-	 
-
-	// Hide the loading page.
-	function hideLoading()
-	{
-	  $ionicLoading.hide();
-	}	 
 	
-
-	// OK... Lets get things rolling
-	// Show the loading page.
-	function showLoading()
-	{
-		$ionicLoading.show({
-			// template: 'Loading...' + text
-			templateUrl: 'templates/loading.html'
-			//noBackdrop: true,		 
-			//template: '<div class="heart"><i class="icon ion-heart"></i></div><div class="loadingMessage">Seducing...</div>'
-		});  
-	} // end showLoading
-
-
-	  
+	
 	// OK. Lets kick things off.. Show Loading
 	//
-	showLoading();
+	$ionicLoading.show({
+		templateUrl: 'templates/loading.html'
+	});  
+
 	
 	// The cards variable for the template...
 	$scope.cards = [];
-	  
+
+	// Add a card to the stack, generally from search results
+	$scope.addCard = function(data) 
+	{
+		$scope.cards.unshift(angular.extend({}, data));
+	}
+  	
+	
 
 	// Now get the location asynchronously
 	// Another new JavaScript development I have no idea about....
@@ -100,78 +81,58 @@ angular.module('datespot.controllers', ['ionic', 'datespot.userservices', 'dates
 		
 	
 		// Once we have GPS lock, get the closest venues and build the cards
-		Search.getVenues($stateParams.occasion,  $scope.position_latitude, $scope.position_longitude )
-			.then(function(){
-			  $scope.currentSpot = Search.queue[0]; // set the inital view to this
-			  
-			  console.log('The current spot is....');
-			  console.log($scope.currentSpot);	  
-			  hideLoading();
-			 console.log('The recommended queue length is: ' + Search.queue.length);
-			// console.log('Length is:');
-			// console.log(Search.queue.length);
-			
-		  // Go through the database and add cards
-		 for(var i = 0; i < Search.queue.length; i++) $scope.addCard(i);
-		  //for(var i = 5; i < 15; i++) $scope.addCard(i); // HACK: only load the first 5 from the database right now
+		Search.getResults($stateParams.occasion,  $scope.position_latitude, $scope.position_longitude, query_offset )
+			.then(function()
+			{
+				if ( Search.results.length == 0)
+				{
+					$scope.showAlert();		
+				}
+				else
+				{
+					for (var i = 0; i < Search.results.length; i++)
+					{
+						$scope.addCard(Search.results[i]);
+					}
+					/* Load only one card at a time, this cards libary permits multiple
+					 * cards overlapping each other at a time but I think this sucks */
+					//$scope.cards 		= Search.results;			
+					console.log('Finished adding cards');		
+				}
+				
+			   // Hide the loading
+			   $ionicLoading.hide();		  
+			  // console.log('Finished adding cards');		
 
-		  console.log('Finished adding cards');		
 
-		});
-		
-		
-	});
+		  });
+		  
+	}); // get geolocation and then cards
 	
-
- 
 
   // Remove a card from the stack
-  $scope.cardDestroyed = function(index) {
-	  
+  $scope.cardDestroyed = function(index) 
+  {
+
     $scope.cards.splice(index, 1);
-	
 	console.log('Card was destroyed: ' + index);
 	
 	var lastcard = $scope.cards.length-1;
-	
 	console.log('That last card is now: ' + lastcard);
 	
-	$scope.currentSpot = $scope.cards[lastcard]; // last card
 	
-	console.log($scope.cards[lastcard]);
+	
+    // low on the queue? lets fill it up
+    if (Search.results.length <= 2) {
+     // o.getVenues(); // we don't do this as our JSON provides all venues currently
+    }
 	
   };
 
-  // Add a card to the stack
-  $scope.addCard = function(id) {
-	  
-   // var newCard = cardTypes[Math.floor(Math.random() * cardTypes.length)];
-  //  newCard.id = Math.random();
-  //  $scope.cards.unshift(angular.extend({}, newCard));
-	
-	
-	console.log('Adding card from Recommendations array of id: ' + id);
-	$scope.cards.unshift(angular.extend({}, Search.queue[id]));
-  }
-  
- // for(var i = 0; i < 3; i++) $scope.addCard(1);
-
-  
-  // Spot Liked
-  /*
-  // This code isn't used with this tinder cards library
-  $scope.spotSwiped = function(index) {
-    console.log('sweetswipe');
-    var newSpot = // new spot data
-    $scope.spots.push(newSpot);
-    $scope.currentSpot.rated = true;
-  };
-  */
-  
   // Spot Rejected
   $scope.cardSwipedLeft = function(index) {
-    console.log('LEFT SWIPE');
-   // $scope.addCard(index);
+    console.log('LEFT SWIPE');   
+    $scope.cardDestroyed(index);
    
   };
   
@@ -179,7 +140,7 @@ angular.module('datespot.controllers', ['ionic', 'datespot.userservices', 'dates
   $scope.cardSwipedRight = function(index) {
     console.log('RIGHT SWIPE');
   //  $scope.addCard(index);
-   User.addSpotToShortlist($scope.cards[index]);  
+	User.addSpotToShortlist($scope.cards[index]);  
 	
   };
   
@@ -198,13 +159,8 @@ angular.module('datespot.controllers', ['ionic', 'datespot.userservices', 'dates
 		// http://learn.ionicframework.com/formulas/sharing-data-between-views/
 		// http://forum.ionicframework.com/t/pass-data-with-state-go/2897/2
 		
-		$state.go('detail', {vuid:  vuidOfClicked });
-
-		
-		
+		$state.go('detail', {vuid:  vuidOfClicked });	
   };
-  
-  
 })
 
 
@@ -240,14 +196,14 @@ angular.module('datespot.controllers', ['ionic', 'datespot.userservices', 'dates
 
 
 // CONTROLLER FOR DETAILS PAGE
-.controller('DetailCtrl', function($scope, $stateParams, User, Spots, Search) {
+.controller('DetailCtrl', function($scope, $stateParams, Search) {
 
 	console.log('Loaded the DetailCtrl controller');
 	
 	console.log('The state vuid param :-):');
 	console.log($stateParams.vuid);
 	
-	$scope.spot = Search.getVenue($stateParams.vuid);
+	$scope.spot = Search.getVenueByVUID($stateParams.vuid);
 	
 	console.log($scope.spot);
 	/*
@@ -359,115 +315,77 @@ angular.module('datespot.controllers', ['ionic', 'datespot.userservices', 'dates
 
 
 /* Map Controller */
-.controller('MapController', function($scope, $ionicLoading, $cordovaGeolocation) {
+.controller('MapController', function($scope, $ionicLoading, $compile) {
 	
-	console.log('Loaded MapController');
-	
-	
-	
-    // onSuccess Callback
-    // This method accepts a Position object, which contains the
-    // current GPS coordinates
-    //
-    var onSuccess = function(position) {
-        alert('Latitude: '          + position.coords.latitude          + '\n' +
-              'Longitude: '         + position.coords.longitude         + '\n' +
-              'Altitude: '          + position.coords.altitude          + '\n' +
-              'Accuracy: '          + position.coords.accuracy          + '\n' +
-              'Altitude Accuracy: ' + position.coords.altitudeAccuracy  + '\n' +
-              'Heading: '           + position.coords.heading           + '\n' +
-              'Speed: '             + position.coords.speed             + '\n' +
-              'Timestamp: '         + position.timestamp                + '\n');
-    };
-
-
-    // onError Callback receives a PositionError object
-    //
-    function onError(error) {
-        alert('code: '    + error.code    + '\n' +
-              'message: ' + error.message + '\n');
-    }
-	
-	// var posOptions = { timeout: 5000, enableHighAccuracy: false, maximumAge: 5000 };
-	
-	
-	console.log($cordovaGeolocation.getCurrentPosition());
-	
-	// Another new JavaScript development I have no idea about....
-	// Promises? http://www.html5rocks.com/en/tutorials/es6/promises/
-	$cordovaGeolocation.getCurrentPosition().then(onSuccess, onError);
-	
-	
-	
-	
-	 //  navigator.geolocation.getCurrentPosition(onSuccess, onError);
-		
-	//console.log(position);
-	
-	
-	
-	/*
- 
-    google.maps.event.addDomListener(window, 'load', function() {
-        var myLatlng = new google.maps.LatLng(37.3000, -120.4833);
- 
+	 console.log('Loading Map Controller.');
+			
+      function initialize() {
+		  
+		/// HACK: Need to change this to a value of the actual location / event.
+        var myLatlng = new google.maps.LatLng(51.530017, -0.120858);
+        
         var mapOptions = {
-            center: myLatlng,
-            zoom: 16,
-            mapTypeId: google.maps.MapTypeId.ROADMAP
+          center: myLatlng,
+          zoom: 16,
+          mapTypeId: google.maps.MapTypeId.ROADMAP
         };
- 
-        var map = new google.maps.Map(document.getElementById("map"), mapOptions);
- 
-        navigator.geolocation.getCurrentPosition(function(pos) {
-            map.setCenter(new google.maps.LatLng(pos.coords.latitude, pos.coords.longitude));
-            var myLocation = new google.maps.Marker({
-                position: new google.maps.LatLng(pos.coords.latitude, pos.coords.longitude),
-                map: map,
-                title: "My Location"
-            });
+		
+        var map = new google.maps.Map(document.getElementById("map"),
+            mapOptions);
+        
+        //Marker + infowindow + angularjs compiled ng-click
+        var contentString = "<div><a ng-click='clickTest()'>Click me!</a></div>";
+        var compiled = $compile(contentString)($scope);
+
+        var infowindow = new google.maps.InfoWindow({
+          content: compiled[0]
         });
- 
+
+        var marker = new google.maps.Marker({
+          position: myLatlng,
+          map: map,
+          title: 'Uluru (Ayers Rock)'
+        });
+
+		/*
+        google.maps.event.addListener(marker, 'click', function() {
+          infowindow.open(map,marker);
+        });
+		*/
+
         $scope.map = map;
-    });
+      };
+	  
+	  
+      google.maps.event.addDomListener(window, 'load', initialize);
+      
+      $scope.centerOnMe = function() {
+        if(!$scope.map) {
+          return;
+        }
+
+        $scope.loading = $ionicLoading.show({
+          content: 'Getting current location...',
+          showBackdrop: false
+        });
+
+        navigator.geolocation.getCurrentPosition(function(pos) {
+          $scope.map.setCenter(new google.maps.LatLng(pos.coords.latitude, pos.coords.longitude));
+          $ionicLoading.hide();
+        }, function(error) {
+          alert('Unable to get location: ' + error.message);
+        });
+      };
+      
+      $scope.clickTest = function() {
+        alert('Example of infowindow with ng-click')
+      };
+	  
+	  initialize();
+      
+})
 	
-	*/
- 
-})
-
-
-/* Map Controller */
-/*
-.controller('LocationCtrol', function($scope, $ionicLoading) {
- 
-
-    // onSuccess Callback
-    // This method accepts a Position object, which contains the
-    // current GPS coordinates
-    //
-    var onSuccess = function(position) {
-        alert('Latitude: '          + position.coords.latitude          + '\n' +
-              'Longitude: '         + position.coords.longitude         + '\n' +
-              'Altitude: '          + position.coords.altitude          + '\n' +
-              'Accuracy: '          + position.coords.accuracy          + '\n' +
-              'Altitude Accuracy: ' + position.coords.altitudeAccuracy  + '\n' +
-              'Heading: '           + position.coords.heading           + '\n' +
-              'Speed: '             + position.coords.speed             + '\n' +
-              'Timestamp: '         + position.timestamp                + '\n');
-    };
-
-    // onError Callback receives a PositionError object
-    //
-    function onError(error) {
-        alert('code: '    + error.code    + '\n' +
-              'message: ' + error.message + '\n');
-    }
-
-    navigator.geolocation.getCurrentPosition(onSuccess, onError);
- 
-})
-*/
-
+	
 
 
 

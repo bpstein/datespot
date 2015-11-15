@@ -108,9 +108,9 @@ angular.module('datespot', ['ionic', 'datespot.controllers', 'ngCordova.plugins.
 
 .constant('SERVER', {
 	
-  // url: 'http://ds.urandom.info'
+   url: 'http://ds.urandom.info',
   
-  url: 			 'http://192.168.56.101',
-  clientversion: '0.1'
+ // url: 			 'http://192.168.56.101',
+  clientversion: 2
 
 });

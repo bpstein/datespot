@@ -2,10 +2,10 @@
 
   // Get transform origin poly
   var d = document.createElement('div');
-  var transformKeys = ['webkitTransformOrigin', 'transform-origin', '-webkit-transform-origin', 'webkit-transform-origin',
+  var transformKeys = ['TransformOrigin', 'transform-origin', '--transform-origin', '-transform-origin',
               '-moz-transform-origin', 'moz-transform-origin', 'MozTransformOrigin', 'mozTransformOrigin'];
 
-  var TRANSFORM_ORIGIN = 'webkitTransformOrigin';
+  var TRANSFORM_ORIGIN = 'TransformOrigin';
   for(var i = 0; i < transformKeys.length; i++) {
     if(d.style[transformKeys[i]] !== undefined) {
       TRANSFORM_ORIGIN = transformKeys[i];
@@ -13,9 +13,9 @@
     }
   }
 
-  var transitionKeys = ['webkitTransition', 'transition', '-webkit-transition', 'webkit-transition',
+  var transitionKeys = ['Transition', 'transition', '--transition', '-transition',
               '-moz-transition', 'moz-transition', 'MozTransition', 'mozTransition'];
-  var TRANSITION = 'webkitTransition';
+  var TRANSITION = 'Transition';
   for(var i = 0; i < transitionKeys.length; i++) {
     if(d.style[transitionKeys[i]] !== undefined) {
       TRANSITION = transitionKeys[i];
@@ -155,8 +155,8 @@
       console.log('Duration', duration);
 
       ionic.requestAnimationFrame(function() {
-        self.el.style.transform = self.el.style.webkitTransform = 'translate3d(' + targetX + 'px, ' + targetY + 'px,0) rotate(' + self.rotationAngle + 'rad)';
-        self.el.style.transition = self.el.style.webkitTransition = 'all ' + duration + 's ease-in-out';
+        self.el.style.transform = self.el.style.Transform = 'translate3d(' + targetX + 'px, ' + targetY + 'px,0) rotate(' + self.rotationAngle + 'rad)';
+        self.el.style.transition = self.el.style.Transition = 'all ' + duration + 's ease-in-out';
       });
       console.log('DO DRAG END');
 
@@ -226,7 +226,7 @@
       this.x = this.startX + (e.gesture.deltaX * 0.8);
       this.y = this.startY + (e.gesture.deltaY * 0.8);
 
-      this.el.style.transform = this.el.style.webkitTransform = 'translate3d(' + this.x + 'px, ' + this.y  + 'px, 0) rotate(' + (this.rotationAngle || 0) + 'rad)';
+      this.el.style.transform = this.el.style.Transform = 'translate3d(' + this.x + 'px, ' + this.y  + 'px, 0) rotate(' + (this.rotationAngle || 0) + 'rad)';
 
 
       this.thresholdAmount = (this.x / (this.parentWidth/2));
@@ -293,8 +293,10 @@
               });
             },
             onSnapBack: function(startX, startY, startRotation) {
-              var leftText = el.querySelector('.yes-text');
-              var rightText = el.querySelector('.no-text');
+			 
+			 //  Grant Hack(tm): Don't know what this is.			
+             // var leftText = el.querySelector('.yes-text');
+             // var rightText = el.querySelector('.no-text');
 
               var animation = collide.animation({
                 // 'linear|ease|ease-in|ease-out|ease-in-out|cubic-bezer(x1,y1,x2,y2)',
@@ -314,7 +316,7 @@
 
               .on('step', function(v) {
                 //Have the element spring over 400px
-                el.style.transform = el.style.webkitTransform = 'translate3d(' + (startX - startX*v) + 'px, ' + (startY - startY*v) + 'px, 0) rotate(' + (startRotation - startRotation*v) + 'rad)';
+                el.style.transform = el.style.Transform = 'translate3d(' + (startX - startX*v) + 'px, ' + (startY - startY*v) + 'px, 0) rotate(' + (startRotation - startRotation*v) + 'rad)';
 			   //  Grant Hack(tm): Don't know what this is.
                // rightText.style.opacity = Math.max(rightText.style.opacity - rightText.style.opacity * v, 0);
               //  leftText.style.opacity = Math.max(leftText.style.opacity - leftText.style.opacity * v, 0);
@@ -323,7 +325,7 @@
               /*
               animateSpringViaCss(el, 0, 0.5, 50, 700, 10, function (x) {
                 console.log('Mapper', x);
-                return el.style.transform = el.style.webkitTransform = 'translate3d(' + x + 'px,0,0)';
+                return el.style.transform = el.style.Transform = 'translate3d(' + x + 'px,0,0)';
               });
               */
             },
@@ -357,7 +359,7 @@
             card = existingCards[i];
             if(!card) continue;
             if(i > 0) {
-              card.style.transform = card.style.webkitTransform = 'translate3d(0, ' + (i * 4) + 'px, 0)';
+              card.style.transform = card.style.Transform = 'translate3d(0, ' + (i * 4) + 'px, 0)';
             }
             card.style.zIndex = (existingCards.length - i);
           }
@@ -369,19 +371,26 @@
 
         var bringCardUp = function(card, amt, max) {
           var position, top, newTop;
-          position = card.style.transform || card.style.webkitTransform;
+          position = card.style.transform || card.style.Transform;
           top = parseInt(position && position.split(',')[1] || 0);
           //console.log(window.getComputedStyle(secondCard));
           newTop = Math.max(0, Math.min(max, max - (max * Math.abs(amt))));
           //console.log(top);
           //console.log(newTop);
-          card.style.transform = card.style.webkitTransform = 'translate3d(0, ' + newTop + 'px, 0)';
+          card.style.transform = card.style.Transform = 'translate3d(0, ' + newTop + 'px, 0)';
         };
 
         this.partial = function(amt) {
           cards = $element[0].querySelectorAll('td-card');
+		  
+		  //https://github.com/julienroubieu/ionic-ion-tinder-cards/commit/7446963202bdef260e29def422032a69f8f89673
+          secondCard = cards.length > 2 && cards[1];
+          thirdCard = cards.length > 3 && cards[2];		  
+		  
+		  /*
           firstCard = cards[0];
           secondCard = cards[1];
+		  */
           thirdCard = cards[2];
           if(!secondCard) { return; }
 

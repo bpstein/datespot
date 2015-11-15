@@ -11,31 +11,26 @@
           class="card-{{$index}}" 
           ng-click="cardClicked($index);">
 		
-  <div class="image"><img ng-src="{{card.image_url}}"></div> 
-		  <div style="background-color:#ffcc00; padding: 5px;">       
+		  <div class="image">
+		  <img ng-src="{{card.image_url}}" />
+		  <div style="background-color:#ffcc00;">       
 			<p>{{ card.name }} </p>
-			<p>This bit will be replaced with a short description.</P>
+			<p>{{ card.desc_short }}</P>
 		  </div>
-
- 
-		    <!--   <div class="background-image-card-test" style="background-image: url({{card.image_url}})"><img ng-src="{{card.image_url}}"></div> -->
+		  </div>
 		 
       </td-card>
     </td-cards>
-	
-	
-		  
-	
-	<!--
-	
-	<div class="spotInfo" style="height:100px">
-      <span ng-hide="currentSpot.loaded"></span>
-        <h2>{{ card.name }}</h2>
-        <p>{{ card.description}}</P>
-    </div> 
-	-->
 
+	 <!--
+	<div class="spotInfo" style="height:100px" style="background-color:#ffcc00; padding: 5px;">
+     <span ng-hide="currentSpot.loaded"></span>
+        <h2>{{ current_card.name }} test</h2>
+        <p>{{ current_card.desc_short}} test</P>
+    </div> 
 	
+	 -->
+
 	</ion-content>
 </ion-view>
 

@@ -1,0 +1,521 @@
+/*******************
+/* GLOBAL STYLING */
+/******************/
+
+@import url(http://fonts.googleapis.com/css?family=Source+Sans+Pro:400,900);
+@import url(https://fonts.googleapis.com/css?family=Varela+Round);
+
+* {
+  font: 20px 'Varela Round';
+  /*Other fonts to consider: 'Adelle Bold', 'Helvetica Neue', sans-serif;*/
+
+}
+
+.customBar {
+  background-color: #000;
+  color: #FFF;
+  border: none;
+/*  height: 60px;
+  vertical-align: middle;*/
+}
+
+.scroll-content {
+  background-color: #000;
+}
+
+/************************
+/* SPLASH PAGE STYLING */
+/***********************/
+
+.splash-page {
+  background:url(../img/splash-bkg.jpg);
+  background-size: cover;
+  background-repeat: no-repeat;
+}
+
+.splash-page .card {
+  margin-top:40px;
+}
+
+.splash-page .logo h1 {
+  margin-top:30px;
+  text-align:center;
+  color:#fff !important;
+  font-family: Verdana, Geneva, sans-serif;
+  font-weight:bold;
+  letter-spacing: -3px;
+  font-size:42px;
+}
+
+.splash-page .signup-opt {
+  color:#fff;
+  padding:15px;
+  margin-top:20px;
+  font-weight: bold;
+  cursor:pointer;
+}
+
+.splash-page .action-button {
+  font-weight: bolder;
+}
+
+/*****************
+/* TABS STYLING */
+/****************/
+
+.tab-nav {
+  background-color: #fff;
+  border: none;
+}
+
+.tab-nav-tabs {
+  background-color:#fff !important;
+}
+
+.tabStyle, .tab-item {
+      background-color: transparent  !important;
+    }
+
+.tab-item-active {
+  color: black;
+  opacity: 2;
+}
+
+.tabs-icon {
+  background-color: #222;
+}
+
+/***********************
+/* SEARCH TAB STYLING */
+/**********************/
+
+.item-complex .item-content {
+  background-color: rgba(0,0,0,0.45);
+  border: none;
+  border: transparent !important;
+  border-top: none;
+  border-bottom:none;
+  margin-bottom: -5px;
+}
+
+.item-complex .item-content:hover {
+  background: rgba(0, 0, 0, 0.75) !important;
+  border: transparent !important;
+}
+
+.ion-item. .item-complex {
+  border: transparent !important;
+  border-top: none;
+  border-bottom:none;
+  margin-bottom: -5px;
+}
+
+.item.active, .item.activated, .item-complex.active .item-content, .item-complex.activated .item-content {
+  border-color: none;
+  background-color: #FFF;
+  border-top: none;
+  border-bottom:none
+;}
+
+.occasionPicker {
+  padding: 0px !important;
+  margin: 0px !important;
+  border: none;
+  display: flex;
+  flex-direction: column;
+  flex-wrap: nowrap;
+  justify-content: space-around;
+  align-content: center;
+  align-items: stretch;
+  min-height: 100% !important;
+  height: 100% !important;
+}
+
+.occasionInfo {
+  height: 190px; 
+  line-height: 190px;
+  padding: 0px;
+  text-align: center;
+  background-size: cover;
+}
+
+.defaultOccasion {
+  background: no-repeat center;
+  background-size: cover!important;
+  -webkit-background-size: cover!important;
+  -webkit-background-size: cover;
+  -moz-background-size: cover;
+  -o-background-size: cover;
+  border: 0.5px solid #333;
+  height: 100%;
+}
+
+.occasionHeader {
+  display: inline-block;
+  vertical-align: middle;
+  line-height: normal;
+  text-transform: uppercase;
+  font-family: 'Varela Round';
+  font-size: 18px;
+  color: #fff;
+  text-shadow: 1px 1px #333;
+}
+
+.occasionTagline {
+  font-family: 'Varela Round';
+  font-size: 20px;
+  color: #fff;
+  word-wrap: break-word;
+}
+
+/**************************
+/* LOADING PAGE STYLING */
+/*************************/
+
+.heart-image {
+  height: 75px;
+}
+
+/**************************
+/* DISCOVER PAGE STYLING */
+/*************************/
+.discover-page {
+
+}
+
+.discover-page .current-song {
+  -webkit-transform: scale(1);
+  -ms-transform: scale(1);
+  transform: scale(1);
+  opacity: 1;
+
+  -webkit-transition:all cubic-bezier(0.420, 0.000, 1.000, 1.000) 0.1s;
+  transition:all cubic-bezier(0.420, 0.000, 1.000, 1.000) 0.1s;
+}
+
+.discover-page .current-song .item-image {
+  max-height:300px;
+  overflow:hidden;
+}
+
+@media screen and (max-height: 600px) {
+  .discover-page .current-song .item-image {
+    max-height:200px;
+    overflow:hidden;
+  }
+}
+
+.discover-page .current-song.favorited.ng-hide {
+  -webkit-transform: translateX(1000px) rotate(50deg);
+  -ms-transform: translateX(1000px) rotate(50deg);
+  transform: translateX(1000px) rotate(50deg);
+  opacity:0;
+}
+
+.discover-page .current-song.skipped.ng-hide {
+  -webkit-transform: translateX(-1000px) rotate(-50deg);
+  -ms-transform: translateX(-1000px) rotate(-50deg);
+  transform: translateX(-1000px) rotate(-50deg);
+  opacity:0;
+}
+
+.discover-page .current-song.ng-hide-add {
+  -webkit-transition:all cubic-bezier(0.420, 0.000, 1.000, 1.000) 0.3s;
+  transition:all cubic-bezier(0.420, 0.000, 1.000, 1.000) 0.3s;
+  display:block!important;
+}
+
+.discover-page .current-song.ng-hide-remove {
+  -webkit-transform: scale(0.7) translateX(0px) rotate(0deg);
+  -ms-transform: scale(0.7) translateX(0px) rotate(0deg);
+  transform: scale(0.7) translateX(0px) rotate(0deg);
+  opacity: 0;
+}
+
+
+.discover-page .img-lookahead img {
+  height:1px;
+  width:1px;
+  opacity:0.01;
+}
+
+
+
+/***************************
+/* SHORTLIST PAGE STYLING */
+/**************************/
+
+.shortlistInfo {
+  padding: 15px;
+  background: no-repeat center;
+  background-size: cover!important;
+  -webkit-background-size: cover!important;
+  -webkit-background-size: cover;
+  -moz-background-size: cover;
+  -o-background-size: cover;
+  height: 240px;
+  width: 400px;
+  border: black;
+}
+
+.shortlistInfo:before {
+  content: " ";
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  z-index: 1;
+  top: 0;
+  left: 0;
+  /*background: -webkit-linear-gradient(
+      transparent, #222 99%);*/
+}
+
+.item-remove-animate .item-icon-right {
+  border: 0.5px solid #333;
+}
+
+/*.shortlistInfo:hover {
+  background: rgba(0, 0, 0, 0.15) !important;
+  border: transparent !important;
+}*/
+
+.shortlistHeader {
+  color: #FFF;
+  font-family: 'Varela Round';
+  font-size: 30px;
+  position: relative;
+  padding-top: 170px;
+  text-shadow: 1px 1px #222;
+  z-index: 2
+}
+
+.shortlistAddress {
+  color: #DDD;
+  font-family: 'Varela Round';
+  font-size: 30px;
+  position: relative;
+  text-shadow: 1px 1px #222;
+  z-index: 2;
+}
+
+.shortlistTagline, .ion-footer-bar {
+  font-family: 'Varela Round';
+  background-color: #f3f3f3;
+  height: 0px;
+  width: 400px;
+  padding-left: 15px;
+  padding-right: 15px;
+  float: left;
+}
+
+.textWrapper {
+  font-size: 13.5px;
+  overflow: initial; 
+  white-space: initial;
+  word-break: break-word;
+  position: justify;
+  text-align: justify;
+  text-justify: inter-word;
+}
+
+.item-complex .item-content, .item-radio .item-content {
+  padding: 0px;
+}
+
+.shortlist.button-assertive {
+  width: 70px;
+  font-size: 10px;
+}
+
+.shortlist-text {
+  font-size: 14px;
+  left: auto;
+  right: auto;
+  display: block;
+  text-align: center;
+}
+
+.ion-paper-airplane, .ion-trash-a {
+  font-size: 28px;
+}
+
+/*************************
+/* DETAILS PAGE STYLING */
+/************************/
+.detailsPageTest {
+  color: #f3f3f3;
+  font-family: 'Varela Round';
+}
+
+.slider-view {
+}
+
+.slider-pager {
+  top: 0;
+  margin-top: 20px;
+}
+
+.sliderCard {
+  height: 350px;
+  background-color: #FFF;
+  z-index: ;
+}
+
+.spotDetailHeader {
+  margin-top: -75px;
+  z-index: 1;
+  position: absolute;
+}
+
+.spotDetailName, 
+.spotDetailAddress, 
+.spotDetailCategory, 
+.spotDetailBlurb  
+.spotDetailOccasion 
+.spotDetailPrice 
+.spotDetailStrip {
+  font-family: 'Varela Round';
+  font-size: 22px;
+  color: red;
+  background: ;
+}
+
+.spotDetailStrip {
+  background-color: #f3f3f3;
+  font-family: 'Varela Round';
+  padding-bottom: 0px;
+  margin-bottom: 15px;
+}
+
+.spotDetailAddress {
+  font-size: 16px;
+}
+
+.spotDetailBlurb, .spotDetailDescription {
+  font-size: 14px;
+}
+
+.spotDetailBlurb {
+  font-weight: bold;
+}
+
+.spotDetailDescription, {
+  margin-top: 15px;
+}
+
+.spotDetailCategory {
+  font-size: 14px;
+  color: #444;
+}
+
+.spotDetailPrice, {
+  text-align: right;
+  color: #444;
+}
+
+.spotDetailOccasion, {
+  text-align: left;
+  font-family: 'Varela Round';
+  color: #444;
+}
+
+
+
+/*************************************
+/* VENUE CARDS PAGE STYLING !        */
+/*************************************/
+
+/*
+
+.background-image-card-test {
+  width: auto;
+  height: auto;
+  background: no-repeat center;
+  background-size: cover!important;
+  -webkit-background-size: cover!important;
+  -webkit-background-size: cover;
+  -moz-background-size: cover;
+  -o-background-size: cover;
+}
+
+.spotInfo {
+  margin-top: 388px;
+  margin-left: 5px;
+  margin-right: 5px;
+  padding: 5px;
+  background-color: #f3f3f3;
+  border-radius: 0px 0px 10px 10px; 
+  border: none;
+  text-align: center;
+  font-family: 'Varela Round';
+  word-wrap: word-break;
+}
+
+
+.ng-binding {
+  font-family: 'Varela Round';
+}
+*/
+
+
+/*************************
+/* LOADING PAGE STYLING */
+/************************/
+
+.loadingPage {
+  background-color: #FFF;
+}
+
+.loadingMessage {
+  font-size: 14px;
+  color: #f3f3f3;
+   -webkit-box-ordinal-group: 1;
+    -moz-box-ordinal-group: 1;
+    -webkit-order: 0;
+    -ms-flex-order: 0;
+    order: 0;
+    -webkit-box-flex: 0;
+    -moz-box-flex: 0;
+    -webkit-flex: 0 1 auto;
+    -ms-flex: 0 1 auto;
+    flex: 0 1 auto;
+    -webkit-align-self: stretch;
+    -ms-flex-item-align: stretch;
+    align-self: stretch;
+}
+
+/***********************
+/* HEART ICON STYLING */
+/**********************/
+
+.heart {
+  margin-top: 90px;
+  font-size:  70px;
+  text-align: center;
+  color: #e74c3c;
+  animation: beat 1s infinite;
+}
+
+@keyframes beat {
+  from {
+    transform: scale(1);
+    transform-origin: center center;
+    animation-timing-function: ease-out;
+  }
+  10% {
+    transform: scale(1.1);
+    animation-timing-function: ease-in;
+  }
+  15% {
+    transform: scale(1);
+    animation-timing-function: ease-out;
+  }
+  25% {
+    transform: scale(1.05);
+    animation-timing-function: ease-in;
+  }
+  35% {
+    transform: scale(1);
+    animation-timing-function: ease-out;
+  }
+}
