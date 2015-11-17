@@ -23,6 +23,13 @@
   background-color: #000;
 }
 
+/*Disables Ionic items turning grey on press*/
+.item.active, .item.activated, .item-complex.active .item-content, 
+.item-complex.activated .item-content, .item .item-content.active,
+.item .item-content.activated {
+    background: transparent !important;
+}
+
 /************************
 /* SPLASH PAGE STYLING */
 /***********************/
@@ -183,12 +190,15 @@
 
 }
 
+.card, .td-card {
+  height: 100%;
+}
+
 .discover-page .current-song {
   -webkit-transform: scale(1);
   -ms-transform: scale(1);
   transform: scale(1);
   opacity: 1;
-
   -webkit-transition:all cubic-bezier(0.420, 0.000, 1.000, 1.000) 0.1s;
   transition:all cubic-bezier(0.420, 0.000, 1.000, 1.000) 0.1s;
 }
@@ -244,7 +254,6 @@
 /***************************
 /* SHORTLIST PAGE STYLING */
 /**************************/
-
 .shortlistInfo {
   padding: 15px;
   background: no-repeat center;
@@ -256,6 +265,7 @@
   height: 240px;
   width: 400px;
   border: black;
+  background-image: linear-gradient(to bottom, transparent, #222);
 }
 
 .shortlistInfo:before {
@@ -266,6 +276,7 @@
   z-index: 1;
   top: 0;
   left: 0;
+  background-image: linear-gradient(to bottom, transparent, #111 99%);
   /*background: -webkit-linear-gradient(
       transparent, #222 99%);*/
 }
@@ -300,12 +311,13 @@
 
 .shortlistTagline, .ion-footer-bar {
   font-family: 'Varela Round';
-  background-color: #f3f3f3;
-  height: 0px;
+  background-color: transparent;
+  height: 50px;
   width: 400px;
   padding-left: 15px;
   padding-right: 15px;
   float: left;
+  color: #DDD;
 }
 
 .textWrapper {
@@ -335,8 +347,38 @@
   text-align: center;
 }
 
-.ion-paper-airplane, .ion-trash-a {
+.shortlist-icon-tray {
+  background-color: red;
+  height: 40px;
+  width: 100px;
+  float: right;
+}
+
+.ion-ios-telephone, .ion-ios-email, .ion-calendar {
+  color: #FFF;
   font-size: 28px;
+  padding: 5;
+  left: auto;
+  right: auto;
+/*  font-size: 28px;
+  right: auto;
+  float: right;
+  padding: 1px;
+  margin-top: -10px;
+  color: #FFF;*/
+}
+
+.ion-paper-airplane, .ion-trash-a, .ion-pin {
+  font-size: 28px;
+  left: auto;
+  right: auto;
+  text-align: center; 
+  padding: 10px;
+}
+
+.ion-chevron-right {
+  color: #FFF;
+  text-shadow: 1px 1px #333;
 }
 
 /*************************
@@ -356,7 +398,8 @@
 }
 
 .sliderCard {
-  height: 350px;
+  min-height: 400px;
+  width: auto;
   background-color: #FFF;
   z-index: ;
 }
@@ -365,6 +408,11 @@
   margin-top: -75px;
   z-index: 1;
   position: absolute;
+}
+
+.spotDetailImage {
+  max-height: 400px;
+  width: auto;
 }
 
 .spotDetailName, 
@@ -376,12 +424,13 @@
 .spotDetailStrip {
   font-family: 'Varela Round';
   font-size: 22px;
-  color: red;
+  color: #FFF;
+  text-shadow: 1px 1px #333;
   background: ;
 }
 
 .spotDetailStrip {
-  background-color: #f3f3f3;
+  background-color: #444;
   font-family: 'Varela Round';
   padding-bottom: 0px;
   margin-bottom: 15px;
@@ -405,12 +454,11 @@
 
 .spotDetailCategory {
   font-size: 14px;
-  color: #444;
+  color: #555;
 }
 
 .spotDetailPrice, {
   text-align: right;
-  color: #444;
 }
 
 .spotDetailOccasion, {

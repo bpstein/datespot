@@ -20,7 +20,9 @@
      <!--  <td-card ng-repeat="card in cards" -->
            <!--     class="card-{{$index}}" > -->
       <ion-slide-box show-pager="true">
-        <ion-slide ng-repeat="imageurl in spot.images">
+        <ion-slide
+          class="spotDetailImage" 
+          ng-repeat="imageurl in spot.images">
           <div class="sliderCard" style="background-image: url({{imageurl}})">
           </div>
         </ion-slide>
@@ -30,7 +32,7 @@
       <div class="row spotDetailHeader"> 
         <div class="col detailsPageTest">
           <h2 class="spotDetailName">{{spot.name}}</h2>
-          <h3 class="spotDetailAddress">{{spot.address}}</h3>
+          <h3 class="spotDetailAddress">{{spot.address}}, {{spot.postcode}}</h3>
         </div>
       </div>
       

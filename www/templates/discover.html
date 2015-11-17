@@ -4,20 +4,20 @@
   
    <td-cards>
       <td-card ng-repeat="card in cards" 
-          on-destroy="cardDestroyed($index)" 
-          on-swipe-left="cardSwipedLeft($index)" 
-          on-swipe-right="cardSwipedRight($index)" 
-          on-partial-swipe="cardPartialSwipe(amt)" 
-          class="card-{{$index}}" 
-          ng-click="cardClicked($index);">
+        on-destroy="cardDestroyed($index)" 
+        on-swipe-left="cardSwipedLeft($index)" 
+        on-swipe-right="cardSwipedRight($index)" 
+        on-partial-swipe="cardPartialSwipe(amt)" 
+        class="card-{{$index}}" 
+        ng-click="cardClicked($index);">
 		
-		  <div class="image">
-		  <img ng-src="{{card.image_url}}" />
-		  <div style="background-color:#ffcc00;">       
-			<p>{{ card.name }} </p>
-			<p>{{ card.desc_short }}</P>
-		  </div>
-		  </div>
+  		  <div class="image">
+  		    <img ng-src="{{card.image_url}}" />
+  		    <div style="background-color:#ffcc00;">       
+  			    <p>{{ card.name }} </p>
+  			    <p>{{ card.desc_short }}</P>
+  		    </div>
+  		  </div>
 		 
       </td-card>
     </td-cards>
