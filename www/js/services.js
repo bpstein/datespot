@@ -1,13 +1,188 @@
-/**********************************************************************
- *
- *	script file		: services.js
- *	
- *	begin			: 1 August 2015
- *	copyright		: Grant Bartlett and Ben Stein
- *
+/* DateSpot Angular Module *******************************************
+ * 
+ * 	name 	:	datespot.jsonservices
+ *  purpose	:   Datespot JSON Services, contains the following
+ * 				factories: Search
  **********************************************************************/
 
- 
+angular.module('datespot.factories', [])
+
+
+// Persisting data across controllers
+.factory('SessionManager', function($localstorage) {
+	
+	console.log('Loaded the SessionManager Factory');	
+	
+	var token_name = 'dstoken';
+	var o = {
+		userLat: null,
+		userLon: null,
+	}
+
+	o.setLocation = function (userLat,userLon) { 
+		o.userLat = userLat; o.userLon = userLon;	
+		console.log('Session location set to: ' + o.userLat +', '+ o.userLon );
+	}
+	
+	o.getToken = function () 		{ return $localstorage.get(token_name); }
+	o.setToken = function (token) 	{ $localstorage.set(token_name, token); }
+	
+	o.positionKnown = function ()
+	{	
+		if ((o.userLat != null) && (o.userLon != null)) { return true; } else { return false; }
+	} // end position known
+	
+	
+	/**
+	 * Returns the distance from 'this' point to destination point (using haversine formula).
+	 *
+	 * @param   {LatLon} point - Latitude/longitude of destination point.
+	 * @param   {number} [radius=6371e3] - (Mean) radius of earth (defaults to radius in metres).
+	 * @returns {number} Distance between this point and destination point, in same units as radius.
+	 *
+	 * @example
+	 *     var p1 = new LatLon(52.205, 0.119), p2 = new LatLon(48.857, 2.351);
+	 *     var d = p1.distanceTo(p2); // Number(d.toPrecision(4)): 404300
+	 */
+	o.calculateDistance = function (Lat, Lon)
+	{
+		// Do we know where we are?
+		if (o.positionKnown() )
+		{
+			var p1 = new LatLon(Lat, Lon), p2 = new LatLon(o.userLat, o.userLon);
+
+			console.log('Our position:' + o.userLat + ', ' + o.userLon + '. PoI: ' + Lat + ', ' + Lon);
+			console.log(p1);
+			console.log(p2);
+			
+			var d = p1.distanceTo(p2); // distance in meters by default
+				d = Number(d.toPrecision(1));
+			
+			console.log('Distance in meters: '+ d);
+			return (d/1000) + ' km';			
+		}
+		else
+		{
+			return '';
+		}		
+	} // end calculate distance
+	
+	return o;
+})
+
+// nothing beats a good cache.
+// https://www.phase2technology.com/blog/caching-json-arrays-using-cachefactory-in-angularjs-1-2-x/
+.factory('CacheService', function($cacheFactory) {
+   var cache = $cacheFactory('cacheService', {
+    // capacity: 3 // optional - turns the cache into LRU cache
+   });
+   
+   return cache;
+   
+})
+
+
+
+// http://learn.ionicframework.com/formulas/data-the-right-way/
+// http://mcgivery.com/ionic-using-factories-and-web-services-for-dynamic-data/
+.factory('SearchQuery', function($http, SERVER, SessionManager, CacheService) {
+   console.log('Loaded the SearchQuery Factory');
+  
+   // We need to insure we are always returning a value from a factory definition
+   var o = {
+		results: [],
+		offset: 0
+	}
+
+   // Function: getVenues
+   o.performQuery = function(scenarioid, offset) 
+   {
+	   
+	   // Clear the results
+	   o.results = [];
+	  
+		var url = SERVER.url + '/client.json.php?ver=' + SERVER.clientversion + '&sid=' + scenarioid +'&originLat=' + SessionManager.userLat + '&originLong=' + SessionManager.userLon + '&o=' + offset + '&token=' + SessionManager.getToken();
+		console.log('Server query: ' + url);
+		
+		return $http({
+		  method: 'GET',
+		  url: url,
+		  cache: true // cache the result, uses cacheFactory but differently by URL.
+		}).success(function(data)
+		{
+			if ( data.success == true)
+			{
+				// 'queryresults' is the name of the element in the JSON returned from the server
+				// that contains all the venues / results.
+				console.log('We got ' + data.queryresults.length + ' results from the server!');
+								
+				  // Iterate through the results
+				  for(var j= 0; j < data.queryresults.length; j++)
+				  {
+						var found = false;
+						var dataPoint = data.queryresults[j];
+						
+						// ignore any dupes
+						for(var i= 0; i<o.results.length; i++)
+						{
+							// this logic is never used given we always flush o.results.
+							// Keeping it here anyway.
+							if(o.results[i].vuid === dataPoint.vuid){ 
+								found = true;
+							}
+						}
+						
+						if(!found){
+							console.log('Pushing result element from server onto search results queue array.');
+							o.results.push(dataPoint);
+						}
+						
+					// Add the result to the cache, by venue unique id
+					CacheService.put(dataPoint.vuid, dataPoint);	
+	
+				  } // loop through results			  
+			 } // end succcess
+			 
+		});
+	
+  } // end getVenues
+
+  
+  // Function: Next Venue -> Need to persist the start point, lat and long from the server.
+  // http://learn.ionicframework.com/formulas/infinite-lists/
+  /*
+  o.dropResult = function() 
+  {
+    // pop the index 0 off
+    o.results.shift();
+
+  } // nextVenue
+  
+
+  // No longer required as we have the results cache.
+  o.getVenueByVUID = function(vuid)
+  {
+		for (var i = 0; i < o.results.length; i++) 
+		{
+			if (o.results[i].vuid === vuid) 
+			{
+				console.log('Found a match to vuid '+ vuid + '! Happy days.');
+				return o.results[i];
+			}
+		}
+		
+		return null;  
+		
+  } // end getVenue
+  */
+  
+  // Return the function definitions
+  return o;
+  
+})
+
+
+
 /* DateSpot Angular Module *******************************************
  * 
  * 	name 	:	datespot.userservices
@@ -15,9 +190,8 @@
  * 				factories: User, FactoryFuck
  **********************************************************************/
 
-angular.module('datespot.userservices', [])
-// User factory within the module
-.factory('User', function() {
+.factory('User', function(SessionManager, CacheService) 
+{
 	
   console.log('Loaded the User Factory');
 
@@ -51,181 +225,12 @@ angular.module('datespot.userservices', [])
   }
   return o;
   
-}) // notice the termination here, as we're terminating the factory ONLY
-
-/*
-.factory('Spots', function() {
-	
-	console.log('Loaded the Spots Factory');
-	  
-	var spots = [{
-
-	}];
-
-	return {
-		all: function() {
-			return spots;
-		},
-		remove: function(spot) {
-			spots.splice(spots.indexOf(spot), 1);
-		},
-		get: function(spotVuid) {
-			for (var i = 0; i < spots.length; i++) {
-				
-				console.log(spots[i].vuid);
-				
-				if (spots[i].vuid === parseInt(spotVuid)) {
-					return spots[i];
-				}
-			}
-			return null;
-		}
-	};
-});
-*/
-
-
-/* DateSpot Angular Module *******************************************
- * 
- * 	name 	:	datespot.jsonservices
- *  purpose	:   Datespot JSON Services, contains the following
- * 				factories: Search
- **********************************************************************/
- 
-angular.module('datespot.jsonservices', [])
-.factory('Search', function($http, SERVER, $localstorage) {
-
-  // http://learn.ionicframework.com/formulas/data-the-right-way/
-  // http://mcgivery.com/ionic-using-factories-and-web-services-for-dynamic-data/
-
-  console.log('Loaded the Search Factory');	
-  console.log('The Server Address is at: ' + SERVER.url);
-  
-  // We need to insure we are always returing a value from a factory definition
-  var o = {
-    results: [],
-	lat: null,
-	lon: null,
-	offset: 0
-  }
-  
-	// Do we have a token
-	var token = $localstorage.get('dstoken');
-
-   // Function: getVenues
-   o.getResults = function(scenarioid, lat, lon, offset) {
-	  
-	//var url = SERVER.url + '/client.json.php?a=all';
-	var url = SERVER.url + '/client.json.php?ver=' + SERVER.clientversion + '&sid=' + scenarioid +'&originLat=' + lat + '&originLong=' + lon + '&o=' + offset + '&token=' + token;
-	console.log('Server query: ' + url);
-	
-    return $http({
-      method: 'GET',
-      url: url
-    }).success(function(data)
-	{
-		if ( data.success == true)
-		{
-			console.log('We got ' + data.queryresults.length + ' results from the server!');
-			
-			// Persis these
-			o.lat 		= lat;
-			o.lon 		= lon;
-			o.offset 	= offset;
-			
-			$localstorage.set('dstoken', data.token);
-			token = data.token;
-			
-						
-			  // Iterate through the results
-			  for(var j= 0; j < data.queryresults.length; j++)
-			  {
-					var found = false;
-					var dataPoint = data.queryresults[j];
-					
-					// ignore any dupes
-					for(var i= 0; i<o.results.length; i++)
-					{
-						if(o.results[i].vuid === dataPoint.vuid){
-							found = true;
-						}
-					}
-					
-					if(!found){
-						console.log('Pushing result element from server onto search results queue array.');
-						o.results.push(dataPoint);
-					}
-			  } // loop through results			  
-		 } // end succcess
-			  
-    });
-	
-  } // end getVenues
-
-  
-  // Function: Next Venue -> Need to persist the start point, lat and long from the server.
-  // http://learn.ionicframework.com/formulas/infinite-lists/
-  o.dropResult = function() 
-  {
-    // pop the index 0 off
-    o.results.shift();
-
-  } // nextVenue
-  
-  
-  o.getVenueByVUID = function(vuid)
-  {
-		for (var i = 0; i < o.results.length; i++) 
-		{
-			if (o.results[i].vuid === vuid) 
-			{
-				console.log('Found a match to vuid '+ vuid + '! Happy days.');
-				return o.results[i];
-			}
-		}
-		
-		return null;  
-		
-  } // end getVenue
-  
-  // Return the function definitions
-  return o;
-  
-});
+}); // notice the termination here, as we're terminating the factory ONLY
 
 
 
 
 
-/*
-angular.module('datespot.jsonservices', [])
-.factory('PersonService', function($http){
-	var BASE_URL = "http://api.randomuser.me/";
-	var items = [];
-	
-	return {
-		GetFeed: function(){
-			return $http.get(BASE_URL+'?results=10').then(function(response){
-				items = response.data.results;
-				return items;
-			});
-		},
-		GetNewUsers: function(){
-			return $http.get(BASE_URL+'?results=2').then(function(response){
-				items = response.data.results;
-				return items;
-			});
-		},
-		GetOldUsers: function(){
-			return $http.get(BASE_URL+'?results=10').then(function(response){
-				items = response.data.results;
-				return items;
-			});
-		}
-	}
-})
-
-*/
 
 
 
@@ -279,3 +284,194 @@ angular.module('ngCordova.plugins.geolocation', [])
       }
     };
   }]);
+  
+  
+  
+/*
+.factory('Spots', function() {
+	
+	console.log('Loaded the Spots Factory');
+	  
+	var spots = [{
+
+	}];
+
+	return {
+		all: function() {
+			return spots;
+		},
+		remove: function(spot) {
+			spots.splice(spots.indexOf(spot), 1);
+		},
+		get: function(spotVuid) {
+			for (var i = 0; i < spots.length; i++) {
+				
+				console.log(spots[i].vuid);
+				
+				if (spots[i].vuid === parseInt(spotVuid)) {
+					return spots[i];
+				}
+			}
+			return null;
+		}
+	};
+});
+*/
+
+
+
+/*
+.factory('StorageManager', function ($cookieStore, $localStorage) {
+
+    var localStoreAvailable = typeof (Storage) !== "undefined";
+	
+	var o = {};
+	
+    o.store = function (name, details) {
+        if (localStoreAvailable) {
+            if (angular.isUndefined(details)) {
+                details = null;
+            } else if (angular.isObject(details) || angular.isArray(details) || angular.isNumber(+details || details)) {
+                details = angular.toJson(details);
+            };
+            sessionStorage.setItem(name, details);
+        } else {
+            $cookieStore.put(name, details);
+        };
+    };
+
+    o.persist = function(name, details) {
+        if (localStoreAvailable) {
+            if (angular.isUndefined(details)) {
+                details = null;
+            } else if (angular.isObject(details) || angular.isArray(details) || angular.isNumber(+details || details)) {
+                details = angular.toJson(details);
+            };
+            localStorage.setItem(name, details);
+        } else {
+            $cookieStore.put(name, details);
+        }
+    };
+
+    o.get = function (name) {
+        if (localStoreAvailable) {
+            return getItem(name);
+        } else {
+            return $cookieStore.get(name);
+        }
+    };
+
+    o.destroy = function (name) {
+        if (localStoreAvailable) {
+            localStorage.removeItem(name);
+            sessionStorage.removeItem(name);
+        } else {
+            $cookieStore.remove(name);
+        };
+    };
+
+    var getItem = function (name) {
+        var data;
+        var localData = localStorage.getItem(name);
+        var sessionData = sessionStorage.getItem(name);
+
+        if (sessionData) {
+            data = sessionData;
+        } else if (localData) {
+            data = localData;
+        } else {
+            return null;
+        }
+
+        if (data === '[object Object]') { return null; };
+        if (!data.length || data === 'null') { return null; };
+
+        if (data.charAt(0) === "{" || data.charAt(0) === "[" || angular.isNumber(data)) {
+            return angular.fromJson(data);
+        };
+
+        return data;
+    };
+
+    return o;
+}]) 
+*/
+
+  
+  
+  
+ // http://blog.thoughtram.io/angular/2015/07/07/service-vs-factory-once-and-for-all.html
+ /*
+  
+  .service('sessionService', ['$cookieStore', function ($cookieStore) {
+    var localStoreAvailable = typeof (Storage) !== "undefined";
+    this.store = function (name, details) {
+        if (localStoreAvailable) {
+            if (angular.isUndefined(details)) {
+                details = null;
+            } else if (angular.isObject(details) || angular.isArray(details) || angular.isNumber(+details || details)) {
+                details = angular.toJson(details);
+            };
+            sessionStorage.setItem(name, details);
+        } else {
+            $cookieStore.put(name, details);
+        };
+    };
+
+    this.persist = function(name, details) {
+        if (localStoreAvailable) {
+            if (angular.isUndefined(details)) {
+                details = null;
+            } else if (angular.isObject(details) || angular.isArray(details) || angular.isNumber(+details || details)) {
+                details = angular.toJson(details);
+            };
+            localStorage.setItem(name, details);
+        } else {
+            $cookieStore.put(name, details);
+        }
+    };
+
+    this.get = function (name) {
+        if (localStoreAvailable) {
+            return getItem(name);
+        } else {
+            return $cookieStore.get(name);
+        }
+    };
+
+    this.destroy = function (name) {
+        if (localStoreAvailable) {
+            localStorage.removeItem(name);
+            sessionStorage.removeItem(name);
+        } else {
+            $cookieStore.remove(name);
+        };
+    };
+
+    var getItem = function (name) {
+        var data;
+        var localData = localStorage.getItem(name);
+        var sessionData = sessionStorage.getItem(name);
+
+        if (sessionData) {
+            data = sessionData;
+        } else if (localData) {
+            data = localData;
+        } else {
+            return null;
+        }
+
+        if (data === '[object Object]') { return null; };
+        if (!data.length || data === 'null') { return null; };
+
+        if (data.charAt(0) === "{" || data.charAt(0) === "[" || angular.isNumber(data)) {
+            return angular.fromJson(data);
+        };
+
+        return data;
+    };
+
+    return this;
+ }])
+
+ */

@@ -9,7 +9,7 @@
           on-swipe-right="cardSwipedRight($index)" 
           on-partial-swipe="cardPartialSwipe(amt)" 
           class="card-{{$index}}" 
-          ng-click="cardClicked($index);">
+          ng-click="showDetails('{{ card.vuid }}');">
 		
 		  <div class="image">
 		  <img ng-src="{{card.image_url}}" />

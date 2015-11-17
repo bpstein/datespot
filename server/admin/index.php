@@ -769,7 +769,7 @@ if  (!isset($_REQUEST['action']) || empty($_REQUEST['action']) )
             </ul>
 			
 		<ul class="nav navbar-nav navbar-right">
-              <li><a href="" data-toggle="modal" data-target="#myModal">Version 0.3</a></li>
+              <li><a href="" data-toggle="modal" data-target="#myModal">Version 0.5</a></li>
             </ul>			
            
           </div><!--/.nav-collapse -->
@@ -785,14 +785,12 @@ if  (!isset($_REQUEST['action']) || empty($_REQUEST['action']) )
       <div class="modal-content">
         <div class="modal-header">
           <button type="button" class="close" data-dismiss="modal">&times;</button>
-          <h4 class="modal-title">Things are nearly done here.</h4>
+          <h4 class="modal-title">This is getting good now!</h4>
         </div>
         <div class="modal-body">
-          <p>Lots of bugs and things have been fixed and not a lot more needs to be done here. At some point when it makes sense I'll expand functionality such as:</p>
-		  <ul><li>A user heat map. Need users fist though.</li><li>Statistics on usage. Again, need people to use it.</li><li>... And anything else.</li></ul>
-		  
-		  There's more than enough here now to fill the database up with venues.
-		  <br /><br />
+          <p>Geolocation, image upload, heat map, user statistics! Things are looking good here!</p>
+		  <p>&nbsp;&nbsp;</p>
+		  <p>Future functionality will be for multiple users and contributor access / functionality?</p>
 
         </div>
         <div class="modal-footer">

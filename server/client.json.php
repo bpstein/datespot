@@ -206,14 +206,14 @@ class ClientHandler extends UserSession
 				 $result['image_url'] 		= $result['images'][0]; // The first main image, other the default as _get_venue_image_URLs will always return at least one image
 				 
 				 // Build Distance Data
-				 $_distance_in_miles		= distance($data['latitude'], $data['longitude'], $_origin_lat, $_origin_long, 'M');
-				 $_distance_in_km			= $_distance_in_miles * 1.609344; // we do this here to avoid a complete recalcuation in the distance() function.
+				 //$_distance_in_miles		= distance($data['latitude'], $data['longitude'], $_origin_lat, $_origin_long, 'M');
+				 //$_distance_in_km			= $_distance_in_miles * 1.609344; // we do this here to avoid a complete recalcuation in the distance() function.
 				 
-				 $_distance_in_miles		= round($_distance_in_miles, 2);
-				 $_distance_in_km			= round($_distance_in_km, 2);
+				 //$_distance_in_miles		= round($_distance_in_miles, 2);
+				 //$_distance_in_km			= round($_distance_in_km, 2);
 
-				 $result['distance_miles'] 		= $_distance_in_miles;
-				 $result['distance_km'] 		= $_distance_in_km;
+				 //$result['distance_miles'] 		= $_distance_in_miles;
+				 //$result['distance_km'] 		= $_distance_in_km;
 				 
 				 // TODO Re-weight the rankings
 				 //$result['dsr']
@@ -221,7 +221,8 @@ class ClientHandler extends UserSession
 				 
 				 
 				 // IMPORTANT: We don't want to expose this data in JSON
-				 unset($data['latitude']); unset($data['longitude']); unset($data['venue_id']);
+				 //unset($data['latitude']); unset($data['longitude']);
+				 unset($data['venue_id']);
 				 
 				 // Build the specific JSON results array;
 				 $this->JSON_result_array[] = array_merge($result, $data);
