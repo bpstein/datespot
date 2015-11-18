@@ -52,9 +52,9 @@ if (DEBUG_MODE)
    
 		// Show the google map with defaults
 		function initializeGoogleMap() {
-		  var myLatlng = new google.maps.LatLng(51.462481,-0.169433); // Start at eckstein
+		  var myLatlng = new google.maps.LatLng(51.489524, -0.120800); // Start at Vauxhaul
 		  var mapOptions = {
-			zoom: 16,
+			zoom: 12,
 			center: myLatlng
 		  }
 		  
@@ -68,7 +68,7 @@ if (DEBUG_MODE)
     </script>
 	</head>
 
-	<body onload="startPage()">
+	<body>
       <div class="alert alert-success" role="alert" id="position-success" style="display:none; margin:2px;"><strong>Hooorray!</strong> <span id="success-message"></span></div>
       <div class="alert alert-warning" role="alert" id="position-error" style="display:none; margin:2px;"><strong>Warning!</strong> <span id="error-message"></span></div>	 
 	  
@@ -87,93 +87,66 @@ if (DEBUG_MODE)
 		sm = document.getElementById("success-message");		
 
 		/* Try and get the location */
-		function startPage() 
+		/* Try and get the location */
+		if (navigator.geolocation) 
 		{
-			
-			/* Try and get the location */
-			if (navigator.geolocation) 
-			{
-				navigator.geolocation.getCurrentPosition(showPosition, showError);		/* Call back function */
-			} else { 
-				$("#position-error").show();
-				em.innerHTML = "Geolocation is not supported by this browser.";
-			}
-			
-			// We love google
-			initializeGoogleMap();
+			navigator.geolocation.getCurrentPosition(showPosition, showError);		/* Call back function */
+		} else { 
+			$("#position-error").show();
+			em.innerHTML = "Geolocation is not supported by this browser.";
 		}
-
+		
+		// We love google
+		initializeGoogleMap();		
+			
 		function showPosition(position) {
-			sm.innerHTML = "We are centering the map to your current position. Latitude: " + position.coords.latitude + " Longitude: " + position.coords.longitude;	
+			sm.innerHTML = "Your current position. Latitude: " + position.coords.latitude + " Longitude: " + position.coords.longitude;	
 			$("#position-success").show();
-			
-			var myOptions = {
-                    zoom:2,
-                    center: new google.maps.LatLng(position.coords.latitude, position.coords.longitude),
-                    mapTypeId: google.maps.MapTypeId.ROADMAP,
-                    panControl: false
-                };
-
+				
 			// If we have coordinates, center the map on these
-			map.setCenter(new google.maps.LatLng(position.coords.latitude, position.coords.longitude));
+			//map.setCenter(new google.maps.LatLng(position.coords.latitude, position.coords.longitude));
 			
-			
-			/* Build the marker 
-			var contentString = '<div id="content">'+
-			  '<div id="bodyContent">This is where you are SCROT!</p>'+
-			  '</div>';
-
-			var infowindow = new google.maps.InfoWindow({
-			  content: contentString
-			});
-*/
-			// Stick a marker at our position
+		   // Stick a marker at our position
 			var marker = new google.maps.Marker({
 			  position: new google.maps.LatLng(position.coords.latitude, position.coords.longitude),
 			  map: map,
 			  title: 'This is where you are SCROT!'
 			});
-			
-			/*
-		  google.maps.event.addListener(marker, 'click', function() {
-			infowindow.open(map,marker);
-		  });
-		  
-		  */
-	  
+				
 
-			// OK. SO we know our position, show us local things.
-			showVenuesAroundPoint(position.coords.latitude, position.coords.longitude);
+			// OK. SO we know our position, show us what's in the database
+			showVenues();
 		}
 		
 		/* Show all the venues */
-		function showVenuesAroundPoint(lat, lng) 
+		function showVenues() 
 		{
 
-						
 			// Make our call
-			jQuery.ajax('./client.php', 
+			jQuery.ajax('./client.json.php', 
 			{
 				data:{
-					originLat: lat,
-					originLong: lng
+					a: 'all'
 				},
 				dataType:'json'
 			}).done(function(data) 
 			{
+				// Data Success
 				if(data.success) 
 				{
 
-					for(i in data.points) 
+					for(i in data.queryresults) 
 					{					
-						var latLng = new google.maps.LatLng(data.points[i].latitude, data.points[i].longitude);
+						var latLng = new google.maps.LatLng(data.queryresults[i].latitude, data.queryresults[i].longitude);
 						
 						var contentString = '<div id="content">'+
-						  '<h5>' + data.points[i].lame + '</h5>'+
+						  '<h5>' + data.queryresults[i].name + '</h5>'+
 						  '<div id="bodyContent">'+
-						  '<p>Latitude: ' + data.points[i].latitude + '. Longitude: ' + data.points[i].longitude + '</p>'+
-						  '<p><b>Overall:</b> ' + data.points[i].GenRating + '&nbsp;&nbsp;&nbsp;<b>Cost:</b> ' + data.points[i].CostRating + '&nbsp;&nbsp;&nbsp;<b>Quirkiness:</b> ' + data.points[i].QuirkinessRating +'</p>'+
-						  '<p>' + data.points[i].lescription + '</p>'+					  
+						  '<p>Latitude: ' + data.queryresults[i].latitude + '. Longitude: ' + data.queryresults[i].longitude + '</p>'+
+						/*  '<p><b>Overall:</b> ' + data.queryresults[i].GenRating + '&nbsp;&nbsp;&nbsp;<b>Cost:</b> ' + data.queryresults[i].CostRating + '&nbsp;&nbsp;&nbsp;<b>Quirkiness:</b> ' + data.queryresults[i].QuirkinessRating +'</p>'+ */
+						
+						'<p><b>Address:</b> ' + data.queryresults[i].address + '&nbsp;&nbsp;&nbsp;<b>Postcode:</b> ' + data.queryresults[i].postcode +
+						  '<p>' + data.queryresults[i].desc_short + '</p>'+					  
 						  '</div>';
 						  
 						  
@@ -186,7 +159,7 @@ if (DEBUG_MODE)
 						var marker = new google.maps.Marker({
 							position: latLng,
 							map: map,
-							title: "Distance Rank: "+ i + "\r\nName: " +data.points[i].name,
+							title: "Distance Rank: "+ i + "\r\nName: " +data.queryresults[i].name,
 							info: contentString // we need to use this or we get the same content for every bloody infomarket
 						});
 						
@@ -202,11 +175,7 @@ if (DEBUG_MODE)
 					
 				} 
 				
-			});
-			
-			
-
-			
+			});	
 		}
 		
 

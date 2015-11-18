@@ -16,7 +16,7 @@ define ('IN_APPLICATION', 	TRUE);
 define ('DEBUG_MODE', 		FALSE);
 
 include('./include/common.php');
-
+include('./include/class_clientsession.php');
 
 // Allow accesss to this script from another domain for development.
 header('Access-Control-Allow-Origin: http://localhost:8100');
@@ -27,7 +27,7 @@ header('Access-Control-Allow-Origin: http://localhost:8100');
 // http://192.168.0.17/client.php?a=img&viuid=aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
 
 
-class ClientHandler
+class ClientHandler extends UserSession
 {
 
 	/********************************************************************************
@@ -41,16 +41,17 @@ class ClientHandler
 	 */
 	 
 	// Change as appropriate
-	//var $venue_image_url_base =	'http://ds.urandom.info/client.json.php?a=img&viuid=';
-    var $venue_image_url_base	=	'http://192.168.56.101/client.json.php?a=img&viuid=';
-	var $limit 	= 5; // Maximum number of results in one hit
+	var $venue_image_url_base =	'http://ds.urandom.info/client.json.php?a=img&viuid=';
+    //var $venue_image_url_base	=	'http://192.168.56.101/client.json.php?a=img&viuid=';
+	var $limit 	= 10; // Maximum number of results in one hit
 	var $offset = 0;
 	
 	 
     // Variables used internally
 	var $success 		= false;	// By default, it's a fail until proven otherwise.
 	var $error_message	= '';
-	var $result_array 	= array();	// What we JSON encode and send back to the client.
+	var $JSON_result_array 	= array();	// What we JSON encode and send back to the client.
+										// Make sure this is only a single array list or we'll break the JSON (it'll return an object) and fuck everything up.
 	
 	var $venue_base_sql_select_attributes	= 'v.venue_id,
 											   v.venue_unique_id 			AS vuid,
@@ -69,13 +70,17 @@ class ClientHandler
 		/**************************************************
 		 JSONClientHandler, $_REQUEST query variables:
 		
-		 a 			= action		
+		 a 			= action	
 		 originLat	= Latitude
 		 originLong = Longitude
 		 viuid		= The venue_image_unique_id
 		 sid		= scenario/situation id					
 		 o			= offset (MySQL Start and End Point)		
 		 nolimit	= no limit (no MySQL Start and End Point)
+		 ver		= Client Version
+		 
+		 // In ClientSession
+		 token		= Token ID
 		 
 		 */
 		 
@@ -88,8 +93,8 @@ class ClientHandler
 						if ($offset > $limit) $this->offset = $offset;
 				}					
 		} // end offset calc
-
-		 
+		
+		
 		switch (@$_REQUEST['a'])
 		{
 
@@ -124,6 +129,13 @@ class ClientHandler
 	{
 		global $conn;
 		
+		// What is the client version, needs to be defined
+		if ( !isset($_REQUEST['ver']) || ($_REQUEST['ver'] < 2)  )
+		{
+			$this->error_message = 'Please upgrade your client.';
+			return false;
+		}
+		
 		// Mandatory Requirements
 		$_origin_lat 	= clean_string(@$_REQUEST['originLat']); 	// should keep 0.00 etc.
 		$_origin_long 	= clean_string(@$_REQUEST['originLong']); 	// should keep 0.00 etc.
@@ -145,7 +157,7 @@ class ClientHandler
 			return false; // FAIL - exit function here
 		}
 
-		if (DEBUG_MODE) { debug_message('Requested updated to Latitude: '. $_origin_lat .' Requested updated to Longitude: '. $_origin_long ); }			
+		if (DEBUG_MODE) { debug_message('Requested updated to Latitude: '. $_origin_lat .' Requested updated to Longitude: '. $_origin_long ); }		
 
 
 		// From: http://www.tec20.co.uk/working-with-postcodes-and-spatial-data-in-mysql/
@@ -194,14 +206,14 @@ class ClientHandler
 				 $result['image_url'] 		= $result['images'][0]; // The first main image, other the default as _get_venue_image_URLs will always return at least one image
 				 
 				 // Build Distance Data
-				 $_distance_in_miles		= distance($data['latitude'], $data['longitude'], $_origin_lat, $_origin_long, 'M');
-				 $_distance_in_km			= $_distance_in_miles * 1.609344; // we do this here to avoid a complete recalcuation in the distance() function.
+				 //$_distance_in_miles		= distance($data['latitude'], $data['longitude'], $_origin_lat, $_origin_long, 'M');
+				 //$_distance_in_km			= $_distance_in_miles * 1.609344; // we do this here to avoid a complete recalcuation in the distance() function.
 				 
-				 $_distance_in_miles		= round($_distance_in_miles, 2);
-				 $_distance_in_km			= round($_distance_in_km, 2);
+				 //$_distance_in_miles		= round($_distance_in_miles, 2);
+				 //$_distance_in_km			= round($_distance_in_km, 2);
 
-				 $result['distance_miles'] 		= $_distance_in_miles;
-				 $result['distance_km'] 		= $_distance_in_km;
+				 //$result['distance_miles'] 		= $_distance_in_miles;
+				 //$result['distance_km'] 		= $_distance_in_km;
 				 
 				 // TODO Re-weight the rankings
 				 //$result['dsr']
@@ -209,12 +221,14 @@ class ClientHandler
 				 
 				 
 				 // IMPORTANT: We don't want to expose this data in JSON
-				 unset($data['latitude']); unset($data['longitude']); unset($data['venue_id']);
+				 //unset($data['latitude']); unset($data['longitude']);
+				 unset($data['venue_id']);
 				 
 				 // Build the specific JSON results array;
-				 $this->result_array[] = array_merge($result, $data);
+				 $this->JSON_result_array[] = array_merge($result, $data);
 				 
-				//$this->result_array[] = $this->_venue_data_last_chance_saloon($data); 	
+				 
+				//$this->JSON_result_array[] = $this->_venue_data_last_chance_saloon($data); 	
 				
 			} // end the loop through each event
 			
@@ -231,15 +245,26 @@ class ClientHandler
 		}
 		
 		
+		//
+		// Start User Session / Return Token if required
+		$this->getUserToken();
+		$this->logUserSession($_origin_lat, $_origin_long);
+		
+
+
+
+
 		// Happy Days
 		$this->success = true;
-		
+
+
 		// Sent JsonOutput
 		//$this->_output_JSON();		
 
 	} // end GetSuggested
 	
 	
+	// Only used for testing now. Not to be used for the app
 	function GetAll()
 	{
 		global $conn;
@@ -255,7 +280,7 @@ class ClientHandler
 			$query = $conn->query($sql); $count = 1;
 			while ($data = $query->fetch(PDO::FETCH_ASSOC)) 
 			{ 
-				$this->result_array[] = $this->_venue_data_last_chance_saloon($data); 
+				$this->JSON_result_array[] = $this->_venue_data_last_chance_saloon($data); 
 			}
 			
 			// Debug Mode
@@ -418,7 +443,7 @@ class ClientHandler
 	function _output_JSON()
 	{
 		
-		$response = array('success' => $this->success, 'points' => $this->result_array, 'error_message' => $this->error_message);
+		$response = array('success' => $this->success, 'queryresults' => $this->JSON_result_array, 'error_message' => $this->error_message, 'token' => $this->token_id);
 		
 		header('Content-Type: application/json');
 		echo json_encode(utf8_encode_all($response));

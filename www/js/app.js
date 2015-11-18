@@ -63,7 +63,12 @@ angular.module('datespot', ['ionic', 'datespot.controllers', 'ngCordova.plugins.
   .state('discover', {
     url: '/discover/:occasion',
     templateUrl: 'templates/discover.html',
-    controller: 'DiscoverCtrl'
+    controller: 'DiscoverCtrl',
+    onEnter: function()
+	{
+		// ????? Check that there is an occasion parameter?	 
+    }
+  
   })
 
   .state('shortlist', {
@@ -80,7 +85,7 @@ angular.module('datespot', ['ionic', 'datespot.controllers', 'ngCordova.plugins.
   
   
    .state('map', {
-      url: '/map',
+      url: '/map/:vuid',
       templateUrl: 'templates/map.html',
       controller: 'MapController'
   });
@@ -111,6 +116,10 @@ angular.module('datespot', ['ionic', 'datespot.controllers', 'ngCordova.plugins.
    url: 'http://ds.urandom.info',
   
  // url: 			 'http://192.168.56.101',
+ 
+ // url: 'http://192.168.0.16',
+  
+  
   clientversion: 2
 
 });

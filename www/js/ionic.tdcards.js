@@ -121,6 +121,7 @@
       //return true;
       return Math.abs(this.thresholdAmount) < 0.4;
     },
+	
     /**
      * Fly the card out or animate back into resting position.
      */
@@ -353,7 +354,7 @@
 
         var sortCards = function() {
           existingCards = $element[0].querySelectorAll('td-card');
-          console.log('Existing', existingCards);
+          // console.log('Existing', existingCards);
 
           for(i = 0; i < existingCards.length; i++) {
             card = existingCards[i];

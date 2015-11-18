@@ -11,7 +11,7 @@
   
   <ion-nav-buttons side="right">
     <a class="button button-icon ion-map" 
-      ng-href="#/map">
+      ng-href="#/map/{{ spot.vuid }}">
     </a>
   </ion-nav-buttons>
 
@@ -38,7 +38,7 @@
       
       <div class="row spotDetailStrip">
         <h5 class="padding-left col col-60 spotDetailOccasion">TBC</h5>
-        <h5 class="padding-right col col-20 spotDetailPrice">{{spot.distance_km}} km</h5>
+        <h5 class="padding-right col col-20 spotDetailPrice">{{spot.distance}}</h5>
       </div>
 	  <!--
       <div class="padding row col detailsPageTest">

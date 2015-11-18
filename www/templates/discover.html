@@ -4,12 +4,12 @@
   
    <td-cards>
       <td-card ng-repeat="card in cards" 
-        on-destroy="cardDestroyed($index)" 
-        on-swipe-left="cardSwipedLeft($index)" 
-        on-swipe-right="cardSwipedRight($index)" 
-        on-partial-swipe="cardPartialSwipe(amt)" 
-        class="card-{{$index}}" 
-        ng-click="cardClicked($index);">
+          on-destroy="cardDestroyed($index)" 
+          on-swipe-left="cardSwipedLeft($index)" 
+          on-swipe-right="cardSwipedRight($index)" 
+          on-partial-swipe="cardPartialSwipe(amt)" 
+          class="card-{{$index}}" 
+          ng-click="showDetails('{{ card.vuid }}');">
 		
   		  <div class="image">
   		    <img ng-src="{{card.image_url}}" />

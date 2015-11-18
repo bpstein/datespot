@@ -49,11 +49,11 @@
 			return false; // fail.
 		}
 		
-		 $this->token_id = $conn->lastInsertId();
-		 
-		 if (DEBUG_MODE){ debug_message('Token ID Generated: ' . $this->token_id); }	
+		// Token ID		
+		$this->token_id = $conn->lastInsertId();
 		
-		 return $this->token_id;
+		if (DEBUG_MODE){ debug_message('Token ID Generated: ' . $this->token_id); }	
+		return $this->token_id;
 		
 		
 	 } // end getUserToken
