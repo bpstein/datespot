@@ -30,6 +30,11 @@
     background: transparent !important;
 }
 
+/*Disables Ionic items default styling*/
+.item {
+  border: transparent !important;
+}
+
 /************************
 /* SPLASH PAGE STYLING */
 /***********************/
@@ -348,39 +353,37 @@
 }
 
 .shortlist-icon-tray {
-  background-color: red;
+  background-color: transparent;
   height: 40px;
-  width: 100px;
+  width: 140px;
+  padding: 2px;
   float: right;
 }
 
 .halo {
-  background-color: #000;
+  background-color: #333;
   border-radius: 50%;
-  width: 35px;
-  height: 100%;
+  width: 40px;
+  height: 40px;
+  line-height: 40px;  
   float: right;
+  text-align: center;
+  vertical-align: middle;
+  display: inline-block;
   margin-left: 1px; margin-right: 1px;
 }
 
 .ion-ios-telephone, .ion-ios-email, .ion-calendar {
   color: #FFF;
-  font-size: 25px;
-  padding: 5px;
-  left: auto;
-  right: auto;
-/*  font-size: 28px;
-  right: auto;
-  float: right;
-  padding: 1px;
-  margin-top: -10px;
-  color: #FFF;*/
+  font-size: 27px;
+  line-height: inherit;
+  text-align: center;
+  vertical-align:middle;
+  display:inline-block;
 }
 
 .ion-paper-airplane, .ion-trash-a, .ion-pin {
   font-size: 28px;
-  left: auto;
-  right: auto;
   text-align: center; 
   padding: 10px;
 }
@@ -404,6 +407,7 @@
 .slider-pager {
   top: 0;
   margin-top: 20px;
+  font-size: 10px;
 }
 
 .sliderCard {
@@ -422,6 +426,7 @@
 .spotDetailImage {
   max-height: 400px;
   width: auto;
+  background-image: linear-gradient(to bottom, transparent, #222);
 }
 
 .spotDetailName, 
