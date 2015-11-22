@@ -356,6 +356,7 @@
           existingCards = $element[0].querySelectorAll('td-card');
           // console.log('Existing', existingCards);
 
+		  $counter = 0;
           for(i = 0; i < existingCards.length; i++) {
             card = existingCards[i];
             if(!card) continue;

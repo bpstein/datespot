@@ -94,7 +94,7 @@ angular.module('datespot.controllers', ['ionic', 'datespot.factories', 'ionic.co
 	
 	
     // onSuccess Callback - This method accepts a Position object, which contains the current GPS coordinates
-	function onGPSLockSuccess(position) { SessionManager.setLocation(position.coords.latitude, position.coords.longitude); }
+	function onGPSLockSuccess(position) { SessionManager.setLocation(position); }
 	
     // onError Callback - Say something to the console.
     function onGPSLockError(error) 		{ console.log('ERROR OBTAINING LOCATION'); console.log('code: ' + error.code + '\n' + 'message: ' + error.message + '\n'); }
@@ -213,27 +213,35 @@ angular.module('datespot.controllers', ['ionic', 'datespot.factories', 'ionic.co
 
 
 // CONTROLLER FOR SHORTLIST VIEW (PREVIOUSLY FAVORITES)
-.controller('ShortlistCtrl', function($scope, User) {
+.controller('ShortlistCtrl', function($scope, $cordovaGeolocation, SessionManager, User) {
 	
- console.log('Loaded the ShortlistCtrl controller');
+	console.log('Loaded the ShortlistCtrl controller');
 
-  // With the new view caching in Ionic, Controllers are only called
-  // when they are recreated or on app start, instead of every page change.
-  // To listen for when this page is active (for example, to refresh data),
-  // listen for the $ionicView.enter event:
-  //
-  //$scope.$on('$ionicView.enter', function(e) {
-  //});
-  // 
-  // Use the above to re-calibrate GPS
+	// Get the GPS position when we do this 
+	$cordovaGeolocation.getCurrentPosition().then(function(position) 
+	{
+		SessionManager.setLocation(position); 
+		
+	}); // End get geolocation and then cards
+	
 
-  $scope.shortlist = User.shortlist;
-  
-  // Remove a spot
-  $scope.removeSpot = function(spot, index) 
-  {
+	// With the new view caching in Ionic, Controllers are only called
+	// when they are recreated or on app start, instead of every page change.
+	// To listen for when this page is active (for example, to refresh data),
+	// listen for the $ionicView.enter event:
+	//
+	//$scope.$on('$ionicView.enter', function(e) {
+	//});
+	// 
+	// Use the above to re-calibrate GPS
+
+	$scope.shortlist = User.getShortlist();
+
+	// Remove a spot
+	$scope.removeSpot = function(spot, index) 
+	{
 		User.removeSpotFromShortlist(spot, index);
-  }
+	}
 
 })
 
