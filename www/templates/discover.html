@@ -8,14 +8,14 @@
           on-swipe-left="cardSwipedLeft($index)" 
           on-swipe-right="cardSwipedRight($index)" 
           on-partial-swipe="cardPartialSwipe(amt)" 
-          class="card-{{$index}}" 
+          class="card-{{$index}} discover-card" 
           ng-click="showDetails('{{ card.vuid }}');">
 		
-  		  <div class="image">
+  		  <div class="discover-card-image">
   		    <img ng-src="{{card.image_url}}" />
-  		    <div style="background-color:#ffcc00;">       
-  			    <p>{{ card.name }} </p>
-  			    <p>{{ card.desc_short }}</P>
+  		    <div class="discover-card-caption" style="background-color:#FFF;">       
+  			    <p class="card-spot-name">{{ card.name }} </p>
+  			    <p class="card-spot-description">{{ card.desc_short }}</P>
   		    </div>
   		  </div>
 		 

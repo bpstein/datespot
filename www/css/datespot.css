@@ -2,6 +2,13 @@
 /* GLOBAL STYLING */
 /******************/
 
+/*GLOBAL COLOR SCHEMES
+WHITE: #FDFFFC
+BLACK: #020100
+GREY: #95AEC7
+SEA GREEN: #4BC6B9
+SALMON RED: #F05D5E*/
+
 @import url(http://fonts.googleapis.com/css?family=Source+Sans+Pro:400,900);
 @import url(https://fonts.googleapis.com/css?family=Varela+Round);
 
@@ -28,10 +35,11 @@
 .item-complex.activated .item-content, .item .item-content.active,
 .item .item-content.activated {
     background: transparent !important;
+    border: transparent !important;
 }
 
 /*Disables Ionic items default styling*/
-.item {
+.item, .item.active{
   border: transparent !important;
 }
 
@@ -196,7 +204,45 @@
 }
 
 .card, .td-card {
-  height: 100%;
+  border-radius: 0px;
+}
+
+.discover-card {
+  border-radius: 0px;
+}
+
+.discover-card-image {
+  height: 80%;
+  padding: 5px;
+  border-radius: 15px 15px 0 0;
+  width: auto;
+  height: auto;
+  background: no-repeat center;
+  background-size: cover!important;
+  -webkit-background-size: cover!important;
+  -webkit-background-size: cover;
+  -moz-background-size: cover;
+  -o-background-size: cover;
+}
+
+.discover-card-caption {
+  padding: 10px;
+  min-height: 50px;
+  height: 120px;
+  margin-top: -6.5px;
+  border-radius: 0 0 15px 15px;
+  background-color: #FDFFFC;
+}
+
+.card-spot-name {
+  font-size: 16px;
+  font-weight: bold;
+  background-color: #FDFFFC;
+}
+
+.card-spot-description {
+  font-size: 13px;
+  background-color: #FDFFFC;
 }
 
 .discover-page .current-song {
@@ -254,8 +300,6 @@
   opacity:0.01;
 }
 
-
-
 /***************************
 /* SHORTLIST PAGE STYLING */
 /**************************/
@@ -296,7 +340,7 @@
 }*/
 
 .shortlistHeader {
-  color: #FFF;
+  color: #FDFFFC;
   font-family: 'Varela Round';
   font-size: 30px;
   position: relative;
@@ -358,10 +402,11 @@
   width: 140px;
   padding: 2px;
   float: right;
+  margin-right: 7px;
 }
 
 .halo {
-  background-color: #333;
+  background-color: #020100;
   border-radius: 50%;
   width: 40px;
   height: 40px;
@@ -374,7 +419,7 @@
 }
 
 .ion-ios-telephone, .ion-ios-email, .ion-calendar {
-  color: #FFF;
+  color: #FDFFFC;
   font-size: 27px;
   line-height: inherit;
   text-align: center;
@@ -444,7 +489,7 @@
 }
 
 .spotDetailStrip {
-  background-color: #444;
+  background-color: #4BC6B9;
   font-family: 'Varela Round';
   padding-bottom: 0px;
   margin-bottom: 15px;
@@ -480,45 +525,6 @@
   font-family: 'Varela Round';
   color: #444;
 }
-
-
-
-/*************************************
-/* VENUE CARDS PAGE STYLING !        */
-/*************************************/
-
-/*
-
-.background-image-card-test {
-  width: auto;
-  height: auto;
-  background: no-repeat center;
-  background-size: cover!important;
-  -webkit-background-size: cover!important;
-  -webkit-background-size: cover;
-  -moz-background-size: cover;
-  -o-background-size: cover;
-}
-
-.spotInfo {
-  margin-top: 388px;
-  margin-left: 5px;
-  margin-right: 5px;
-  padding: 5px;
-  background-color: #f3f3f3;
-  border-radius: 0px 0px 10px 10px; 
-  border: none;
-  text-align: center;
-  font-family: 'Varela Round';
-  word-wrap: word-break;
-}
-
-
-.ng-binding {
-  font-family: 'Varela Round';
-}
-*/
-
 
 /*************************
 /* LOADING PAGE STYLING */
