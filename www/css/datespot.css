@@ -9,6 +9,8 @@ GREY: #95AEC7
 SEA GREEN: #4BC6B9
 SALMON RED: #F05D5E*/
 
+
+/*FONT IMPORTS*/
 @import url(http://fonts.googleapis.com/css?family=Source+Sans+Pro:400,900);
 @import url(https://fonts.googleapis.com/css?family=Varela+Round);
 
@@ -83,13 +85,13 @@ SALMON RED: #F05D5E*/
 /* TABS STYLING */
 /****************/
 
-.tab-nav {
-  background-color: #fff;
+/*.tab-nav {
+  background-color: #000;
   border: none;
 }
 
 .tab-nav-tabs {
-  background-color:#fff !important;
+  background-color:#000 !important;
 }
 
 .tabStyle, .tab-item {
@@ -103,7 +105,7 @@ SALMON RED: #F05D5E*/
 
 .tabs-icon {
   background-color: #222;
-}
+}*/
 
 /***********************
 /* SEARCH TAB STYLING */
@@ -132,7 +134,7 @@ SALMON RED: #F05D5E*/
 
 .item.active, .item.activated, .item-complex.active .item-content, .item-complex.activated .item-content {
   border-color: none;
-  background-color: #FFF;
+  background-color: #000;
   border-top: none;
   border-bottom:none
 ;}
@@ -189,17 +191,16 @@ SALMON RED: #F05D5E*/
 }
 
 /**************************
-/* LOADING PAGE STYLING */
-/*************************/
-
-.heart-image {
-  height: 75px;
-}
-
-/**************************
 /* DISCOVER PAGE STYLING */
 /*************************/
 .discover-page {
+
+}
+
+.td-cards {
+}
+
+.swipe-card {
 
 }
 
@@ -209,40 +210,55 @@ SALMON RED: #F05D5E*/
 
 .discover-card {
   border-radius: 0px;
+  height: 50px;
+  border: 5px red;
 }
 
 .discover-card-image {
-  height: 80%;
   padding: 5px;
   border-radius: 15px 15px 0 0;
   width: auto;
   height: auto;
-  background: no-repeat center;
+  /*background: no-repeat center;*/
   background-size: cover!important;
   -webkit-background-size: cover!important;
   -webkit-background-size: cover;
   -moz-background-size: cover;
   -o-background-size: cover;
+  background-image: linear-gradient(to bottom, transparent, #222);
 }
 
-.discover-card-caption {
+.discover-card-caption, .click-block, .click-block-hide {
   padding: 10px;
   min-height: 50px;
-  height: 120px;
+  height: 160px;
   margin-top: -6.5px;
   border-radius: 0 0 15px 15px;
-  background-color: #FDFFFC;
+  background-color: #4BC6B9;
+  z-index: 100px;
 }
 
 .card-spot-name {
-  font-size: 16px;
+  font-size: 18px;
+  color: #FDFFFC;
+  text-shadow: 1px 1px #222;
   font-weight: bold;
-  background-color: #FDFFFC;
+  background-color: #4BC6B9;
+  margin-top: -70px;
+}
+
+.card-spot-address, .card-spot-postcode {
+  font-size: 13px;
+  text-shadow: 1px 1px #222;
+  color: #DDD;
+  font-weight: bold;
+  background-color: #4BC6B9;
 }
 
 .card-spot-description {
+  margin-top: 20px;
   font-size: 13px;
-  background-color: #FDFFFC;
+  background-color: #4BC6B9;
 }
 
 .discover-page .current-song {
@@ -334,11 +350,6 @@ SALMON RED: #F05D5E*/
   border: 0.5px solid #333;
 }
 
-/*.shortlistInfo:hover {
-  background: rgba(0, 0, 0, 0.15) !important;
-  border: transparent !important;
-}*/
-
 .shortlistHeader {
   color: #FDFFFC;
   font-family: 'Varela Round';
@@ -403,11 +414,13 @@ SALMON RED: #F05D5E*/
   padding: 2px;
   float: right;
   margin-right: 7px;
+  margin-top: -5px;
 }
 
 .halo {
-  background-color: #020100;
+  background-color: #555;
   border-radius: 50%;
+  border: 1px solid #fff;
   width: 40px;
   height: 40px;
   line-height: 40px;  
@@ -419,7 +432,7 @@ SALMON RED: #F05D5E*/
 }
 
 .ion-ios-telephone, .ion-ios-email, .ion-calendar {
-  color: #FDFFFC;
+  color: #fff;
   font-size: 27px;
   line-height: inherit;
   text-align: center;
@@ -452,7 +465,11 @@ SALMON RED: #F05D5E*/
 .slider-pager {
   top: 0;
   margin-top: 20px;
-  font-size: 10px;
+  font-size: 12px;
+}
+
+.slider-pager-page.active {
+  color: #4BC6B9;
 }
 
 .sliderCard {
@@ -463,7 +480,7 @@ SALMON RED: #F05D5E*/
 }
 
 .spotDetailHeader {
-  margin-top: -75px;
+  margin-top: -70px;
   z-index: 1;
   position: absolute;
 }
@@ -485,18 +502,18 @@ SALMON RED: #F05D5E*/
   font-size: 22px;
   color: #FFF;
   text-shadow: 1px 1px #333;
-  background: ;
 }
 
 .spotDetailStrip {
   background-color: #4BC6B9;
   font-family: 'Varela Round';
-  padding-bottom: 0px;
   margin-bottom: 15px;
+  height: 44px;
 }
 
 .spotDetailAddress {
-  font-size: 16px;
+  font-size: 14px;
+  margin-top: -5px;
 }
 
 .spotDetailBlurb, .spotDetailDescription {
@@ -529,13 +546,16 @@ SALMON RED: #F05D5E*/
 /*************************
 /* LOADING PAGE STYLING */
 /************************/
-
 .loadingPage {
   background-color: #FFF;
 }
 
+.heart-image {
+  height: 95px;
+}
+
 .loadingMessage {
-  font-size: 14px;
+  font-size: 16px;
   color: #f3f3f3;
    -webkit-box-ordinal-group: 1;
     -moz-box-ordinal-group: 1;
@@ -555,7 +575,6 @@ SALMON RED: #F05D5E*/
 /***********************
 /* HEART ICON STYLING */
 /**********************/
-
 .heart {
   margin-top: 90px;
   font-size:  70px;
