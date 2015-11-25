@@ -219,7 +219,8 @@ SALMON RED: #F05D5E*/
   border-radius: 15px 15px 0 0;
   width: auto;
   height: auto;
-  /*background: no-repeat center;*/
+  height: 80%;
+  background: no-repeat center;
   background-size: cover!important;
   -webkit-background-size: cover!important;
   -webkit-background-size: cover;
@@ -494,21 +495,19 @@ SALMON RED: #F05D5E*/
 .spotDetailName, 
 .spotDetailAddress, 
 .spotDetailCategory, 
-.spotDetailBlurb  
-.spotDetailOccasion 
-.spotDetailPrice 
-.spotDetailStrip {
+.spotDetailBlurb,  
+.spot-detail-occasion {
   font-family: 'Varela Round';
   font-size: 22px;
   color: #FFF;
   text-shadow: 1px 1px #333;
 }
 
-.spotDetailStrip {
-  background-color: #4BC6B9;
+.spot-detail-strip {
+  background-color: #95AEC7;
+  color: #FFF;
   font-family: 'Varela Round';
-  margin-bottom: 15px;
-  height: 44px;
+  height: 46px;
 }
 
 .spotDetailAddress {
@@ -516,7 +515,7 @@ SALMON RED: #F05D5E*/
   margin-top: -5px;
 }
 
-.spotDetailBlurb, .spotDetailDescription {
+.spotDetailBlurb, .spot-detail-description {
   font-size: 14px;
 }
 
@@ -524,8 +523,8 @@ SALMON RED: #F05D5E*/
   font-weight: bold;
 }
 
-.spotDetailDescription, {
-  margin-top: 15px;
+.spot-detail-description {
+  margin-top: 25px;
 }
 
 .spotDetailCategory {
@@ -533,14 +532,61 @@ SALMON RED: #F05D5E*/
   color: #555;
 }
 
-.spotDetailPrice, {
-  text-align: right;
+.spot-detail-price {
+  text-align: left;
+  font-size: 14px;
+  color: #FDFFFC;
+  font-family: 'Varela Round';
 }
 
-.spotDetailOccasion, {
+.spot-detail-distance {
+  text-align: right;
+  font-size: 14px;
+  color: #FDFFFC;
+  font-family: 'Varela Round';
+}
+
+.spot-detail-occasion, {
   text-align: left;
   font-family: 'Varela Round';
   color: #444;
+}
+
+.spot-detail-options, 
+.row.spot-detail-options {
+  padding: 0px;
+  margin-top: 0px;
+  border-radius: 0px;
+  font-family: 'Varela Round';
+  background-color: black;
+  display: -webkit-flex;
+           -webkit-flex-direction: row;
+}
+
+.call-button, .email-button, .book-button {
+  font-family: 'Varela Round';
+  font-size: 15px;
+  border: none;
+  color: #FDFFFC;
+  font-weight: bold;
+  -webkit-flex: 1 !important;
+  -webkit-align-items: center;
+  max-width: 90%; max-height: 50px;
+  margin-left: 5px; padding-right: 5px;
+  /*background-color: #4BC6B9;*/
+}
+
+.button.button-block.call-button,
+.button.button-block.email-button,
+.button.button-block.book-button {
+  background-color: #4BC6B9;
+  border-radius: 25px;
+}
+
+.call-icon, 
+.email-icon, 
+.book-icon {
+  font-size: 20px;
 }
 
 /*************************
