@@ -193,33 +193,23 @@ SALMON RED: #F05D5E*/
 /**************************
 /* DISCOVER PAGE STYLING */
 /*************************/
-.discover-page {
-
-}
 
 .td-cards {
 }
 
 .swipe-card {
-
 }
 
 .card, .td-card {
-  border-radius: 0px;
+  z-index: 1;
+  position: relative;
+  border-radius: 15px;
 }
 
-.discover-card {
-  border-radius: 0px;
-  height: 50px;
-  border: 5px red;
-}
 
 .discover-card-image {
-  padding: 5px;
-  border-radius: 15px 15px 0 0;
   width: auto;
   height: auto;
-  height: 80%;
   background: no-repeat center;
   background-size: cover!important;
   -webkit-background-size: cover!important;
@@ -232,10 +222,9 @@ SALMON RED: #F05D5E*/
 .discover-card-caption, .click-block, .click-block-hide {
   padding: 10px;
   min-height: 50px;
-  height: 160px;
-  margin-top: -6.5px;
+  height: 140px;
+  background-color: #FDFFFC;
   border-radius: 0 0 15px 15px;
-  background-color: #4BC6B9;
   z-index: 100px;
 }
 
@@ -244,24 +233,57 @@ SALMON RED: #F05D5E*/
   color: #FDFFFC;
   text-shadow: 1px 1px #222;
   font-weight: bold;
+  margin-top: -60px;
+  padding: 0 0 0 8px;
+}
+
+.hours-status {
+  text-transform: uppercase;
+  font-size: 12px;
+  font-weight: bold;
+  color: #FDFFFC;
   background-color: #4BC6B9;
-  margin-top: -70px;
+  text-shadow: none;
+  width: 24%;
+  height: 18px;
+  text-align: center;
+  vertical-align: middle;
+  padding: 2px;
 }
 
 .card-spot-address, .card-spot-postcode {
-  font-size: 13px;
+  font-size: 12px;
   text-shadow: 1px 1px #222;
   color: #DDD;
   font-weight: bold;
-  background-color: #4BC6B9;
+  background-color: transparent;
+  padding: 0 0 0 8px;
+  margin-top: -5px;
+}
+
+.card-spot-strip {
+  height: 55px;
+ /* z-index: 2;
+  position: relative;*/
+  background-color: #95AEC7;
+}
+
+.price-meter, .quirky-meter, .card-spot-distance {
+  font-size: 13px;
+  color: #FDFFFC;
+  vertical-align: middle;
+  padding: 5px;
+  line-height: inherit;
+  margin-top: 12px;
+  display: inline-block;
 }
 
 .card-spot-description {
-  margin-top: 20px;
   font-size: 13px;
-  background-color: #4BC6B9;
+  margin-top: -15px;
+  background-color: #FDFFFC;
 }
-
+/*
 .discover-page .current-song {
   -webkit-transform: scale(1);
   -ms-transform: scale(1);
@@ -308,14 +330,14 @@ SALMON RED: #F05D5E*/
   -ms-transform: scale(0.7) translateX(0px) rotate(0deg);
   transform: scale(0.7) translateX(0px) rotate(0deg);
   opacity: 0;
-}
+}*/
 
 
-.discover-page .img-lookahead img {
+/*.discover-page .img-lookahead img {
   height:1px;
   width:1px;
   opacity:0.01;
-}
+}*/
 
 /***************************
 /* SHORTLIST PAGE STYLING */
@@ -408,45 +430,6 @@ SALMON RED: #F05D5E*/
   text-align: center;
 }
 
-.shortlist-icon-tray {
-  background-color: transparent;
-  height: 40px;
-  width: 140px;
-  padding: 2px;
-  float: right;
-  margin-right: 7px;
-  margin-top: -5px;
-}
-
-.halo {
-  background-color: #555;
-  border-radius: 50%;
-  border: 1px solid #fff;
-  width: 40px;
-  height: 40px;
-  line-height: 40px;  
-  float: right;
-  text-align: center;
-  vertical-align: middle;
-  display: inline-block;
-  margin-left: 1px; margin-right: 1px;
-}
-
-.ion-ios-telephone, .ion-ios-email, .ion-calendar {
-  color: #fff;
-  font-size: 27px;
-  line-height: inherit;
-  text-align: center;
-  vertical-align:middle;
-  display:inline-block;
-}
-
-.ion-paper-airplane, .ion-trash-a, .ion-pin {
-  font-size: 28px;
-  text-align: center; 
-  padding: 10px;
-}
-
 .ion-chevron-right {
   color: #FFF;
   text-shadow: 1px 1px #333;
@@ -455,8 +438,9 @@ SALMON RED: #F05D5E*/
 /*************************
 /* DETAILS PAGE STYLING */
 /************************/
-.detailsPageTest {
+.details-page {
   color: #f3f3f3;
+  background-color: #FFF;
   font-family: 'Varela Round';
 }
 
@@ -507,7 +491,7 @@ SALMON RED: #F05D5E*/
   background-color: #95AEC7;
   color: #FFF;
   font-family: 'Varela Round';
-  height: 46px;
+  height: 40px;
 }
 
 .spotDetailAddress {
@@ -546,48 +530,20 @@ SALMON RED: #F05D5E*/
   font-family: 'Varela Round';
 }
 
-.spot-detail-occasion, {
+.spot-detail-occasion {
   text-align: left;
   font-family: 'Varela Round';
   color: #444;
 }
 
-.spot-detail-options, 
-.row.spot-detail-options {
-  padding: 0px;
-  margin-top: 0px;
-  border-radius: 0px;
-  font-family: 'Varela Round';
-  background-color: black;
-  display: -webkit-flex;
-           -webkit-flex-direction: row;
-}
 
-.call-button, .email-button, .book-button {
-  font-family: 'Varela Round';
-  font-size: 15px;
-  border: none;
-  color: #FDFFFC;
-  font-weight: bold;
-  -webkit-flex: 1 !important;
-  -webkit-align-items: center;
-  max-width: 90%; max-height: 50px;
-  margin-left: 5px; padding-right: 5px;
-  /*background-color: #4BC6B9;*/
-}
 
-.button.button-block.call-button,
-.button.button-block.email-button,
-.button.button-block.book-button {
-  background-color: #4BC6B9;
-  border-radius: 25px;
-}
-
-.call-icon, 
-.email-icon, 
-.book-icon {
-  font-size: 20px;
-}
+  /*SWIPE RIGHT BUTTON FUNCTIONS*/
+  .ion-paper-airplane, .ion-trash-a, .ion-pin {
+    font-size: 25px;
+    text-align: center; 
+    padding: 10px;
+  }
 
 /*************************
 /* LOADING PAGE STYLING */
@@ -651,4 +607,97 @@ SALMON RED: #F05D5E*/
     transform: scale(1);
     animation-timing-function: ease-out;
   }
+}
+
+
+
+
+
+
+
+
+
+
+
+.spot-detail-options, 
+.row.spot-detail-options,
+.row.padding.spot-detail-options {
+
+  height: 68px;
+  padding: 0px;
+  margin-top: 0px;
+  border-radius: 0px;
+  font-family: 'Varela Round';
+  background-color: #FDFFFC;
+  width: auto;
+  /*display: block;*/
+  display: -webkit-flex;
+           -webkit-flex-direction: row;
+}
+
+
+.shortlist-icon-tray {
+  background-color: transparent;
+  height: 40px;
+  width: 140px;
+  padding: 2px;
+  float: right;
+  margin-right: 7px;
+  margin-top: -5px;
+}
+
+.halo {
+/*  background-color: transparent;
+  border-radius: 50%;
+  border: 1px solid #020100;
+  width: 40px;
+  height: 40px;
+  line-height: 40px;  
+  float: right;
+  text-align: center;
+  vertical-align: middle;
+  display: inline-block;
+  margin-left: 1px; margin-right: 1px;*/
+  float: right;
+}
+
+.ion-ios-telephone, .ion-ios-email, .ion-calendar {
+  color: #020100;
+  font-size: 27px;
+  line-height: inherit;
+  text-align: center;
+  vertical-align:middle;
+  display:inline-block;
+}
+
+.call-button, .email-button, .book-button {
+  font-family: 'Varela Round';
+  font-size: 25px;
+  border: none;
+  color: #FDFFFC;
+  background-color: blue;
+  font-weight: bold;
+  padding: 4px;
+  float: right;
+  display: block;
+  text-align: right
+}
+
+.button.button-block.call-button {
+  margin-top: -15px;
+}
+
+.call-icon, 
+.email-icon, 
+.book-icon {
+  font-size: 25px;
+}
+
+.button.button-block.call-button,
+.button.button-block.email-button,
+.button.button-block.book-button {
+  height: 40px;
+  margin-bottom: -10px;
+/*  background-color: #4BC6B9;
+  border-radius: 100%;
 }

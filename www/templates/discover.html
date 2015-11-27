@@ -2,35 +2,46 @@
 <ion-view view-title="Discover" class="discover-page"> 
   <ion-content scroll="false">
   
-   <td-cards>
+    <td-cards>
       <td-card ng-repeat="card in cards" 
           on-destroy="cardDestroyed($index)" 
           on-swipe-left="cardSwipedLeft($index)" 
           on-swipe-right="cardSwipedRight($index)" 
           on-partial-swipe="cardPartialSwipe(amt)" 
-          class="card-{{$index}} discover-card" 
+          class="padding card-{{$index}} discover-card" 
           ng-click="showDetails('{{ card.vuid }}');">
 		
   		  <div class="discover-card-image">
   		    <img ng-src="{{card.image_url}}" />
-  		    <div class="discover-card-caption" style="background-color:#background-color: #4BC6B9;">       
-  			    <p class="card-spot-name">{{ card.name }} </p>
-            <p class="card-spot-address">{{ card.address }}, {{card.postcode}}</p>
-  			    <p class="card-spot-description">{{ card.desc_short }}</P>
-  		    </div>
-  		  </div>
+        </div>
+        <div class="card-spot-title-block">
+          <p class="card-spot-name">
+            {{ card.name }} 
+          </p> 
+          <p class="card-spot-address">{{ card.address }}, {{card.postcode}}</p>
+        </div>
+        <div class="row card-spot-strip">
+          <span class="col-33 price-meter">Price: 
+            <i class="ion-cash"></i>
+            <i class="ion-cash"></i>
+            <i class="ion-cash"></i>
+          </span>
+          <span class="col-33 quirky-meter">Quirky: 
+            <i class="ion-erlenmeyer-flask"></i>
+            <i class="ion-erlenmeyer-flask"></i>
+          </span>
+          <span class="col-33 card-spot-distance">Distance: 
+            {{ card.distance }}
+          </span>   
+        </div>
+  		  <div class="discover-card-caption" style="background-color:#background-color: transparent;">
+          <div class="hours-status">  Open now  </div>  
+          <span class="card-spot-distance">{{ card.distance }}</span>   
+  			  <p class="card-spot-description">{{ card.desc_short }}</p>
+        </div>
 		 
       </td-card>
     </td-cards>
-
-	 <!--
-	<div class="spotInfo" style="height:100px" style="background-color:#ffcc00; padding: 5px;">
-     <span ng-hide="currentSpot.loaded"></span>
-        <h2>{{ current_card.name }} test</h2>
-        <p>{{ current_card.desc_short}} test</P>
-    </div> 
-	
-	 -->
 
 	</ion-content>
 </ion-view>
