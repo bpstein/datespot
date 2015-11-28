@@ -2,6 +2,15 @@
 /* GLOBAL STYLING */
 /******************/
 
+/*GLOBAL COLOR SCHEMES
+WHITE: #FDFFFC
+BLACK: #020100
+GREY: #95AEC7
+SEA GREEN: #4BC6B9
+SALMON RED: #F05D5E*/
+
+
+/*FONT IMPORTS*/
 @import url(http://fonts.googleapis.com/css?family=Source+Sans+Pro:400,900);
 @import url(https://fonts.googleapis.com/css?family=Varela+Round);
 
@@ -21,6 +30,19 @@
 
 .scroll-content {
   background-color: #000;
+}
+
+/*Disables Ionic items turning grey on press*/
+.item.active, .item.activated, .item-complex.active .item-content, 
+.item-complex.activated .item-content, .item .item-content.active,
+.item .item-content.activated {
+    background: transparent !important;
+    border: transparent !important;
+}
+
+/*Disables Ionic items default styling*/
+.item, .item.active{
+  border: transparent !important;
 }
 
 /************************
@@ -63,13 +85,13 @@
 /* TABS STYLING */
 /****************/
 
-.tab-nav {
-  background-color: #fff;
+/*.tab-nav {
+  background-color: #000;
   border: none;
 }
 
 .tab-nav-tabs {
-  background-color:#fff !important;
+  background-color:#000 !important;
 }
 
 .tabStyle, .tab-item {
@@ -83,7 +105,7 @@
 
 .tabs-icon {
   background-color: #222;
-}
+}*/
 
 /***********************
 /* SEARCH TAB STYLING */
@@ -112,7 +134,7 @@
 
 .item.active, .item.activated, .item-complex.active .item-content, .item-complex.activated .item-content {
   border-color: none;
-  background-color: #FFF;
+  background-color: #000;
   border-top: none;
   border-bottom:none
 ;}
@@ -169,26 +191,104 @@
 }
 
 /**************************
-/* LOADING PAGE STYLING */
-/*************************/
-
-.heart-image {
-  height: 75px;
-}
-
-/**************************
 /* DISCOVER PAGE STYLING */
 /*************************/
-.discover-page {
 
+.td-cards {
 }
 
+.swipe-card {
+}
+
+.card, .td-card {
+  z-index: 1;
+  position: relative;
+  border-radius: 15px;
+}
+
+
+.discover-card-image {
+  width: auto;
+  height: auto;
+  background: no-repeat center;
+  background-size: cover!important;
+  -webkit-background-size: cover!important;
+  -webkit-background-size: cover;
+  -moz-background-size: cover;
+  -o-background-size: cover;
+  background-image: linear-gradient(to bottom, transparent, #222);
+}
+
+.discover-card-caption, .click-block, .click-block-hide {
+  padding: 10px;
+  min-height: 50px;
+  height: 140px;
+  background-color: #FDFFFC;
+  border-radius: 0 0 15px 15px;
+  z-index: 100px;
+}
+
+.card-spot-name {
+  font-size: 18px;
+  color: #FDFFFC;
+  text-shadow: 1px 1px #222;
+  font-weight: bold;
+  margin-top: -60px;
+  padding: 0 0 0 8px;
+}
+
+.hours-status {
+  text-transform: uppercase;
+  font-size: 12px;
+  font-weight: bold;
+  color: #FDFFFC;
+  background-color: #4BC6B9;
+  text-shadow: none;
+  width: 24%;
+  height: 18px;
+  text-align: center;
+  vertical-align: middle;
+  padding: 2px;
+}
+
+.card-spot-address, .card-spot-postcode {
+  font-size: 12px;
+  text-shadow: 1px 1px #222;
+  color: #DDD;
+  font-weight: bold;
+  background-color: transparent;
+  padding: 0 0 0 8px;
+  margin-top: -5px;
+}
+
+.card-spot-strip {
+  height: 55px;
+ /* z-index: 2;
+  position: relative;*/
+  background-color: #95AEC7;
+}
+
+.price-meter, .quirky-meter, .card-spot-distance {
+  font-size: 13px;
+  color: #FDFFFC;
+  vertical-align: middle;
+  padding: 5px;
+  line-height: inherit;
+  margin-top: 12px;
+  display: inline-block;
+}
+
+.card-spot-description {
+  font-size: 13px;
+  margin-top: -15px;
+  background-color: #FDFFFC;
+}
+/*
 .discover-page .current-song {
   -webkit-transform: scale(1);
   -ms-transform: scale(1);
   transform: scale(1);
   opacity: 1;
-
   -webkit-transition:all cubic-bezier(0.420, 0.000, 1.000, 1.000) 0.1s;
   transition:all cubic-bezier(0.420, 0.000, 1.000, 1.000) 0.1s;
 }
@@ -230,21 +330,18 @@
   -ms-transform: scale(0.7) translateX(0px) rotate(0deg);
   transform: scale(0.7) translateX(0px) rotate(0deg);
   opacity: 0;
-}
+}*/
 
 
-.discover-page .img-lookahead img {
+/*.discover-page .img-lookahead img {
   height:1px;
   width:1px;
   opacity:0.01;
-}
-
-
+}*/
 
 /***************************
 /* SHORTLIST PAGE STYLING */
 /**************************/
-
 .shortlistInfo {
   padding: 15px;
   background: no-repeat center;
@@ -256,6 +353,7 @@
   height: 240px;
   width: 400px;
   border: black;
+  background-image: linear-gradient(to bottom, transparent, #222);
 }
 
 .shortlistInfo:before {
@@ -266,6 +364,7 @@
   z-index: 1;
   top: 0;
   left: 0;
+  background-image: linear-gradient(to bottom, transparent, #111 99%);
   /*background: -webkit-linear-gradient(
       transparent, #222 99%);*/
 }
@@ -274,13 +373,8 @@
   border: 0.5px solid #333;
 }
 
-/*.shortlistInfo:hover {
-  background: rgba(0, 0, 0, 0.15) !important;
-  border: transparent !important;
-}*/
-
 .shortlistHeader {
-  color: #FFF;
+  color: #FDFFFC;
   font-family: 'Varela Round';
   font-size: 30px;
   position: relative;
@@ -300,12 +394,13 @@
 
 .shortlistTagline, .ion-footer-bar {
   font-family: 'Varela Round';
-  background-color: #f3f3f3;
-  height: 0px;
+  background-color: transparent;
+  height: 50px;
   width: 400px;
   padding-left: 15px;
   padding-right: 15px;
   float: left;
+  color: #DDD;
 }
 
 .textWrapper {
@@ -335,15 +430,17 @@
   text-align: center;
 }
 
-.ion-paper-airplane, .ion-trash-a {
-  font-size: 28px;
+.ion-chevron-right {
+  color: #FFF;
+  text-shadow: 1px 1px #333;
 }
 
 /*************************
 /* DETAILS PAGE STYLING */
 /************************/
-.detailsPageTest {
+.details-page {
   color: #f3f3f3;
+  background-color: #FFF;
   font-family: 'Varela Round';
 }
 
@@ -353,45 +450,56 @@
 .slider-pager {
   top: 0;
   margin-top: 20px;
+  font-size: 12px;
+}
+
+.slider-pager-page.active {
+  color: #4BC6B9;
 }
 
 .sliderCard {
-  height: 350px;
+  min-height: 400px;
+  width: auto;
   background-color: #FFF;
   z-index: ;
 }
 
 .spotDetailHeader {
-  margin-top: -75px;
+  margin-top: -70px;
   z-index: 1;
   position: absolute;
+}
+
+.spotDetailImage {
+  max-height: 400px;
+  width: auto;
+  background-image: linear-gradient(to bottom, transparent, #222);
 }
 
 .spotDetailName, 
 .spotDetailAddress, 
 .spotDetailCategory, 
-.spotDetailBlurb  
-.spotDetailOccasion 
-.spotDetailPrice 
-.spotDetailStrip {
+.spotDetailBlurb,  
+.spot-detail-occasion {
   font-family: 'Varela Round';
   font-size: 22px;
-  color: red;
-  background: ;
+  color: #FFF;
+  text-shadow: 1px 1px #333;
 }
 
-.spotDetailStrip {
-  background-color: #f3f3f3;
+.spot-detail-strip {
+  background-color: #95AEC7;
+  color: #FFF;
   font-family: 'Varela Round';
-  padding-bottom: 0px;
-  margin-bottom: 15px;
+  height: 40px;
 }
 
 .spotDetailAddress {
-  font-size: 16px;
+  font-size: 14px;
+  margin-top: -5px;
 }
 
-.spotDetailBlurb, .spotDetailDescription {
+.spotDetailBlurb, .spot-detail-description {
   font-size: 14px;
 }
 
@@ -399,21 +507,30 @@
   font-weight: bold;
 }
 
-.spotDetailDescription, {
-  margin-top: 15px;
+.spot-detail-description {
+  margin-top: 25px;
 }
 
 .spotDetailCategory {
   font-size: 14px;
-  color: #444;
+  color: #555;
 }
 
-.spotDetailPrice, {
+.spot-detail-price {
+  text-align: left;
+  font-size: 14px;
+  color: #FDFFFC;
+  font-family: 'Varela Round';
+}
+
+.spot-detail-distance {
   text-align: right;
-  color: #444;
+  font-size: 14px;
+  color: #FDFFFC;
+  font-family: 'Varela Round';
 }
 
-.spotDetailOccasion, {
+.spot-detail-occasion {
   text-align: left;
   font-family: 'Varela Round';
   color: #444;
@@ -421,53 +538,26 @@
 
 
 
-/*************************************
-/* VENUE CARDS PAGE STYLING !        */
-/*************************************/
-
-/*
-
-.background-image-card-test {
-  width: auto;
-  height: auto;
-  background: no-repeat center;
-  background-size: cover!important;
-  -webkit-background-size: cover!important;
-  -webkit-background-size: cover;
-  -moz-background-size: cover;
-  -o-background-size: cover;
-}
-
-.spotInfo {
-  margin-top: 388px;
-  margin-left: 5px;
-  margin-right: 5px;
-  padding: 5px;
-  background-color: #f3f3f3;
-  border-radius: 0px 0px 10px 10px; 
-  border: none;
-  text-align: center;
-  font-family: 'Varela Round';
-  word-wrap: word-break;
-}
-
-
-.ng-binding {
-  font-family: 'Varela Round';
-}
-*/
-
+  /*SWIPE RIGHT BUTTON FUNCTIONS*/
+  .ion-paper-airplane, .ion-trash-a, .ion-pin {
+    font-size: 25px;
+    text-align: center; 
+    padding: 10px;
+  }
 
 /*************************
 /* LOADING PAGE STYLING */
 /************************/
-
 .loadingPage {
   background-color: #FFF;
 }
 
+.heart-image {
+  height: 95px;
+}
+
 .loadingMessage {
-  font-size: 14px;
+  font-size: 16px;
   color: #f3f3f3;
    -webkit-box-ordinal-group: 1;
     -moz-box-ordinal-group: 1;
@@ -487,7 +577,6 @@
 /***********************
 /* HEART ICON STYLING */
 /**********************/
-
 .heart {
   margin-top: 90px;
   font-size:  70px;
@@ -518,4 +607,97 @@
     transform: scale(1);
     animation-timing-function: ease-out;
   }
+}
+
+
+
+
+
+
+
+
+
+
+
+.spot-detail-options, 
+.row.spot-detail-options,
+.row.padding.spot-detail-options {
+
+  height: 68px;
+  padding: 0px;
+  margin-top: 0px;
+  border-radius: 0px;
+  font-family: 'Varela Round';
+  background-color: #FDFFFC;
+  width: auto;
+  /*display: block;*/
+  display: -webkit-flex;
+           -webkit-flex-direction: row;
+}
+
+
+.shortlist-icon-tray {
+  background-color: transparent;
+  height: 40px;
+  width: 140px;
+  padding: 2px;
+  float: right;
+  margin-right: 7px;
+  margin-top: -5px;
+}
+
+.halo {
+/*  background-color: transparent;
+  border-radius: 50%;
+  border: 1px solid #020100;
+  width: 40px;
+  height: 40px;
+  line-height: 40px;  
+  float: right;
+  text-align: center;
+  vertical-align: middle;
+  display: inline-block;
+  margin-left: 1px; margin-right: 1px;*/
+  float: right;
+}
+
+.ion-ios-telephone, .ion-ios-email, .ion-calendar {
+  color: #020100;
+  font-size: 27px;
+  line-height: inherit;
+  text-align: center;
+  vertical-align:middle;
+  display:inline-block;
+}
+
+.call-button, .email-button, .book-button {
+  font-family: 'Varela Round';
+  font-size: 25px;
+  border: none;
+  color: #FDFFFC;
+  background-color: blue;
+  font-weight: bold;
+  padding: 4px;
+  float: right;
+  display: block;
+  text-align: right
+}
+
+.button.button-block.call-button {
+  margin-top: -15px;
+}
+
+.call-icon, 
+.email-icon, 
+.book-icon {
+  font-size: 25px;
+}
+
+.button.button-block.call-button,
+.button.button-block.email-button,
+.button.button-block.book-button {
+  height: 40px;
+  margin-bottom: -10px;
+/*  background-color: #4BC6B9;
+  border-radius: 100%;
 }

@@ -16,36 +16,53 @@
   </ion-nav-buttons>
 
   <ion-content scroll="true">
- 
-     <!--  <td-card ng-repeat="card in cards" -->
-           <!--     class="card-{{$index}}" > -->
-      <ion-slide-box show-pager="true">
-        <ion-slide ng-repeat="imageurl in spot.images">
-          <div class="sliderCard" style="background-image: url({{imageurl}})">
-          </div>
-        </ion-slide>
-      </ion-slide-box>
+    <ion-slide-box show-pager="true">
+      <ion-slide
+        class="spotDetailImage" 
+        ng-repeat="imageurl in spot.images">
+        <div class="sliderCard" style="background-image: url({{imageurl}})">
+        </div>
+      </ion-slide>
+    </ion-slide-box>
     
 
-      <div class="row spotDetailHeader"> 
-        <div class="col detailsPageTest">
-          <h2 class="spotDetailName">{{spot.name}}</h2>
-          <h3 class="spotDetailAddress">{{spot.address}}</h3>
-        </div>
+    <div class="row spotDetailHeader"> 
+      <div class="col detailsPageTest">
+        <h2 class="spotDetailName">{{spot.name}}</h2>
+        <h3 class="spotDetailAddress">{{spot.address}}, {{spot.postcode}}</h3>
       </div>
+    </div>
       
-      <div class="row spotDetailStrip">
-        <h5 class="padding-left col col-60 spotDetailOccasion">TBC</h5>
-        <h5 class="padding-right col col-20 spotDetailPrice">{{spot.distance}}</h5>
-      </div>
-	  <!--
-      <div class="padding row col detailsPageTest">
-        <p class="spotDetailBlurb">Spot blurb goes here. Spot blurb goes here.Spot blurb goes here.Spot blurb goes here.Spot blurb goes here.Spot blurb goes here.Spot blurb goes here.Spot blurb goes here.Spot blurb goes here.Spot blurb goes here.Spot blurb goes here.</p>
-      </div-->
+    <div class="row spot-detail-strip">
+      <h5 class="padding-left col col-60 spot-detail-price">$$$ goes here</h5>
+      <h5 class="padding-right col col-20 spot-detail-distance">{{spot.distance}}</h5>
+    </div>
 
-      <div class="padding row col detailsPageTest">
-        <p class="spotDetailDescription">{{spot.desc_long}}.</p>
-      </div>
+    <!-- MOIST BUTTON CONFIGURATION FOR CALLING, EMAILING OR BOOKING SPOTS -->
+<!--     <div class="row padding spot-detail-options">
+      <button class="button button-block email-button">
+        <span>
+          <i class="ion-ios-telephone halo call-icon"></i>
+        </span> 
+      </button>
+    
+      <button class="button button-block email-button">
+        <span>
+          <i class="ion-ios-email halo email-icon"></i>
+        </span>  
+      </button>
+
+      <button class="button button-block email-button">
+        <span>
+          <i class="ion-calendar halo book-icon"></i>
+        </span>  
+      </button>
+    </div> -->
+    
+    <!-- LONG DESCRIPTION OF THE SPOT -->
+    <div class="row padding details-page">
+      <p class="spot-detail-description">{{spot.desc_long}}.</p>
+    </div> 
 
   </ion-content>
 </ion-view>

@@ -10,23 +10,25 @@
     
   </ion-nav-buttons>
   <ion-nav-buttons side="right">
-    <a class="button button-icon ion-bookmark"  ng-href="#/shortlist"></a>
+    <a class="button button-icon ion-lightbulb"  ng-href="#/shortlist"></a>
   </ion-nav-buttons>
   <ion-content>
 
-      <ion-list class="OccasionPicker">
+    <ion-list class="OccasionPicker">
 
-        <ion-item 
-          class="defaultOccasion" 
-          ng-repeat="occasion in occasions"
-          style="background-image: url({{occasion.imgurl}})"
-		      href="#/discover/{{occasion.id}}">
-			  
-          <div class="col occasionInfo">
-            <span class="occasionSpan"><h1 class="occasionHeader">{{occasion.name}}</h1></span>
-          </div>
-        </ion-item>
-      </ion-list>
+      <ion-item 
+        class="defaultOccasion" 
+        ng-repeat="occasion in occasions"
+        style="background-image: url({{occasion.imgurl}})"
+	      href="#/discover/{{occasion.id}}">
+		  
+        <div class="col occasionInfo">
+          <span class="occasionSpan">
+            <h1 class="occasionHeader">{{occasion.name}}</h1>
+          </span>
+        </div>
+      </ion-item>
+    </ion-list>
  
   </ion-content>
 </ion-view>
