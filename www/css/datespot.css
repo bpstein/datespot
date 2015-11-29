@@ -45,8 +45,11 @@ SALMON RED: #F05D5E*/
   border: transparent !important;
 }
 
+/*Disables annoying white line across header and footer bars*/
 .title, .title-center, .title.title-center.header-item,
-.title.header-item, .title-center.header-item {
+.title.header-item, .title-center.header-item,
+.nav-bar-block, .ion-header-bar,
+.customBar.bar.bar-header, .customBar, .bar {
   border: none;
 }
 
@@ -257,7 +260,7 @@ SALMON RED: #F05D5E*/
   vertical-align: middle;
   padding: 5px;
   line-height: inherit;
-  margin-top: 12px;
+  margin-top: 10px;
   display: inline-block;
 }
 
@@ -315,9 +318,10 @@ SALMON RED: #F05D5E*/
   color: #FDFFFC;
   font-family: 'Varela Round';
   font-size: 30px;
+  font-weight: bolder;
   position: relative;
   padding-top: 170px;
-  text-shadow: 1px 1px #222;
+ /* text-shadow: 1px 1px #222;*/
   z-index: 2
 }
 
@@ -326,8 +330,8 @@ SALMON RED: #F05D5E*/
   font-family: 'Varela Round';
   font-size: 30px;
   position: relative;
-  text-shadow: 1px 1px #222;
-  z-index: 2;
+/*  text-shadow: 1px 1px #222;
+*/  z-index: 2;
 }
 
 .shortlistTagline, .ion-footer-bar {
@@ -429,6 +433,7 @@ SALMON RED: #F05D5E*/
 .spot-detail-occasion {
   font-family: 'Varela Round';
   font-size: 22px;
+  font-weight: bold;
   color: #FDFFFC;
 }
 
@@ -454,7 +459,7 @@ SALMON RED: #F05D5E*/
 }
 
 .spot-detail-description {
-  margin-top: 15px;
+  margin-top: 5px;
   color: #020100;
   font-size: 13px;
 }
@@ -490,19 +495,30 @@ SALMON RED: #F05D5E*/
   color: #444;
 }
 
+.hr {
+  display: block;
+  padding: 0px;
+  margin-left: 15px; margin-right: 15px;
+  width: auto;
+  height: 1px;
+  color: #EEE;
+  background-color: #EEE;
+}
+
 /*BUTTONS TO CALL, EMAIL OR BOOK A SPOT*/
-.col-15.buffer-left {
+.col-15.buffer-left, .col-15.buffer-right {
   width: 15%;
 }
 
 .button-holder {
   text-align: center;
-  padding: 15px;
+  padding: 0 20px 0 20px;
 }
 
 .call-button, .email-button, .book-button {
   border-radius: 100%;
-  width: 55px;
+  width: 50px;
+  height: 50px;
   border-color: #95AEC7;
 }
 
@@ -519,6 +535,25 @@ SALMON RED: #F05D5E*/
 .book-icon {
   font-size: 25px;
   border-radius: 
+}
+
+.row.spot-detail-options-text {
+  font-family: 'Varela Round';
+  color: #020100;
+  font-size: 15px;
+  padding: 0 20px 8px 20px;
+}
+
+.button-text-1,
+.button-text-2,
+.button-text-3 {
+  text-align: center;
+  width: 50px;
+  font-weight: bold;
+}
+
+.button-text-2, .button-text-3 {
+  margin-left: 43px;
 }
 
 /*************************
