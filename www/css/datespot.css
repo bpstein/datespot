@@ -45,6 +45,11 @@ SALMON RED: #F05D5E*/
   border: transparent !important;
 }
 
+.title, .title-center, .title.title-center.header-item,
+.title.header-item, .title-center.header-item {
+  border: none;
+}
+
 /************************
 /* SPLASH PAGE STYLING */
 /***********************/
@@ -81,32 +86,6 @@ SALMON RED: #F05D5E*/
   font-weight: bolder;
 }
 
-/*****************
-/* TABS STYLING */
-/****************/
-
-/*.tab-nav {
-  background-color: #000;
-  border: none;
-}
-
-.tab-nav-tabs {
-  background-color:#000 !important;
-}
-
-.tabStyle, .tab-item {
-      background-color: transparent  !important;
-    }
-
-.tab-item-active {
-  color: black;
-  opacity: 2;
-}
-
-.tabs-icon {
-  background-color: #222;
-}*/
-
 /***********************
 /* SEARCH TAB STYLING */
 /**********************/
@@ -121,7 +100,7 @@ SALMON RED: #F05D5E*/
 }
 
 .item-complex .item-content:hover {
-  background: rgba(0, 0, 0, 0.75) !important;
+  /*background: rgba(0, 0, 0, 0.75) !important;*/
   border: transparent !important;
 }
 
@@ -206,7 +185,6 @@ SALMON RED: #F05D5E*/
   border-radius: 15px;
 }
 
-
 .discover-card-image {
   width: auto;
   height: auto;
@@ -228,6 +206,10 @@ SALMON RED: #F05D5E*/
   z-index: 100px;
 }
 
+.card-spot-title-block {
+  background: linear-gradient(to bottom, transparent, #111);
+}
+
 .card-spot-name {
   font-size: 18px;
   color: #FDFFFC;
@@ -237,7 +219,7 @@ SALMON RED: #F05D5E*/
   padding: 0 0 0 8px;
 }
 
-.hours-status {
+.hours-status, .row.hours-status {
   text-transform: uppercase;
   font-size: 12px;
   font-weight: bold;
@@ -249,6 +231,7 @@ SALMON RED: #F05D5E*/
   text-align: center;
   vertical-align: middle;
   padding: 2px;
+  margin-bottom: 1px;
 }
 
 .card-spot-address, .card-spot-postcode {
@@ -263,13 +246,13 @@ SALMON RED: #F05D5E*/
 
 .card-spot-strip {
   height: 55px;
- /* z-index: 2;
-  position: relative;*/
   background-color: #95AEC7;
+  font-weight: bold;
 }
 
 .price-meter, .quirky-meter, .card-spot-distance {
-  font-size: 13px;
+  font-size: 14px;
+  font-weight: bold;
   color: #FDFFFC;
   vertical-align: middle;
   padding: 5px;
@@ -278,60 +261,15 @@ SALMON RED: #F05D5E*/
   display: inline-block;
 }
 
+.inactive {
+  color: #888;
+}
+
 .card-spot-description {
   font-size: 13px;
   margin-top: -15px;
   background-color: #FDFFFC;
 }
-/*
-.discover-page .current-song {
-  -webkit-transform: scale(1);
-  -ms-transform: scale(1);
-  transform: scale(1);
-  opacity: 1;
-  -webkit-transition:all cubic-bezier(0.420, 0.000, 1.000, 1.000) 0.1s;
-  transition:all cubic-bezier(0.420, 0.000, 1.000, 1.000) 0.1s;
-}
-
-.discover-page .current-song .item-image {
-  max-height:300px;
-  overflow:hidden;
-}
-
-@media screen and (max-height: 600px) {
-  .discover-page .current-song .item-image {
-    max-height:200px;
-    overflow:hidden;
-  }
-}
-
-.discover-page .current-song.favorited.ng-hide {
-  -webkit-transform: translateX(1000px) rotate(50deg);
-  -ms-transform: translateX(1000px) rotate(50deg);
-  transform: translateX(1000px) rotate(50deg);
-  opacity:0;
-}
-
-.discover-page .current-song.skipped.ng-hide {
-  -webkit-transform: translateX(-1000px) rotate(-50deg);
-  -ms-transform: translateX(-1000px) rotate(-50deg);
-  transform: translateX(-1000px) rotate(-50deg);
-  opacity:0;
-}
-
-.discover-page .current-song.ng-hide-add {
-  -webkit-transition:all cubic-bezier(0.420, 0.000, 1.000, 1.000) 0.3s;
-  transition:all cubic-bezier(0.420, 0.000, 1.000, 1.000) 0.3s;
-  display:block!important;
-}
-
-.discover-page .current-song.ng-hide-remove {
-  -webkit-transform: scale(0.7) translateX(0px) rotate(0deg);
-  -ms-transform: scale(0.7) translateX(0px) rotate(0deg);
-  transform: scale(0.7) translateX(0px) rotate(0deg);
-  opacity: 0;
-}*/
-
 
 /*.discover-page .img-lookahead img {
   height:1px;
@@ -435,6 +373,13 @@ SALMON RED: #F05D5E*/
   text-shadow: 1px 1px #333;
 }
 
+/*SWIPE LEFT BUTTON FUNCTIONS*/
+.ion-paper-airplane, .ion-trash-a, .ion-pin {
+  font-size: 25px;
+  text-align: center; 
+  padding: 10px;
+}
+
 /*************************
 /* DETAILS PAGE STYLING */
 /************************/
@@ -465,15 +410,16 @@ SALMON RED: #F05D5E*/
 }
 
 .spotDetailHeader {
-  margin-top: -70px;
+  margin-top: -76px;
   z-index: 1;
+  background: linear-gradient(to bottom, transparent, #111);
   position: absolute;
 }
 
 .spotDetailImage {
   max-height: 400px;
   width: auto;
-  background-image: linear-gradient(to bottom, transparent, #222);
+  background-image: linear-gradient(to bottom, transparent 90%, #222);
 }
 
 .spotDetailName, 
@@ -483,20 +429,20 @@ SALMON RED: #F05D5E*/
 .spot-detail-occasion {
   font-family: 'Varela Round';
   font-size: 22px;
-  color: #FFF;
-  text-shadow: 1px 1px #333;
-}
-
-.spot-detail-strip {
-  background-color: #95AEC7;
-  color: #FFF;
-  font-family: 'Varela Round';
-  height: 40px;
+  color: #FDFFFC;
 }
 
 .spotDetailAddress {
   font-size: 14px;
   margin-top: -5px;
+}
+
+.row.spot-detail-strip {
+  color: #FDFFFC;
+  font-weight: bold;
+  font-family: 'Varela Round';
+  height: 58px;
+  background-color: #95AEC7;
 }
 
 .spotDetailBlurb, .spot-detail-description {
@@ -508,26 +454,34 @@ SALMON RED: #F05D5E*/
 }
 
 .spot-detail-description {
-  margin-top: 25px;
+  margin-top: 15px;
+  color: #020100;
+  font-size: 13px;
 }
 
 .spotDetailCategory {
   font-size: 14px;
-  color: #555;
+  color: #FDFFFC;
+}
+
+.spot-detail-distance, .spot-detail-price {
+  font-family: 'Varela Round';
+  font-size: 14px;
+  font-weight: bold;
+  color: #FDFFFC;
+  vertical-align: middle;
+  padding: 5px;
+  line-height: inherit;
+  margin-top: 18px;
+  display: inline-block;
 }
 
 .spot-detail-price {
   text-align: left;
-  font-size: 14px;
-  color: #FDFFFC;
-  font-family: 'Varela Round';
 }
 
 .spot-detail-distance {
   text-align: right;
-  font-size: 14px;
-  color: #FDFFFC;
-  font-family: 'Varela Round';
 }
 
 .spot-detail-occasion {
@@ -536,14 +490,36 @@ SALMON RED: #F05D5E*/
   color: #444;
 }
 
+/*BUTTONS TO CALL, EMAIL OR BOOK A SPOT*/
+.col-15.buffer-left {
+  width: 15%;
+}
 
+.button-holder {
+  text-align: center;
+  padding: 15px;
+}
 
-  /*SWIPE RIGHT BUTTON FUNCTIONS*/
-  .ion-paper-airplane, .ion-trash-a, .ion-pin {
-    font-size: 25px;
-    text-align: center; 
-    padding: 10px;
-  }
+.call-button, .email-button, .book-button {
+  border-radius: 100%;
+  width: 55px;
+  border-color: #95AEC7;
+}
+
+.ion-ios-telephone, .ion-ios-email, .ion-calendar {
+  color: #020100;
+  line-height: inherit;
+  text-align: center;
+  vertical-align:middle;
+  display:inline-block;
+}
+
+.call-icon, 
+.email-icon, 
+.book-icon {
+  font-size: 25px;
+  border-radius: 
+}
 
 /*************************
 /* LOADING PAGE STYLING */
@@ -607,97 +583,4 @@ SALMON RED: #F05D5E*/
     transform: scale(1);
     animation-timing-function: ease-out;
   }
-}
-
-
-
-
-
-
-
-
-
-
-
-.spot-detail-options, 
-.row.spot-detail-options,
-.row.padding.spot-detail-options {
-
-  height: 68px;
-  padding: 0px;
-  margin-top: 0px;
-  border-radius: 0px;
-  font-family: 'Varela Round';
-  background-color: #FDFFFC;
-  width: auto;
-  /*display: block;*/
-  display: -webkit-flex;
-           -webkit-flex-direction: row;
-}
-
-
-.shortlist-icon-tray {
-  background-color: transparent;
-  height: 40px;
-  width: 140px;
-  padding: 2px;
-  float: right;
-  margin-right: 7px;
-  margin-top: -5px;
-}
-
-.halo {
-/*  background-color: transparent;
-  border-radius: 50%;
-  border: 1px solid #020100;
-  width: 40px;
-  height: 40px;
-  line-height: 40px;  
-  float: right;
-  text-align: center;
-  vertical-align: middle;
-  display: inline-block;
-  margin-left: 1px; margin-right: 1px;*/
-  float: right;
-}
-
-.ion-ios-telephone, .ion-ios-email, .ion-calendar {
-  color: #020100;
-  font-size: 27px;
-  line-height: inherit;
-  text-align: center;
-  vertical-align:middle;
-  display:inline-block;
-}
-
-.call-button, .email-button, .book-button {
-  font-family: 'Varela Round';
-  font-size: 25px;
-  border: none;
-  color: #FDFFFC;
-  background-color: blue;
-  font-weight: bold;
-  padding: 4px;
-  float: right;
-  display: block;
-  text-align: right
-}
-
-.button.button-block.call-button {
-  margin-top: -15px;
-}
-
-.call-icon, 
-.email-icon, 
-.book-icon {
-  font-size: 25px;
-}
-
-.button.button-block.call-button,
-.button.button-block.email-button,
-.button.button-block.book-button {
-  height: 40px;
-  margin-bottom: -10px;
-/*  background-color: #4BC6B9;
-  border-radius: 100%;
 }

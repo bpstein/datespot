@@ -37,33 +37,36 @@
       <h5 class="padding-left col col-60 spot-detail-price">$$$ goes here</h5>
       <h5 class="padding-right col col-20 spot-detail-distance">{{spot.distance}}</h5>
     </div>
-
-    <!-- MOIST BUTTON CONFIGURATION FOR CALLING, EMAILING OR BOOKING SPOTS -->
-<!--     <div class="row padding spot-detail-options">
-      <button class="button button-block email-button">
-        <span>
-          <i class="ion-ios-telephone halo call-icon"></i>
-        </span> 
-      </button>
     
-      <button class="button button-block email-button">
-        <span>
-          <i class="ion-ios-email halo email-icon"></i>
-        </span>  
-      </button>
 
-      <button class="button button-block email-button">
-        <span>
-          <i class="ion-calendar halo book-icon"></i>
-        </span>  
-      </button>
-    </div> -->
-    
-    <!-- LONG DESCRIPTION OF THE SPOT -->
-    <div class="row padding details-page">
-      <p class="spot-detail-description">{{spot.desc_long}}.</p>
-    </div> 
-
+    <div class="padding details-page">
+      <!-- LONG DESCRIPTION OF THE SPOT -->
+      <div class="detail-description-block">
+        <div class="row spot-detail-description">{{spot.desc_long}}.</div>
+        <div class="row spot-detail-options">
+          <div class="col-15 buffer-left"></div>
+          <!-- div class="col-30 hours-status">  Open now  </div>   -->
+          <div class="col-15 button-holder">
+            <button class="button call-button">
+              <a href="tel: +44 7514143203">
+                <i class="ion-ios-telephone halo call-icon"></i>
+              </a>
+            </button>
+          </div>
+          <div class="col-15 button-holder">
+            <button class="button email-button">
+              <i class="ion-ios-email halo email-icon"></i>
+            </button>
+          </div>
+          <div class="col-15 button-holder">
+            <button class="button book-button">
+              <i class="ion-calendar halo book-icon"></i>
+            </button>
+          </div>
+          <div class="col-15 buffer-right"></div>
+        </div>
+      </div>
+    </div>
   </ion-content>
 </ion-view>
 

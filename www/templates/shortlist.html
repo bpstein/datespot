@@ -14,20 +14,26 @@
         class="item-remove-animate item-icon-right" 
         ng-repeat="spot in shortlist"
         type="item-text-wrap"
-        href="#/spots/{{spot.vuid}}">
+        ng-click="showDetails('{{ card.vuid }}');">
 
         <!-- EACH DATESPOT IN THE SHORTLIST -->
-<!--         <div class="shortlistImage"
-          style="background-image: url({{spot.image_url}})">
-        </div> -->
         <div class="shortlistInfo" style="background-image: url({{spot.image_url}})">
           <div class="shortlist-icon-tray">
             
           <h2 class="shortlistHeader">{{spot.name}}</h2>
           <h3 class="shortlistAddress">{{spot.address}}, {{spot.postcode}}</h3>
-<!--           <ion-footer-bar class="shortlistTagline">
- -->           <!--  <div class="textWrapper">{{spot.desc_short}}</div> -->
-          <!-- </ion-footer-bar> -->
+        </div>
+
+        <div class="row shortlist-options">
+          <div class="col-33 shortlist-call-button">
+            Call
+          </div>
+          <div class="col-33 shortlist-email-button">
+            Email
+          </div>
+          <div class="col-33 shortlist-book-button">
+            Book
+          </div>
         </div>
 
         <!-- SWIPE OPTIONS TO DELETE, SHARE OR PIN EACH DATESPOT -->
