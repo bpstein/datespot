@@ -49,8 +49,12 @@ SALMON RED: #F05D5E*/
 .title, .title-center, .title.title-center.header-item,
 .title.header-item, .title-center.header-item,
 .nav-bar-block, .ion-header-bar,
-.customBar.bar.bar-header, .customBar, .bar {
-  border: none;
+.customBar.bar.bar-header, .customBar, .bar, .bar-header,
+.grade-b, .menu-content, .grade-c, .menu-content {
+  border: 0px !important;
+  border-bottom-color: transparent !important;
+  background-image: none;
+  border-bottom: none;
 }
 
 /************************
