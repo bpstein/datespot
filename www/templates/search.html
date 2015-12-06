@@ -14,17 +14,17 @@
   </ion-nav-buttons>
   <ion-content>
 
-    <ion-list class="OccasionPicker">
+    <ion-list class="col occasion-picker">
 
       <ion-item 
-        class="defaultOccasion" 
+        class="row-33 default-occasion" 
         ng-repeat="occasion in occasions"
         style="background-image: url({{occasion.imgurl}})"
 	      href="#/discover/{{occasion.id}}">
 		  
-        <div class="col occasionInfo">
-          <span class="occasionSpan">
-            <h1 class="occasionHeader">{{occasion.name}}</h1>
+        <div class="col occasion-info">
+          <span class="occasion-span">
+            <h1 class="occasion-header">{{occasion.name}}</h1>
           </span>
         </div>
       </ion-item>

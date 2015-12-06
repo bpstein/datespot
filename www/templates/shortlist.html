@@ -17,22 +17,10 @@
         ng-click="showDetails('{{ card.vuid }}');">
 
         <!-- EACH DATESPOT IN THE SHORTLIST -->
-        <div class="shortlistInfo" style="background-image: url({{spot.image_url}})">
-          <div class="shortlist-icon-tray">
-            
-          <h2 class="shortlistHeader">{{spot.name}}</h2>
-          <h3 class="shortlistAddress">{{spot.address}}, {{spot.postcode}}</h3>
-        </div>
-
-        <div class="row shortlist-options">
-          <div class="col-33 shortlist-call-button">
-            Call
-          </div>
-          <div class="col-33 shortlist-email-button">
-            Email
-          </div>
-          <div class="col-33 shortlist-book-button">
-            Book
+        <div class="shortlist-info" style="background-image: url({{spot.image_url}})">
+          <div class="shortlist-title-block">
+            <h2 class="shortlist-header">{{spot.name}}</h2>
+            <h3 class="shortlist-address">{{spot.address}}, {{spot.postcode}}</h3>
           </div>
         </div>
 
@@ -53,8 +41,25 @@
             class="button-calm">
             <i class="ion-pin"></i>
           </ion-option-button>
-             
+
+        <!-- OPTIONS TO CALL, EMAIL AND BOOK DATESPOTS -->
+        <div class="row shortlist-options">
+          <div class="col-33 shortlist-call-button">
+            Call
+          </div>
+          <div class="col-33 shortlist-email-button">
+            Email
+          </div>
+          <div class="col-33 shortlist-book-button">
+            Book
+          </div>
+        </div>
+        
       </ion-item>
+      
+      <!-- BLANK SPACE BETWEEN SHORTLIST ITEMS -->
+      <div class="shortlist-buffer"></div>       
+      
     </ion-list>
   </ion-content>
 </ion-view>

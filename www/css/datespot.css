@@ -16,6 +16,7 @@ SALMON RED: #F05D5E*/
 
 * {
   font: 20px 'Varela Round';
+  background-color: transparent;
   /*Other fonts to consider: 'Adelle Bold', 'Helvetica Neue', sans-serif;*/
 
 }
@@ -122,24 +123,24 @@ SALMON RED: #F05D5E*/
   border-color: none;
   background-color: #000;
   border-top: none;
-  border-bottom:none
-;}
+  border-bottom:none;
+}
 
-.occasionPicker {
+.occasion-picker {
   padding: 0px !important;
   margin: 0px !important;
   border: none;
-  display: flex;
+/*  display: flex;
   flex-direction: column;
   flex-wrap: nowrap;
   justify-content: space-around;
   align-content: center;
   align-items: stretch;
   min-height: 100% !important;
-  height: 100% !important;
+  height: 100% !important;*/
 }
 
-.occasionInfo {
+.occasion-info {
   height: 190px; 
   line-height: 190px;
   padding: 0px;
@@ -147,7 +148,7 @@ SALMON RED: #F05D5E*/
   background-size: cover;
 }
 
-.defaultOccasion {
+.default-occasion {
   background: no-repeat center;
   background-size: cover!important;
   -webkit-background-size: cover!important;
@@ -155,10 +156,9 @@ SALMON RED: #F05D5E*/
   -moz-background-size: cover;
   -o-background-size: cover;
   border: 0.5px solid #333;
-  height: 100%;
 }
 
-.occasionHeader {
+.occasion-header {
   display: inline-block;
   vertical-align: middle;
   line-height: normal;
@@ -213,10 +213,6 @@ SALMON RED: #F05D5E*/
   z-index: 100px;
 }
 
-.card-spot-title-block {
-  background: linear-gradient(to bottom, transparent, #111);
-}
-
 .card-spot-name {
   font-size: 18px;
   color: #FDFFFC;
@@ -238,13 +234,14 @@ SALMON RED: #F05D5E*/
   text-align: center;
   vertical-align: middle;
   padding: 2px;
+  margin-top: 10px;
   margin-bottom: 1px;
 }
 
 .card-spot-address, .card-spot-postcode {
   font-size: 12px;
   text-shadow: 1px 1px #222;
-  color: #DDD;
+  color: #FDFFFC;
   font-weight: bold;
   background-color: transparent;
   padding: 0 0 0 8px;
@@ -287,21 +284,21 @@ SALMON RED: #F05D5E*/
 /***************************
 /* SHORTLIST PAGE STYLING */
 /**************************/
-.shortlistInfo {
-  padding: 15px;
+.shortlist-info {
+  padding: 0px;
+  padding-left: 5px; padding-right: 5px; padding-bottom: 10px;
   background: no-repeat center;
   background-size: cover!important;
   -webkit-background-size: cover!important;
   -webkit-background-size: cover;
   -moz-background-size: cover;
   -o-background-size: cover;
-  height: 240px;
+  height: 200px;
   width: 400px;
-  border: black;
-  background-image: linear-gradient(to bottom, transparent, #222);
+  border: none;
 }
 
-.shortlistInfo:before {
+.shortlist-info:before {
   content: " ";
   width: 100%;
   height: 100%;
@@ -309,36 +306,41 @@ SALMON RED: #F05D5E*/
   z-index: 1;
   top: 0;
   left: 0;
-  background-image: linear-gradient(to bottom, transparent, #111 99%);
+  background-color: transparent;
   /*background: -webkit-linear-gradient(
       transparent, #222 99%);*/
 }
+
+.shortlist-title-block {
+  height: 60px;
+  font-weight: bold;
+  background-color: transparent;
+/*  background-image: linear-gradient(to bottom, transparent, #111 99%);
+*/}
 
 .item-remove-animate .item-icon-right {
   border: 0.5px solid #333;
 }
 
-.shortlistHeader {
+.shortlist-header {
   color: #FDFFFC;
   font-family: 'Varela Round';
-  font-size: 30px;
-  font-weight: bolder;
+  font-size: 32px;
+  font-weight: bold;
   position: relative;
-  padding-top: 170px;
+  padding-top: 160px;
  /* text-shadow: 1px 1px #222;*/
   z-index: 2
 }
 
-.shortlistAddress {
-  color: #DDD;
+.shortlist-address {
+  color: #FDFFFC;
   font-family: 'Varela Round';
-  font-size: 30px;
+  font-size: 24px;
   position: relative;
-/*  text-shadow: 1px 1px #222;
-*/  z-index: 2;
 }
 
-.shortlistTagline, .ion-footer-bar {
+/*.shortlistTagline, .ion-footer-bar {
   font-family: 'Varela Round';
   background-color: transparent;
   height: 50px;
@@ -347,9 +349,9 @@ SALMON RED: #F05D5E*/
   padding-right: 15px;
   float: left;
   color: #DDD;
-}
+}*/
 
-.textWrapper {
+/*.textWrapper {
   font-size: 13.5px;
   overflow: initial; 
   white-space: initial;
@@ -357,7 +359,7 @@ SALMON RED: #F05D5E*/
   position: justify;
   text-align: justify;
   text-justify: inter-word;
-}
+}*/
 
 .item-complex .item-content, .item-radio .item-content {
   padding: 0px;
@@ -370,6 +372,7 @@ SALMON RED: #F05D5E*/
 
 .shortlist-text {
   font-size: 14px;
+  font-weight: bold;
   left: auto;
   right: auto;
   display: block;
@@ -379,6 +382,27 @@ SALMON RED: #F05D5E*/
 .ion-chevron-right {
   color: #FFF;
   text-shadow: 1px 1px #333;
+}
+
+.shortlist-options, .row.shortlist-options {
+  text-align: center;
+  color: #FDFFFC;
+  background-color: #020100;
+  padding: 10px;
+}
+
+.shortlist-call-button, .shortlist-email-button {
+  border-right: solid #95AEC7;
+  border-width: thin;
+}
+
+.shortlist-call-button, .shortlist-email-button, .shortlist-book-button {
+  height: 22px;
+}
+
+.shortlist-options, .row.shortlist-options {
+  width: 400px;
+  margin-bottom: 15px;
 }
 
 /*SWIPE LEFT BUTTON FUNCTIONS*/
@@ -413,7 +437,7 @@ SALMON RED: #F05D5E*/
 .sliderCard {
   min-height: 400px;
   width: auto;
-  background-color: #FFF;
+  background-color: #FDFFFC;
   z-index: ;
 }
 
@@ -466,6 +490,7 @@ SALMON RED: #F05D5E*/
   margin-top: 5px;
   color: #020100;
   font-size: 13px;
+  padding-bottom: 25px;
 }
 
 .spotDetailCategory {
@@ -499,24 +524,19 @@ SALMON RED: #F05D5E*/
   color: #444;
 }
 
-.hr {
-  display: block;
-  padding: 0px;
-  margin-left: 15px; margin-right: 15px;
-  width: auto;
-  height: 1px;
-  color: #EEE;
-  background-color: #EEE;
-}
-
 /*BUTTONS TO CALL, EMAIL OR BOOK A SPOT*/
 .col-15.buffer-left, .col-15.buffer-right {
   width: 15%;
 }
 
-.button-holder {
+.col-15.button-holder {
   text-align: center;
   padding: 0 20px 0 20px;
+  padding-top: 20px;
+  padding-bottom: 20px;
+  border-top: solid #95AEC7;
+  border-bottom: solid #95AEC7;
+  border-width: thin;
 }
 
 .call-button, .email-button, .book-button {
