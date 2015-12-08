@@ -1,0 +1,7 @@
+{
+    "name": "DateSpot Demo",
+    "description": "The perfect venue for every occasion",
+    "repository": "https://github.com/bumstain/datespot",
+    "logo": "http://pathToYourLogo.png",
+    "keywords": ["ionic", "datespot", "tinder for venues"]
+}
