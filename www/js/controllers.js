@@ -45,6 +45,11 @@ angular.module('datespot.controllers', ['ionic', 'datespot.factories', 'ionic.co
 		  id: "cheapeat",
 		  tag: "Something informal with friends in pubs, bars or clubs.",
 		  imgurl: "img/cheapeats.jpg"
+		}, {
+			name: "A friend comes to visit",
+			id: "visitor", 
+			tag: "A friend visits from out of town",
+			imgurl: ""
 		}
 
 		// {
@@ -71,10 +76,33 @@ angular.module('datespot.controllers', ['ionic', 'datespot.factories', 'ionic.co
 
 }) // end SearchCtrl
 
-
-.controller('DiscoverCtrl', function($scope, $state, $stateParams, $ionicLoading, $cordovaGeolocation, $ionicPopup, SessionManager, SearchQuery, User) {
 /*************** CONTROLLER FOR THE DISCOVER/SWIPE VIEW ***************/
 
+.controller('DiscoverCtrl', function($scope, $state, $stateParams, $ionicLoading, $cordovaGeolocation, $ionicPopup, SessionManager, SearchQuery, User) {
+
+	var loadingMessages = [
+	// For 'First date' and 'Go all out' occasions
+		"Seducing...",
+		"Laying rose petals...",
+		"Popping champagne...", 
+		"Prepping rooms with wafts of French perfume...",
+		"Prepping champagne flutes...", 
+		"Sourcing the finest wines...",
+	// For parties and non-romantic events
+		"Getting the party started...",
+		"Popping bottles...",
+		"Tapping kegs...",
+		"Procuring kegs...",
+	// 	// For getting weird events
+		"Formulating the awesome...",
+		"Searching the area for weirdess...",
+		"Scouring the area for weird..."
+	];
+
+		$scope.chooseMessage = function() {
+			$scope.messenger = loadingMessages[Math.floor(Math.random() * loadingMessages.length)];
+		};
+	
 	console.log('Loaded the DiscoverCtrl controller');
 	/*
 	if ($stateParams.occasion.)
@@ -92,8 +120,7 @@ angular.module('datespot.controllers', ['ionic', 'datespot.factories', 'ionic.co
 	// Show the loading screen
 	$ionicLoading.show({ templateUrl: 'templates/loading.html' });
 	
-	
-    // onSuccess Callback - This method accepts a Position object, which contains the current GPS coordinates
+  // onSuccess Callback - This method accepts a Position object, which contains the current GPS coordinates
 	function onGPSLockSuccess(position) { SessionManager.setLocation(position.coords.latitude, position.coords.longitude); }
 	
     // onError Callback - Say something to the console.
@@ -157,7 +184,7 @@ angular.module('datespot.controllers', ['ionic', 'datespot.factories', 'ionic.co
 		if ( ($scope.cards.length == 0) && (result_count == server_limit) ) // Get the next  
 		{
 			// Show the loading (again)
-			$ionicLoading.show();
+			$ionicLoading.show({ templateUrl: 'templates/loading.html' });
 			
 			//console.log('cards length' + $scope.cards.length);
 			//console.log('results count' + result_count);
@@ -330,6 +357,7 @@ angular.module('datespot.controllers', ['ionic', 'datespot.factories', 'ionic.co
 		}
 
 		$scope.loading = $ionicLoading.show({
+			templateUrl: 'templates/loading.html',
 		  content: 'Getting current location...',
 		  showBackdrop: false
 		});

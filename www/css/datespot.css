@@ -9,7 +9,6 @@ GREY: #95AEC7
 SEA GREEN: #4BC6B9
 SALMON RED: #F05D5E*/
 
-
 /*FONT IMPORTS*/
 @import url(http://fonts.googleapis.com/css?family=Source+Sans+Pro:400,900);
 @import url(https://fonts.googleapis.com/css?family=Varela+Round);
@@ -284,9 +283,14 @@ SALMON RED: #F05D5E*/
 /***************************
 /* SHORTLIST PAGE STYLING */
 /**************************/
+.shortlist-background {
+  background-color: #CCC;
+}
+
 .shortlist-info {
-  padding: 0px;
-  padding-left: 5px; padding-right: 5px; padding-bottom: 10px;
+/*  padding: 0px;
+/*  padding-left: 5px; padding-right: 5px; padding-bottom: 10px;
+*/  
   background: no-repeat center;
   background-size: cover!important;
   -webkit-background-size: cover!important;
@@ -296,6 +300,7 @@ SALMON RED: #F05D5E*/
   height: 200px;
   width: 400px;
   border: none;
+  padding: 0;
 }
 
 .shortlist-info:before {
@@ -303,11 +308,10 @@ SALMON RED: #F05D5E*/
   width: 100%;
   height: 100%;
   position: absolute;
-  z-index: 1;
   top: 0;
   left: 0;
-  background-color: transparent;
-  /*background: -webkit-linear-gradient(
+/*  background-color: transparent;
+*/  /*background: -webkit-linear-gradient(
       transparent, #222 99%);*/
 }
 
@@ -386,8 +390,8 @@ SALMON RED: #F05D5E*/
 
 .shortlist-options, .row.shortlist-options {
   text-align: center;
-  color: #FDFFFC;
-  background-color: #020100;
+  color: #95AEC7;
+  background-color: #FDFFFC;
   padding: 10px;
 }
 
@@ -396,13 +400,21 @@ SALMON RED: #F05D5E*/
   border-width: thin;
 }
 
-.shortlist-call-button, .shortlist-email-button, .shortlist-book-button {
-  height: 22px;
+.shortlist-call-button, .col-33.shortlist-call-button,
+.shortlist-email-button, .col-33.shortlist-email-button,
+.shortlist-book-button, .col-33.shortlist-book-button { 
+  height: 22px; 
+  color: #95AEC7;
+}
+
+.ion-calendar, .ion-ios-telephone, .ion-ios-email {
+  color: #95AEC7;
 }
 
 .shortlist-options, .row.shortlist-options {
   width: 400px;
   margin-bottom: 15px;
+  color: #95AEC7;
 }
 
 /*SWIPE LEFT BUTTON FUNCTIONS*/
