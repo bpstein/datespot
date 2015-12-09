@@ -157,7 +157,7 @@ angular.module('datespot.controllers', ['ionic', 'datespot.factories', 'ionic.co
 		if ( ($scope.cards.length == 0) && (result_count == server_limit) ) // Get the next  
 		{
 			// Show the loading (again)
-			$ionicLoading.show();
+			$ionicLoading.show({templateUrl: 'templates/loading.html'});
 			
 			//console.log('cards length' + $scope.cards.length);
 			//console.log('results count' + result_count);

@@ -51,9 +51,10 @@ class ClientHandler extends UserSession
 	var $success 		= false;	// By default, it's a fail until proven otherwise.
 	var $error_message	= '';
 	var $JSON_result_array 	= array();	// What we JSON encode and send back to the client.
-										// Make sure this is only a single array list or we'll break the JSON (it'll return an object) and fuck everything up.
-	
-	var $venue_base_sql_select_attributes	= 'v.venue_id,
+										// Make sure this is only a single array list or we'll break the JSON (it'll return an object) and fuck everything up	
+										
+	var $venue_base_sql_select_attributes	= '*,
+											   v.venue_id,
 											   v.venue_unique_id 			AS vuid,
 											   v.venue_name 				AS name,
 											   v.venue_description			AS desc_long,
@@ -61,7 +62,11 @@ class ClientHandler extends UserSession
 											   v.venue_address				AS address,
 											   v.venue_postcode			 	AS postcode,
 											   v.venue_location_lon			AS longitude,
-											   v.venue_location_lat			AS latitude';
+											   v.venue_location_lat			AS latitude,
+											   CEILING(v.venue_rating_cost/5) AS rating_cost';
+											   
+	// What we permit to be sent via JSON from results array (whitelist)
+	var $venue_base_sql_select_attributes_JSON_whitelist = array('vuid' => 1, 'name' => 1, 'desc_long' => 1, 'desc_short' => 1, 'address' => 1, 'postcode' => 1, 'longitude' => 1, 'latitude' => 1, 'rating_cost' => 1);										   
 											   
 
 	function ClientHandler()
@@ -141,7 +146,7 @@ class ClientHandler extends UserSession
 		$_origin_long 	= clean_string(@$_REQUEST['originLong']); 	// should keep 0.00 etc.
 		$_scenario 		= clean_string(@$_REQUEST['sid']); 			// firstdate etc.
 
-		$_scenario = null;
+		// $_scenario = null;
 		
 		// lat and log co-ords OK?
 		// http://stackoverflow.com/questions/5756232/moving-lat-lon-text-columns-into-a-point-type-column
@@ -182,17 +187,16 @@ class ClientHandler extends UserSession
 				WHERE v.venue_location_spatial_point IS NOT NULL ';
 		
 		// If we have a scenario
-		if ( !empty($_scenario) ) $sql .= 'AND v.venue_scenario = \''. $_scenario .'\'';
+		if ( !empty($_scenario) ) $sql .= 'AND v.venue_scenario LIKE \'%'. $_scenario .'%\' ';
 		
-		$sql .= 'ORDER BY GLENGTH(GEOMFROMTEXT(CONCAT(\'LINESTRING(' . $_origin_lat . ' '. $_origin_long. ',\' ,X(venue_location_spatial_point),\' \',Y(venue_location_spatial_point),\')\'))) ASC';
+		$sql .= ' ORDER BY GLENGTH(GEOMFROMTEXT(CONCAT(\'LINESTRING(' . $_origin_lat . ' '. $_origin_long. ',\' ,X(venue_location_spatial_point),\' \',Y(venue_location_spatial_point),\')\'))) ASC';
 			
 		// Limit results as required	
 		if ( !isset($_REQUEST['nolimit']) )
 		{
 			$sql .= ' LIMIT '. $this->offset .', '. $this->limit; 
 		}
-		
-				
+			
 		try
 		{		
 			// Do the query
@@ -219,13 +223,21 @@ class ClientHandler extends UserSession
 				 //$result['dsr']
 				 //`venue_rating_general` ,  `venue_rating_cost` ,  `venue_rating_quirkiness` 
 				 
+				 // Gotta love PHP
+				 $result['rating_cost_html_str']		= ($data['rating_cost'] != 0) ? str_repeat("&pound; ", $data['rating_cost']):'???'; // Question marks if unknown
 				 
-				 // IMPORTANT: We don't want to expose this data in JSON
-				 //unset($data['latitude']); unset($data['longitude']);
-				 unset($data['venue_id']);
 				 
-				 // Build the specific JSON results array;
-				 $this->JSON_result_array[] = array_merge($result, $data);
+				 
+				 
+				// IMPORTANT: We don't want to expose this data in JSON
+				//unset($data['latitude']); unset($data['longitude']);
+				// unset($data['venue_id']);
+				// unset($data['rating_cost']);
+				//http://php.net/manual/en/function.array-intersect-key.php
+				$data = array_intersect_key($data, $this->venue_base_sql_select_attributes_JSON_whitelist);
+				 
+				// Build the specific JSON results array;
+				$this->JSON_result_array[] = array_merge($result, $data);
 				 
 				 
 				//$this->JSON_result_array[] = $this->_venue_data_last_chance_saloon($data); 	
@@ -403,6 +415,14 @@ class ClientHandler extends UserSession
 		return $images;
 		
 	} // _get_venue_images
+	
+	
+	// Check to see if a venue is open
+	function _venue_is_currently_open($data, $comparison_datetime = null )
+	{
+		// TODO: DO we do another query, or fetch all this from the main SQL query?
+		
+	}
 	
 	 
 	 // Check the venue row to see if there's anything we need to fix before it gets JSONified
