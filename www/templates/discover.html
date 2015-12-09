@@ -21,7 +21,9 @@
           <p class="card-spot-address">{{ card.address }}, {{card.postcode}}</p>
         </div>
         <div class="row card-spot-strip">
-          <span class="col-33 price-meter">Price:  £££££
+          <span class="col-33 price-meter">Price: <span ng-bind-html="card.rating_cost_html_str"></span> <!-- http://stackoverflow.com/questions/718891/how-to-make-a-div-not-wrap - Use Span instead!  -->
+		  <!-- https://docs.angularjs.org/api/ng/service/$sce 
+			   https://docs.angularjs.org/api/ng/directive/ngBindHtml -->
           </span>
           <span class="col-33 quirky-meter"> 
           </span>

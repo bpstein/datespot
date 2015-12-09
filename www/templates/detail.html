@@ -33,7 +33,7 @@
     </div>
       
     <div class="row spot-detail-strip">
-      <h5 class="padding-left col col-60 spot-detail-price">$$$ goes here</h5>
+      <h5 class="padding-left col col-60 spot-detail-price"><span ng-bind-html="spot.rating_cost_html_str"></span></h5>
       <h5 class="padding-right col col-30 spot-detail-distance">{{spot.distance}} away</h5>
     </div>
     

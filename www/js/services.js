@@ -19,8 +19,9 @@ angular.module('datespot.factories', [])
 		userLon: null,
 	}
 
-	o.setLocation = function (userLat,userLon) { 
-		o.userLat = userLat; o.userLon = userLon;	
+					// This will come from the Cordovia Geolocation
+	o.setLocation = function (position) { 
+		o.userLat = position.coords.latitude; o.userLon = position.coords.longitude;	
 		console.log('Session location set to: ' + o.userLat +', '+ o.userLon );
 	}
 	
@@ -56,10 +57,18 @@ angular.module('datespot.factories', [])
 			console.log(p2);
 			
 			var d = p1.distanceTo(p2); // distance in meters by default
-				d = Number(d.toPrecision(1));
+				d = Number(d.toPrecision(3));
 			
 			console.log('Distance in meters: '+ d);
-			return (d/1000) + ' km';			
+			
+			if ( d < 1000)
+			{
+				return d + ' meters';
+			}
+			else
+			{
+				return (d/1000) + ' km';			
+			}
 		}
 		else
 		{
@@ -199,6 +208,32 @@ angular.module('datespot.factories', [])
     shortlist: [],
     newShortlist: 0
   }
+  
+  
+  // Get the shortlist data and re-calculate distance
+  o.getShortlist = function ()
+  {
+	  
+	//TODO: If user is logged in, get the items from the server??
+	  
+	// Recalculate proxmity
+	for (var i = 0; i < o.shortlist.length; i++) 
+	{		
+		o.shortlist[i].current_proximity = SessionManager.calculateDistance(o.shortlist[i].latitude, o.shortlist[i].longitude);	
+	}
+	
+	// Now re-order the array of objects
+	// http://stackoverflow.com/questions/1069666/sorting-javascript-object-by-property-value
+	/*
+	var maxSpeed = {car:300, bike:60, motorbike:200, airplane:1000, helicopter:400, rocket:8*60*60}
+	var sortable = [];
+	for (var vehicle in maxSpeed)
+		  sortable.push([vehicle, maxSpeed[vehicle]])
+	sortable.sort(function(a, b) {return a[1] - b[1]})	
+	*/
+	return o.shortlist;
+	
+  }
 
   o.addSpotToShortlist = function(spot) {
 	  
@@ -220,9 +255,11 @@ angular.module('datespot.factories', [])
     o.shortlist.splice(index, 1);
   }
 
-  o.shortlistCount = function() {
+  o.shortlistCount = function() 
+  {
   	return o.newShortlist;
   }
+  
   return o;
   
 }); // notice the termination here, as we're terminating the factory ONLY
