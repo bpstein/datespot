@@ -32,7 +32,8 @@
           </span>   
         </div>
   		  <div class="discover-card-caption" style="background-color:#background-color: transparent;">
-          <div class="hours-status">  Open now  </div>  
+          <div ng-if="card.venue_open_now == true"  class="hours-status">  Open now  </div>  
+		  <div ng-if="card.venue_open_now == false" class="hours-status">  Closed now </div>  
           <span class="card-spot-distance">{{ card.distance }}</span>   
   			  <p class="card-spot-description">{{ card.desc_short }}</p>
         </div>

@@ -27,6 +27,8 @@ header('Access-Control-Allow-Origin: http://localhost:8100');
 // http://192.168.0.17/client.php?a=img&viuid=aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
 
 
+$ClientDateTime = new DateTime('NOW'); 
+
 class ClientHandler extends UserSession
 {
 
@@ -41,19 +43,19 @@ class ClientHandler extends UserSession
 	 */
 	 
 	// Change as appropriate
-	var $venue_image_url_base =	'http://ds.urandom.info/client.json.php?a=img&viuid=';
+	private $venue_image_url_base =	'http://ds.urandom.info/client.json.php?a=img&viuid=';
     //var $venue_image_url_base	=	'http://192.168.56.101/client.json.php?a=img&viuid=';
-	var $limit 	= 10; // Maximum number of results in one hit
-	var $offset = 0;
+	private $limit 	= 10; // Maximum number of results in one hit
+	private $offset = 0;
 	
 	 
     // Variables used internally
-	var $success 		= false;	// By default, it's a fail until proven otherwise.
-	var $error_message	= '';
-	var $JSON_result_array 	= array();	// What we JSON encode and send back to the client.
+	private $success 		= false;	// By default, it's a fail until proven otherwise.
+	private $error_message	= '';
+	private $JSON_result_array 	= array();	// What we JSON encode and send back to the client.
 										// Make sure this is only a single array list or we'll break the JSON (it'll return an object) and fuck everything up	
 										
-	var $venue_base_sql_select_attributes	= '*,
+	protected $venue_base_sql_select_attributes	= '*,
 											   v.venue_id,
 											   v.venue_unique_id 			AS vuid,
 											   v.venue_name 				AS name,
@@ -66,8 +68,12 @@ class ClientHandler extends UserSession
 											   CEILING(v.venue_rating_cost/5) AS rating_cost';
 											   
 	// What we permit to be sent via JSON from results array (whitelist)
-	var $venue_base_sql_select_attributes_JSON_whitelist = array('vuid' => 1, 'name' => 1, 'desc_long' => 1, 'desc_short' => 1, 'address' => 1, 'postcode' => 1, 'longitude' => 1, 'latitude' => 1, 'rating_cost' => 1);										   
-											   
+	protected $venue_base_sql_select_attributes_JSON_whitelist = array('vuid' => 1, 'name' => 1, 'desc_long' => 1, 'desc_short' => 1, 'address' => 1, 'postcode' => 1, 'longitude' => 1, 'latitude' => 1, 'rating_cost' => 1);										   
+						
+    // Timezone class
+	//private $datetime;
+	private $client_day;
+	private $client_time; // What is the client's timzone?
 
 	function ClientHandler()
 	{
@@ -88,6 +94,9 @@ class ClientHandler extends UserSession
 		 token		= Token ID
 		 
 		 */
+		
+		// Get our datetime
+		//$datetime = new DateTime('NOW');
 		 
 		// Calculate offset if required for sql
 		if ( isset($_REQUEST['o']) )
@@ -226,7 +235,7 @@ class ClientHandler extends UserSession
 				 // Gotta love PHP
 				 $result['rating_cost_html_str']		= ($data['rating_cost'] != 0) ? str_repeat("&pound; ", $data['rating_cost']):'???'; // Question marks if unknown
 				 
-				 
+				 $result['venue_open_now'] = $this->_venue_is_open_now($data);
 				 
 				 
 				// IMPORTANT: We don't want to expose this data in JSON
@@ -418,11 +427,43 @@ class ClientHandler extends UserSession
 	
 	
 	// Check to see if a venue is open
-	function _venue_is_currently_open($data, $comparison_datetime = null )
+	function _venue_is_open_now($data)
 	{
-		// TODO: DO we do another query, or fetch all this from the main SQL query?
+		global $ClientDateTime;
 		
+		// http://php.net/manual/en/datetime.settimezone.php
+		// http://php.net/manual/en/class.datetime.php
+
+		// TODO: Need to factor in the timezone of the venue!!
+		if ( !isset($this->client_time) )
+		{
+			$ClientDateTime->setTimezone(new DateTimeZone('Europe/London')); // We will get the timezone from the first result
+	
+			$this->client_time 	= $ClientDateTime->format('H:i:s'); // return 21:07:56
+			$this->client_day 	= strtolower($ClientDateTime->format('l')); // return 'friday', array elements are case sensitive
+		}
+		
+		// print $ClientDateTime->format('Y-m-d H:i:s (e)');
+		
+		// Todo, need to factor in venues timezone
+		return $this->__isBetween($data['venue_hour_'. $this->client_day.'_open'], $data['venue_hour_'. $this->client_day .'_close'], $this->client_time);
 	}
+	
+	
+	// From: http://stackoverflow.com/questions/27131527/php-check-if-time-is-between-two-times-regardless-of-date/27134087#27134087
+	function __isBetween($from, $till, $input, $venue_tz = null) 
+	{
+		// echo 'The venue open time:'. $from;
+		// echo 'The venue close time:'. $till;
+
+		$f = DateTime::createFromFormat('!H:i:s', $from);
+		$t = DateTime::createFromFormat('!H:i:s', $till);
+		$i = DateTime::createFromFormat('!H:i:s', $input);
+	
+		if ($f > $t) $t->modify('+1 day');
+		return ($f <= $i && $i <= $t) || ($f <= $i->modify('+1 day') && $i <= $t);
+	}
+
 	
 	 
 	 // Check the venue row to see if there's anything we need to fix before it gets JSONified
