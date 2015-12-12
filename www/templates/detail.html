@@ -26,7 +26,10 @@
     </ion-slide-box>
 
     <div class="row spotDetailHeader"> 
-      <div class="col detailsPageTest">
+      <div class="col">
+        <div class="open-hours-detail"> Open now </div>
+        <!-- <div ng-if="card.venue_open_now == true"  class="open-hours">  Open now  </div>  
+          <div ng-if="card.venue_open_now == false" class="closed-hours">  Closed now </div> -->
         <h2 class="spotDetailName">{{spot.name}}</h2>
         <h3 class="spotDetailAddress">{{spot.address}}, {{spot.postcode}}</h3>
       </div>
@@ -41,7 +44,10 @@
     <div class="padding details-page">
       <!-- LONG DESCRIPTION OF THE SPOT -->
       <div class="detail-description-block">
-        <div class="row spot-detail-description">{{spot.desc_long}}.</div>
+        <div class="spot-detail-description">
+          <div class="detail-blurb">{{spot.desc_short}}</div>
+          <div class="detail-long-text">{{spot.desc_long}}</div>
+        </div>
           <div class="row spot-detail-options">
           <div class="col-15 buffer-left"></div>
           <!-- div class="col-30 hours-status">  Open now  </div>   -->

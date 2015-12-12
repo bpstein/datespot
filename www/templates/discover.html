@@ -12,7 +12,8 @@
           ng-click="showDetails('{{ card.vuid }}');">
 		
   		  <div class="discover-card-image">
-  		    <img ng-src="{{card.image_url}}" />
+  		    <img ng-src="{{card.image_url}}"
+               style="background-image: linear-gradient(to bottom, transparent 90%, #222);" />
         </div>
         <div class="card-spot-title-block">
           <p class="card-spot-name">
@@ -27,13 +28,16 @@
           </span>
           <span class="col-33 quirky-meter"> 
           </span>
-          <span class="col-33 card-spot-distance"> 
+          <span class="padding col col-33 card-spot-distance">
             {{ card.distance }} 
           </span>   
         </div>
   		  <div class="discover-card-caption" style="background-color:#background-color: transparent;">
-          <div ng-if="card.venue_open_now == true"  class="hours-status">  Open now  </div>  
-		  <div ng-if="card.venue_open_now == false" class="hours-status">  Closed now </div>  
+          <div class="hours-status">
+            <div ng-if="card.venue_open_now == true"  class="open-hours">  Open now  </div>  
+            <div ng-if="card.venue_open_now == false" class="closed-hours">  Closed now </div>   
+          </div>
+         
           <span class="card-spot-distance">{{ card.distance }}</span>   
   			  <p class="card-spot-description">{{ card.desc_short }}</p>
         </div>

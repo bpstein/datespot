@@ -98,7 +98,7 @@ SALMON RED: #F05D5E*/
 /**********************/
 
 .item-complex .item-content {
-  background-color: rgba(0,0,0,0.45);
+  background-color: rgba(0,0,0,0.35);
   border: none;
   border: transparent !important;
   border-top: none;
@@ -179,14 +179,7 @@ SALMON RED: #F05D5E*/
 /* DISCOVER PAGE STYLING */
 /*************************/
 
-.td-cards {
-}
-
-.swipe-card {
-}
-
 .card, .td-card {
-  z-index: 1;
   position: relative;
   border-radius: 15px;
 }
@@ -200,7 +193,6 @@ SALMON RED: #F05D5E*/
   -webkit-background-size: cover;
   -moz-background-size: cover;
   -o-background-size: cover;
-  background-image: linear-gradient(to bottom, transparent, #222);
 }
 
 .discover-card-caption, .click-block, .click-block-hide {
@@ -212,35 +204,47 @@ SALMON RED: #F05D5E*/
   z-index: 100px;
 }
 
+.card-spot-title-block {
+
+}
+
 .card-spot-name {
-  font-size: 18px;
+  font-size: 19px;
   color: #FDFFFC;
-  text-shadow: 1px 1px #222;
+  /*text-shadow: 1px 1px #222;*/
   font-weight: bold;
   margin-top: -60px;
   padding: 0 0 0 8px;
 }
 
-.hours-status, .row.hours-status {
+.open-hours, .closed-hours, .row.hours-status {
   text-transform: uppercase;
   font-size: 12px;
   font-weight: bold;
   color: #FDFFFC;
   background-color: #4BC6B9;
   text-shadow: none;
-  width: 24%;
+  width: 23%;
   height: 18px;
   text-align: center;
   vertical-align: middle;
   padding: 2px;
-  margin-top: 10px;
+  margin-top: 5px;
   margin-bottom: 1px;
+}
+
+.open-hours {
+  background-color: #4BC6B9;
+}
+
+.closed-hours {
+  background-color: #F05D5E;
 }
 
 .card-spot-address, .card-spot-postcode {
   font-size: 12px;
-  text-shadow: 1px 1px #222;
-  color: #FDFFFC;
+  /*text-shadow: 1px 1px #222;*/
+  color: #CCC;
   font-weight: bold;
   background-color: transparent;
   padding: 0 0 0 8px;
@@ -438,7 +442,7 @@ SALMON RED: #F05D5E*/
 
 .slider-pager {
   top: 0;
-  margin-top: 20px;
+  margin-top: -;
   font-size: 12px;
 }
 
@@ -450,14 +454,29 @@ SALMON RED: #F05D5E*/
   min-height: 400px;
   width: auto;
   background-color: #FDFFFC;
-  z-index: ;
+}
+
+.open-hours-detail {
+  background-color: #4BC6B9;
+  text-transform: uppercase;
+  font-size: 12px;
+  font-weight: bold;
+  color: #FDFFFC;
+  background-color: #4BC6B9;
+  text-shadow: none;
+  width: 23%;
+  height: 18px;
+  margin-bottom: -8px;
+  text-align: center;
+  vertical-align: middle;
+  padding: 2px;
 }
 
 .spotDetailHeader {
-  margin-top: -76px;
-  z-index: 1;
-  background: linear-gradient(to bottom, transparent, #111);
+  margin-top: -105px;
+  background: linear-gradient(to bottom, transparent, #222);
   position: absolute;
+  padding-left: 10px; padding-right: 10px;
 }
 
 .spotDetailImage {
@@ -478,8 +497,9 @@ SALMON RED: #F05D5E*/
 }
 
 .spotDetailAddress {
-  font-size: 14px;
-  margin-top: -5px;
+  font-size: 12px;
+  color: #CCC;
+  margin-top: -4px;
 }
 
 .row.spot-detail-strip {
@@ -494,8 +514,17 @@ SALMON RED: #F05D5E*/
   font-size: 14px;
 }
 
-.spotDetailBlurb {
-  font-weight: bold;
+.detail-blurb {
+  font-weight: bold; 
+  text-align: justify;
+  text-justify: inter-word;
+  padding-left: 5px; padding-right: 5px;
+}
+
+.detail-long-text {
+  padding: 10px 5px 10px 5px;
+  text-align: justify;
+  text-justify: inter-word;
 }
 
 .spot-detail-description {
@@ -524,10 +553,12 @@ SALMON RED: #F05D5E*/
 
 .spot-detail-price {
   text-align: left;
+  padding-left: 10px;
 }
 
 .spot-detail-distance {
   text-align: right;
+  padding-right: 10px;
 }
 
 .spot-detail-occasion {
