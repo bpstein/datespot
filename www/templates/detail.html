@@ -44,44 +44,67 @@
     <div class="padding details-page">
       <!-- LONG DESCRIPTION OF THE SPOT -->
       <div class="detail-description-block">
+
+        <!-- BLURB AND DESCRIPTION -->
         <div class="spot-detail-description">
           <div class="detail-blurb">{{spot.desc_short}}</div>
           <div class="detail-long-text">{{spot.desc_long}}</div>
         </div>
-          <div class="row spot-detail-options">
-          <div class="col-15 buffer-left"></div>
-          <!-- div class="col-30 hours-status">  Open now  </div>   -->
-          <div class="col-15 button-holder">
+
+        <!-- BUTTONS TO CALL, EMAIL AND BOOK -->
+        <div class="row spot-detail-options">
+          <div class="col-5 buffer-left"></div>
+          <div class="col button-holder">
             <button class="button call-button">
               <a href="tel: +44 7514143203">
                 <i class="ion-ios-telephone halo call-icon"></i>
               </a>
             </button>
           </div>
-          <div class="col-15 button-holder">
+          <div class="col button-holder">
             <button class="button email-button">
               <i class="ion-ios-email halo email-icon"></i>
             </button>
           </div>
-          <div class="col-15 button-holder">
+          <div class="col button-holder">
             <button class="button book-button">
               <i class="ion-calendar halo book-icon"></i>
             </button>
           </div>
-          <div class="col-15 buffer-right"></div>
+          <div class="col-5 buffer-left"></div>
         </div>
+
       </div>
-<!--       <div class="row spot-detail-options-text">
-          <div class="col-15 buffer-left"></div>
-          <div class="col-15 button-text-1">Call</div>
-          <div class="col-15 button-text-2">Email</div>
-          <div class="col-15 button-text-3">Book</div>
-          <div class="col-15 buffer-right"></div>
-        </div> -->
-        
-    <!--   </div> -->
-      <div class="operating-hours-block">
-        <table class="operating-hours-table">
+      <div class="padding opening-hours-block">
+        <table>
+          <tr>
+            <td align="left" class="table-days">Monday</td>
+            <td align="left" class="table-hours">Hours</td>
+          </tr>
+          <tr>
+            <td align="left" class="table-days">Tuesday</td>
+            <td align="left" class="table-hours">Hours</td>
+          </tr>
+          <tr>
+            <td align="left" class="table-days">Wednesday</td>
+            <td align="left" class="table-hours">Hours</td>
+          </tr>
+           <tr>
+            <td align="left" class="table-days">Thursday</td>
+            <td align="left" class="table-hours">Hours</td>
+          </tr>
+           <tr>
+            <td align="left" class="table-days">Friday</td>
+            <td align="left" class="table-hours">Hours</td>
+          </tr>
+           <tr>
+            <td align="left" class="table-days">Saturday</td>
+            <td align="left" class="table-hours">Hours</td>
+          </tr>
+           <tr>
+            <td align="left" class="table-days">Sunday</td>
+            <td align="left" class="table-hours">Hours</td>
+          </tr>
         </table>
       </div>
     </div>

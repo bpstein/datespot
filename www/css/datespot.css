@@ -213,7 +213,7 @@ SALMON RED: #F05D5E*/
   color: #FDFFFC;
   /*text-shadow: 1px 1px #222;*/
   font-weight: bold;
-  margin-top: -60px;
+  margin-top: -62px;
   padding: 0 0 0 8px;
 }
 
@@ -224,7 +224,7 @@ SALMON RED: #F05D5E*/
   color: #FDFFFC;
   background-color: #4BC6B9;
   text-shadow: none;
-  width: 23%;
+  width: 30%;
   height: 18px;
   text-align: center;
   vertical-align: middle;
@@ -442,7 +442,7 @@ SALMON RED: #F05D5E*/
 
 .slider-pager {
   top: 0;
-  margin-top: -;
+  margin-top: 15px;
   font-size: 12px;
 }
 
@@ -459,13 +459,13 @@ SALMON RED: #F05D5E*/
 .open-hours-detail {
   background-color: #4BC6B9;
   text-transform: uppercase;
-  font-size: 12px;
+  font-size: 11px;
   font-weight: bold;
   color: #FDFFFC;
   background-color: #4BC6B9;
   text-shadow: none;
-  width: 23%;
-  height: 18px;
+  width: 29%;
+  height: 16px;
   margin-bottom: -8px;
   text-align: center;
   vertical-align: middle;
@@ -499,7 +499,7 @@ SALMON RED: #F05D5E*/
 .spotDetailAddress {
   font-size: 12px;
   color: #CCC;
-  margin-top: -4px;
+  margin-top: -2px;
 }
 
 .row.spot-detail-strip {
@@ -531,7 +531,7 @@ SALMON RED: #F05D5E*/
   margin-top: 5px;
   color: #020100;
   font-size: 13px;
-  padding-bottom: 25px;
+  padding-bottom: 10px;
 }
 
 .spotDetailCategory {
@@ -568,13 +568,13 @@ SALMON RED: #F05D5E*/
 }
 
 /*BUTTONS TO CALL, EMAIL OR BOOK A SPOT*/
-.col-15.buffer-left, .col-15.buffer-right {
-  width: 15%;
+.col-5.buffer-left, .col-5.buffer-right {
+  width: 1%;
 }
 
-.col-15.button-holder {
+.col.button-holder {
   text-align: center;
-  padding: 0 20px 0 20px;
+  padding: 0 0px 0 0px;
   padding-top: 20px;
   padding-bottom: 20px;
   border-top: solid #95AEC7;
@@ -584,8 +584,8 @@ SALMON RED: #F05D5E*/
 
 .call-button, .email-button, .book-button {
   border-radius: 100%;
-  width: 50px;
-  height: 50px;
+  width: 70px;
+  height: 70px;
   border-color: #95AEC7;
 }
 
@@ -600,7 +600,7 @@ SALMON RED: #F05D5E*/
 .call-icon, 
 .email-icon, 
 .book-icon {
-  font-size: 25px;
+  font-size: 30px;
   border-radius: 
 }
 
@@ -608,19 +608,48 @@ SALMON RED: #F05D5E*/
   font-family: 'Varela Round';
   color: #020100;
   font-size: 15px;
-  padding: 0 20px 8px 20px;
 }
 
 .button-text-1,
 .button-text-2,
 .button-text-3 {
   text-align: center;
-  width: 50px;
+  width: 0px;
   font-weight: bold;
 }
 
 .button-text-2, .button-text-3 {
   margin-left: 43px;
+}
+
+/*OPENING HOURS TABLE*/
+.opening-hours-block {
+  padding-top: 20px;
+  width: 100%;
+  font-size: 14px;
+  color: #020100;
+}
+
+.opening-hours-header {
+  font-size: 14px;
+  color: #020100;
+}
+
+.table-days {
+  float: left;
+  text-align: left;
+  font-size: 14px;
+  color: #020100;
+  padding-bottom: 8px;
+  font-weight: bold;
+}
+
+.table-hours {
+  float: right;
+  text-align: right;
+  padding-left: 100px;
+  font-size: 14px;
+  color: #020100;
 }
 
 /*************************
