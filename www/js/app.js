@@ -18,6 +18,9 @@ angular.module('datespot', ['ionic'])
         cordova.plugins.Keyboard.hideKeyboardAccessoryBar(true);
         cordova.plugins.Keyboard.disableScroll(true);
       }
+      if(window.cordova && window.cordova.InAppBrowser) {
+        window.open = window.cordova.InAppBrowser.open;
+      }
       if(window.StatusBar) {
         StatusBar.styleLightContent();
       }

@@ -15,7 +15,7 @@
     </a>
   </ion-nav-buttons>
 
-  <ion-content scroll="true">
+  <ion-content scroll="true" ng-controller="DetailCtrl">
     <ion-slide-box show-pager="true">
       <ion-slide
         class="spotDetailImage" 
@@ -67,14 +67,16 @@
             </button>
           </div>
           <div class="col button-holder">
-            <button class="button book-button">
+            <button class="button book-button"
+                    ng-click="openInAppBrowser()">
               <i class="ion-calendar halo book-icon"></i>
             </button>
           </div>
           <div class="col-5 buffer-left"></div>
         </div>
-
       </div>
+
+      <!-- OPENING HOURS TABLE -->
       <div class="padding opening-hours-block">
         <table>
           <tr>

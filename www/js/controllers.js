@@ -299,6 +299,11 @@ angular.module('datespot.controllers', ['ionic', 'datespot.factories', 'ionic.co
 		$state.go('search');
 	}	
 
+	//GB TO ADD BOOKING LINK FOR EACH VENUE ({{spot.booking_url??}})
+	$scope.openInAppBrowser = function() {
+		window.open('http://google.com', '_blank');
+	}
+
 })
 
 

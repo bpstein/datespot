@@ -45,6 +45,7 @@
     <splash src="resources/ios/splash/Default@2x~iphone.png" width="640" height="960"/>
     <splash src="resources/ios/splash/Default~iphone.png" width="320" height="480"/>
     <access origin="tel:*" launch-external="yes"/>
+    <allow-intent href="tel:*" />
   </platform>
   <icon src="resources/ios/icon/icon-small@3x.png"/>
 </widget>
