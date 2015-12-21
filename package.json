@@ -18,5 +18,7 @@
   "cordovaPlugins": [
     "cordova-plugin-inappbrowser"
   ],
-  "cordovaPlatforms": []
+  "cordovaPlatforms": [
+    "android"
+  ]
 }
