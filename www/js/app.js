@@ -31,7 +31,7 @@ angular.module('datespot', ['ionic'])
 
 
 
-angular.module('datespot', ['ionic', 'datespot.controllers', 'ngCordova.plugins.geolocation', 'ionic.utils'])
+angular.module('datespot', ['ionic', 'datespot.controllers', 'ngCordova.plugins.geolocation', 'ionic.utils', 'ngCordova'])
 
 /* 
  * GUI State Provider Code - Link the various tabs to the relevant
