@@ -11,6 +11,11 @@ angular.module('datespot.controllers', ['ionic', 'datespot.factories', 'ionic.co
 		  tag: "She said 'yes.' Choose a place that'll impress.",
 		  imgurl: "img/firstdate.jpg"
 	  }, {
+	  	name: "Dinner date",
+	  	id: "dinnerdate",
+	  	tag: "Suave restaurants and tasty treats.",
+	  	imgurl: "img/dinnerdate.jpg"
+	  }, {
 		  name: "Fancy a drink?",
 		  id: "drinksonly",
 		  tag: "Hip spots to grab a drink with a date or friend.",
@@ -25,11 +30,6 @@ angular.module('datespot.controllers', ['ionic', 'datespot.factories', 'ionic.co
 		  id: "funinthesun",
 		  tag: "Something informal with friends in pubs, bars or clubs.",
 		  imgurl: "img/funinthesun.jpg"
-	  }, {
-		  name: "Dinner date",
-		  id: "dinnerdate",
-		  tag: "Suave restaurants, tasty treats and cheap eats.",
-		  imgurl: "img/dinnerdate.jpg"
 	  }, {
 		  name: "Fun with friends",
 		  id: "friends",
@@ -81,20 +81,40 @@ angular.module('datespot.controllers', ['ionic', 'datespot.factories', 'ionic.co
 .controller('DiscoverCtrl', function($scope, $state, $stateParams, $ionicLoading, $cordovaGeolocation, $ionicPopup, SessionManager, SearchQuery, User) {
 
 	var loadingMessages = [
-	// For 'First date' and 'Go all out' occasions
+	// For the following occasion IDs: 'First Date', 'Dinner Date' and 'Go All Out'
 		"Seducing...",
 		"Laying rose petals...",
 		"Popping champagne...", 
 		"Prepping rooms with wafts of French perfume...",
 		"Prepping champagne flutes...", 
 		"Sourcing the finest wines...",
-	// For parties and non-romantic events
+	// For the following occasion IDs: 'Fancy a Drink?'
+		"Popping champagne...",
+		"Sourcing the finest wines...",
+		"Tapping kegs...",
+		"Getting the party started...",
+	// For the following occasion IDs: 'Brunch or Coffee'
+		"Brewing...",
+		"Enjoying the aromas of the finest Guatemalan beans...",
+		"Caffeinating...",
+		"Percolating...",
+	// For the following occasion IDs: 'Fun in the Sun'
+		"Getting the party started...",
+		"Basking in rays...",
+		"Stealing sunshine...",
+	// For the following occasion IDs: 'Fun with Friends'
 		"Getting the party started...",
 		"Popping bottles...",
 		"Tapping kegs...",
 		"Procuring kegs...",
-	// 	// For getting weird events
+	// For the following occasion IDs: 'A Friend Comes to Visit'
+		"Rolling out the red carpet...",
+		"Coordinating the welcome party...",
+		"Getting the party started...",
+		"Arranging the perfect reunion...",
+	// For the following occasion IDs: 'Let's Get Weird'
 		"Formulating the awesome...",
+		"Formulating weirdness...",
 		"Searching the area for weirdess...",
 		"Scouring the area for weird..."
 	];
