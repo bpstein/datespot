@@ -27,7 +27,10 @@
 
     <div class="row spotDetailHeader"> 
       <div class="col">
-        <div class="open-hours-detail"> Open now </div>
+        <div class="hours-status">
+            <div ng-if="spot.venue_open_now == true"  class="open-hours">  Open now  </div>  
+            <div ng-if="spot.venue_open_now == false" class="closed-hours">  Closed now </div>   
+          </div>
         <!-- <div ng-if="card.venue_open_now == true"  class="open-hours">  Open now  </div>  
           <div ng-if="card.venue_open_now == false" class="closed-hours">  Closed now </div> -->
         <h2 class="spotDetailName">{{spot.name}}</h2>

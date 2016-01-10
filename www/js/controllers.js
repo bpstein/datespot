@@ -45,12 +45,12 @@ angular.module('datespot.controllers', ['ionic', 'datespot.factories', 'ionic.co
 		  id: "cheapeat",
 		  tag: "Something informal with friends in pubs, bars or clubs.",
 		  imgurl: "img/cheapeats.jpg"
-		}, {
-			name: "A friend comes to visit",
-			id: "visitor", 
-			tag: "A friend visits from out of town",
-			imgurl: ""
 		}
+		// 	name: "A friend comes to visit",
+		// 	id: "visitor", 
+		// 	tag: "A friend visits from out of town",
+		// 	imgurl: ""
+		// }
 
 		// {
 		//   name: "Go all out",
@@ -105,6 +105,7 @@ angular.module('datespot.controllers', ['ionic', 'datespot.factories', 'ionic.co
 	// For the following occasion IDs: 'Fun with Friends'
 		"Getting the party started...",
 		"Popping bottles...",
+		"Popping champagne...",
 		"Tapping kegs...",
 		"Procuring kegs...",
 	// For the following occasion IDs: 'A Friend Comes to Visit'
@@ -112,8 +113,8 @@ angular.module('datespot.controllers', ['ionic', 'datespot.factories', 'ionic.co
 		"Coordinating the welcome party...",
 		"Getting the party started...",
 		"Arranging the perfect reunion...",
+		"Popping champagne...",
 	// For the following occasion IDs: 'Let's Get Weird'
-		"Formulating the awesome...",
 		"Formulating weirdness...",
 		"Searching the area for weirdess...",
 		"Scouring the area for weird..."

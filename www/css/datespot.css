@@ -332,19 +332,20 @@ SALMON RED: #F05D5E*/
 
 .shortlist-header {
   color: #FDFFFC;
+  padding-left: 5px;
   font-family: 'Varela Round';
   font-size: 32px;
-  font-weight: bold;
+  font-weight: bolder;
   position: relative;
   padding-top: 160px;
  /* text-shadow: 1px 1px #222;*/
-  z-index: 2
 }
 
 .shortlist-address {
   color: #FDFFFC;
   font-family: 'Varela Round';
   font-size: 24px;
+  padding-left: 5px;
   position: relative;
 }
 
@@ -397,6 +398,7 @@ SALMON RED: #F05D5E*/
   color: #95AEC7;
   background-color: #FDFFFC;
   padding: 10px;
+  background-color: #CCC;
 }
 
 .shortlist-call-button, .shortlist-email-button {
@@ -407,8 +409,10 @@ SALMON RED: #F05D5E*/
 .shortlist-call-button, .col-33.shortlist-call-button,
 .shortlist-email-button, .col-33.shortlist-email-button,
 .shortlist-book-button, .col-33.shortlist-book-button { 
-  height: 22px; 
+  height: 18px; 
   color: #95AEC7;
+  font-size: 13px;
+  font-weight: normal;
 }
 
 .ion-calendar, .ion-ios-telephone, .ion-ios-email {
@@ -473,7 +477,7 @@ SALMON RED: #F05D5E*/
 }
 
 .spotDetailHeader {
-  margin-top: -105px;
+  margin-top: -121px;
   background: linear-gradient(to bottom, transparent, #222);
   position: absolute;
   padding-left: 10px; padding-right: 10px;
