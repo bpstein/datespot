@@ -28,8 +28,8 @@
     <div class="row spotDetailHeader"> 
       <div class="col">
         <div class="hours-status">
-            <div ng-if="spot.venue_open_now == true"  class="open-hours">  Open now  </div>  
-            <div ng-if="spot.venue_open_now == false" class="closed-hours">  Closed now </div>   
+            <div class="open-hours-wrapper"><div ng-if="spot.venue_open_now == true"  class="open-hours">  Open now  </div></div>  
+            <div class="closed-hours-wrapper"><div ng-if="spot.venue_open_now == false" class="closed-hours">  Closed now </div></div>
           </div>
         <!-- <div ng-if="card.venue_open_now == true"  class="open-hours">  Open now  </div>  
           <div ng-if="card.venue_open_now == false" class="closed-hours">  Closed now </div> -->

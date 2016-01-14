@@ -57,6 +57,12 @@ angular.module('datespot', ['ionic', 'datespot.controllers', 'ngCordova.plugins.
     }
   })
 
+  .state('tutorial', {
+    url: '/tutorial',
+    templateUrl: 'templates/tutorial.html',
+    controller: 'TutorialCtrl'
+  })
+
   .state('search', {
     url: '/search',
     templateUrl: 'templates/search.html',

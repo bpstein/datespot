@@ -93,6 +93,20 @@ SALMON RED: #F05D5E*/
   font-weight: bolder;
 }
 
+/************************
+/* TUTORIAL PAGE STYLING */
+/***********************/
+
+.tutorial {
+  background-color: red;
+}
+
+.tutorial-header {
+  color: white;
+  font-size: 15px;
+  text-align: center;
+}
+
 /***********************
 /* SEARCH TAB STYLING */
 /**********************/
@@ -164,8 +178,8 @@ SALMON RED: #F05D5E*/
   text-transform: uppercase;
   font-family: 'Varela Round';
   font-size: 18px;
+  font-weight: normal;
   color: #fff;
-  text-shadow: 1px 1px #333;
 }
 
 .occasionTagline {
@@ -205,16 +219,15 @@ SALMON RED: #F05D5E*/
 }
 
 .card-spot-title-block {
-
 }
 
 .card-spot-name {
   font-size: 19px;
   color: #FDFFFC;
-  /*text-shadow: 1px 1px #222;*/
   font-weight: bold;
   margin-top: -62px;
   padding: 0 0 0 8px;
+  overflow: hidden;
 }
 
 .open-hours, .closed-hours, .row.hours-status {
@@ -222,15 +235,27 @@ SALMON RED: #F05D5E*/
   font-size: 12px;
   font-weight: bold;
   color: #FDFFFC;
-  background-color: #4BC6B9;
-  text-shadow: none;
-  width: 30%;
   height: 18px;
-  text-align: center;
+  text-align: left;
   vertical-align: middle;
-  padding: 2px;
+  padding: 3px;
   margin-top: 5px;
   margin-bottom: 1px;
+  position: relative;
+  float: left;
+  border-radius: 2px;
+
+}
+
+.open-hours-wrapper, .closed-hours-wrapper {
+  text-transform: uppercase;
+  font-weight: bold;
+  background: #010101;
+  font-family: 'Open Sans', sans-serif;
+  padding: 10px 0; /* change horizontal padding to 0 */
+  display: inline;
+  word-wrap: break-word;
+  border-radius: 5px;
 }
 
 .open-hours {
@@ -249,6 +274,7 @@ SALMON RED: #F05D5E*/
   background-color: transparent;
   padding: 0 0 0 8px;
   margin-top: -5px;
+  overflow: hidden;
 }
 
 .card-spot-strip {
@@ -305,6 +331,7 @@ SALMON RED: #F05D5E*/
   width: 400px;
   border: none;
   padding: 0;
+  font-weight: bold;
 }
 
 .shortlist-info:before {
@@ -314,6 +341,7 @@ SALMON RED: #F05D5E*/
   position: absolute;
   top: 0;
   left: 0;
+  font-weight: bold;
 /*  background-color: transparent;
 */  /*background: -webkit-linear-gradient(
       transparent, #222 99%);*/
@@ -323,6 +351,7 @@ SALMON RED: #F05D5E*/
   height: 60px;
   font-weight: bold;
   background-color: transparent;
+  font-weight: bold;
 /*  background-image: linear-gradient(to bottom, transparent, #111 99%);
 */}
 
@@ -335,16 +364,15 @@ SALMON RED: #F05D5E*/
   padding-left: 5px;
   font-family: 'Varela Round';
   font-size: 32px;
-  font-weight: bolder;
+  font-weight: bold;
   position: relative;
   padding-top: 160px;
- /* text-shadow: 1px 1px #222;*/
 }
 
 .shortlist-address {
   color: #FDFFFC;
   font-family: 'Varela Round';
-  font-size: 24px;
+  font-size: 20px;
   padding-left: 5px;
   position: relative;
 }
@@ -399,6 +427,7 @@ SALMON RED: #F05D5E*/
   background-color: #FDFFFC;
   padding: 10px;
   background-color: #CCC;
+  font-weight: bold;
 }
 
 .shortlist-call-button, .shortlist-email-button {

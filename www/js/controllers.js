@@ -76,6 +76,7 @@ angular.module('datespot.controllers', ['ionic', 'datespot.factories', 'ionic.co
 
 }) // end SearchCtrl
 
+
 /*************** CONTROLLER FOR THE DISCOVER/SWIPE VIEW ***************/
 
 .controller('DiscoverCtrl', function($scope, $state, $stateParams, $ionicLoading, $cordovaGeolocation, $ionicPopup, SessionManager, SearchQuery, User) {
