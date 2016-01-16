@@ -143,14 +143,6 @@ SALMON RED: #F05D5E*/
   padding: 0px !important;
   margin: 0px !important;
   border: none;
-/*  display: flex;
-  flex-direction: column;
-  flex-wrap: nowrap;
-  justify-content: space-around;
-  align-content: center;
-  align-items: stretch;
-  min-height: 100% !important;
-  height: 100% !important;*/
 }
 
 .occasion-info {
@@ -188,6 +180,9 @@ SALMON RED: #F05D5E*/
   color: #fff;
   word-wrap: break-word;
 }
+
+
+
 
 /**************************
 /* DISCOVER PAGE STYLING */
@@ -241,21 +236,22 @@ SALMON RED: #F05D5E*/
   padding: 3px;
   margin-top: 5px;
   margin-bottom: 1px;
+  margin-left: -3px;
   position: relative;
   float: left;
   border-radius: 2px;
+  display: inline-block;
 
 }
 
 .open-hours-wrapper, .closed-hours-wrapper {
   text-transform: uppercase;
   font-weight: bold;
-  background: #010101;
   font-family: 'Open Sans', sans-serif;
-  padding: 10px 0; /* change horizontal padding to 0 */
-  display: inline;
+  padding: 0px 0; /* change horizontal padding to 0 */
   word-wrap: break-word;
   border-radius: 5px;
+  display: inline-block;
 }
 
 .open-hours {
@@ -279,7 +275,7 @@ SALMON RED: #F05D5E*/
 
 .card-spot-strip {
   height: 55px;
-  background-color: #95AEC7;
+  background-color: #111;
   font-weight: bold;
 }
 
@@ -304,11 +300,8 @@ SALMON RED: #F05D5E*/
   background-color: #FDFFFC;
 }
 
-/*.discover-page .img-lookahead img {
-  height:1px;
-  width:1px;
-  opacity:0.01;
-}*/
+
+
 
 /***************************
 /* SHORTLIST PAGE STYLING */
@@ -506,7 +499,7 @@ SALMON RED: #F05D5E*/
 }
 
 .spotDetailHeader {
-  margin-top: -121px;
+  margin-top: -106px;
   background: linear-gradient(to bottom, transparent, #222);
   position: absolute;
   padding-left: 10px; padding-right: 10px;
@@ -540,7 +533,7 @@ SALMON RED: #F05D5E*/
   font-weight: bold;
   font-family: 'Varela Round';
   height: 58px;
-  background-color: #95AEC7;
+  background-color: #222;
 }
 
 .spotDetailBlurb, .spot-detail-description {
@@ -663,27 +656,25 @@ SALMON RED: #F05D5E*/
   color: #020100;
 }
 
-.opening-hours-header {
-  font-size: 14px;
-  color: #020100;
+.table-days-hours {
+  width: 100%;
+  margin: 0 auto;
 }
 
-.table-days {
-  float: left;
+.table-days-hours td {
+  width: 50%;
+}
+
+.table-days-hours .table-days {
   text-align: left;
-  font-size: 14px;
-  color: #020100;
-  padding-bottom: 8px;
-  font-weight: bold;
+  padding: 4px;
 }
 
-.table-hours {
-  float: right;
+.table-days-hours .table-hours {
   text-align: right;
-  padding-left: 100px;
-  font-size: 14px;
-  color: #020100;
+  padding: 4px;
 }
+
 
 /*************************
 /* LOADING PAGE STYLING */

@@ -27,14 +27,16 @@
 
     <div class="row spotDetailHeader"> 
       <div class="col">
+
         <div class="hours-status">
-            <div class="open-hours-wrapper"><div ng-if="spot.venue_open_now == true"  class="open-hours">  Open now  </div></div>  
-            <div class="closed-hours-wrapper"><div ng-if="spot.venue_open_now == false" class="closed-hours">  Closed now </div></div>
-          </div>
-        <!-- <div ng-if="card.venue_open_now == true"  class="open-hours">  Open now  </div>  
-          <div ng-if="card.venue_open_now == false" class="closed-hours">  Closed now </div> -->
-        <h2 class="spotDetailName">{{spot.name}}</h2>
-        <h3 class="spotDetailAddress">{{spot.address}}, {{spot.postcode}}</h3>
+          <div class="open-hours-wrapper"><div ng-if="spot.venue_open_now == true"  class="open-hours">  Open now  </div></div>  
+          <div class="closed-hours-wrapper"><div ng-if="spot.venue_open_now == false" class="closed-hours">  Closed now </div></div>
+        </div>
+        <div>
+          <h2 class="spotDetailName">{{spot.name}}</h2>
+          <h3 class="spotDetailAddress">{{spot.address}}, {{spot.postcode}}</h3>
+        </div>
+
       </div>
     </div>
       
@@ -81,14 +83,14 @@
 
       <!-- OPENING HOURS TABLE -->
       <div class="padding opening-hours-block">
-        <table>
+        <table class="table-days-hours">
           <tr>
-            <td align="left" class="table-days">Monday</td>
-            <td align="left" class="table-hours">Hours</td>
+            <td class="table-days">Monday</td>
+            <td class="table-hours">Hours</td>
           </tr>
           <tr>
-            <td align="left" class="table-days">Tuesday</td>
-            <td align="left" class="table-hours">Hours</td>
+            <td class="table-days">Tuesday</td>
+            <td class="table-hours">Hours</td>
           </tr>
           <tr>
             <td align="left" class="table-days">Wednesday</td>
