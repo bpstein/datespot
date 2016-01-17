@@ -24,8 +24,6 @@ SALMON RED: #F05D5E*/
   background-color: #000;
   color: #FFF;
   border: none;
-/*  height: 60px;
-  vertical-align: middle;*/
 }
 
 .scroll-content {
@@ -57,28 +55,21 @@ SALMON RED: #F05D5E*/
   border-bottom: none;
 }
 
+
+
+
 /************************
 /* SPLASH PAGE STYLING */
 /***********************/
 
 .splash-page {
-  background:url(../img/splash-bkg.jpg);
-  background-size: cover;
+/*  background:url(../img/datespot_splash.png);
+*/  background-size: cover;
   background-repeat: no-repeat;
 }
 
 .splash-page .card {
   margin-top:40px;
-}
-
-.splash-page .logo h1 {
-  margin-top:30px;
-  text-align:center;
-  color:#fff !important;
-  font-family: Verdana, Geneva, sans-serif;
-  font-weight:bold;
-  letter-spacing: -3px;
-  font-size:42px;
 }
 
 .splash-page .signup-opt {
@@ -92,6 +83,14 @@ SALMON RED: #F05D5E*/
 .splash-page .action-button {
   font-weight: bolder;
 }
+
+.logo-image {
+  width: 100%;
+  margin-top: -70px;
+}
+
+
+
 
 /************************
 /* TUTORIAL PAGE STYLING */
@@ -107,12 +106,15 @@ SALMON RED: #F05D5E*/
   text-align: center;
 }
 
+
+
+
 /***********************
 /* SEARCH TAB STYLING */
 /**********************/
 
 .item-complex .item-content {
-  background-color: rgba(0,0,0,0.35);
+  background-color: rgba(0,0,0,0.30);
   border: none;
   border: transparent !important;
   border-top: none;
@@ -121,7 +123,6 @@ SALMON RED: #F05D5E*/
 }
 
 .item-complex .item-content:hover {
-  /*background: rgba(0, 0, 0, 0.75) !important;*/
   border: transparent !important;
 }
 
@@ -370,27 +371,6 @@ SALMON RED: #F05D5E*/
   position: relative;
 }
 
-/*.shortlistTagline, .ion-footer-bar {
-  font-family: 'Varela Round';
-  background-color: transparent;
-  height: 50px;
-  width: 400px;
-  padding-left: 15px;
-  padding-right: 15px;
-  float: left;
-  color: #DDD;
-}*/
-
-/*.textWrapper {
-  font-size: 13.5px;
-  overflow: initial; 
-  white-space: initial;
-  word-break: break-word;
-  position: justify;
-  text-align: justify;
-  text-justify: inter-word;
-}*/
-
 .item-complex .item-content, .item-radio .item-content {
   padding: 0px;
 }
@@ -454,6 +434,9 @@ SALMON RED: #F05D5E*/
   padding: 10px;
 }
 
+
+
+
 /*************************
 /* DETAILS PAGE STYLING */
 /************************/
@@ -495,12 +478,11 @@ SALMON RED: #F05D5E*/
   margin-bottom: -8px;
   text-align: center;
   vertical-align: middle;
-  padding: 2px;
 }
 
 .spotDetailHeader {
   margin-top: -106px;
-  background: linear-gradient(to bottom, transparent, #222);
+  background: linear-gradient(to bottom, transparent, #020100);
   position: absolute;
   padding-left: 10px; padding-right: 10px;
 }
@@ -533,7 +515,7 @@ SALMON RED: #F05D5E*/
   font-weight: bold;
   font-family: 'Varela Round';
   height: 58px;
-  background-color: #222;
+  background-color: #020100;
 }
 
 .spotDetailBlurb, .spot-detail-description {
@@ -676,6 +658,8 @@ SALMON RED: #F05D5E*/
 }
 
 
+
+
 /*************************
 /* LOADING PAGE STYLING */
 /************************/
@@ -704,6 +688,9 @@ SALMON RED: #F05D5E*/
     -ms-flex-item-align: stretch;
     align-self: stretch;
 }
+
+
+
 
 /***********************
 /* HEART ICON STYLING */

@@ -25,11 +25,13 @@ angular.module('datespot', ['ionic'])
         StatusBar.styleLightContent();
       }
   });
+})
+
+.run(function($cordovaSplashscreen) {
+  setTimeout(function() {
+    $cordovaSplashscreen.hide()
+  }, 4000)
 });
-
-
-
-
 
 angular.module('datespot', ['ionic', 'datespot.controllers', 'ngCordova.plugins.geolocation', 'ionic.utils', 'ngCordova'])
 
@@ -46,15 +48,20 @@ angular.module('datespot', ['ionic', 'datespot.controllers', 'ngCordova.plugins.
   $stateProvider
 
   // 
+  // .state('splash', {
+  //   url: '/',
+  //   templateUrl: 'templates/splash.html',
+  //   controller: 'SplashCtrl',
+  //   onEnter: function($state, User) {
+  //     User.checkSession().then(function(hasSession) {
+  //       if (hasSession) $state.go('tab.discover');
+  //     });
+  //   }
+  // })
+
   .state('splash', {
-    url: '/',
+    url: '/splash',
     templateUrl: 'templates/splash.html',
-    controller: 'SplashCtrl',
-    onEnter: function($state, User) {
-      User.checkSession().then(function(hasSession) {
-        if (hasSession) $state.go('tab.discover');
-      });
-    }
   })
 
   .state('tutorial', {
