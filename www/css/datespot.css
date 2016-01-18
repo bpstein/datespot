@@ -112,6 +112,14 @@ SALMON RED: #F05D5E*/
 /* SEARCH TAB STYLING */
 /**********************/
 
+.search-page {
+  background-image: url("../img/datespot_background.jpg");
+  -webkit-background-size: cover;
+  -moz-background-size: cover;
+  -o-background-size: cover;
+  background-size: cover;
+}
+
 .item-complex .item-content {
   background-color: rgba(0,0,0,0.30);
   border: none;
@@ -189,7 +197,7 @@ SALMON RED: #F05D5E*/
 /*************************/
 
 .discover-page {
-  background-image: url("/img/datespot_background.jpg");
+  background-image: url("../img/datespot_background.jpg");
   -webkit-background-size: cover;
   -moz-background-size: cover;
   -o-background-size: cover;
@@ -241,13 +249,13 @@ SALMON RED: #F05D5E*/
   height: 18px;
   text-align: left;
   vertical-align: middle;
-  padding: 3px;
+  padding: 2.5px;
   margin-top: 5px;
   margin-bottom: 1px;
   margin-left: -3px;
   position: relative;
   float: left;
-  border-radius: 2px;
+  border-radius: 4px;
   display: inline-block;
 
 }
@@ -314,7 +322,7 @@ SALMON RED: #F05D5E*/
 /* SHORTLIST PAGE STYLING */
 /**************************/
 .shortlist-background {
-  background-image: url("/img/datespot_background.jpg");
+  background-image: url("../img/datespot_background.jpg");
   -webkit-background-size: no-repeat cover;
   -moz-background-size: no-repeat cover;
   -o-background-size: cover;
@@ -354,8 +362,9 @@ SALMON RED: #F05D5E*/
 }
 
 .item-remove-animate .item-icon-right {
-/*  border: 0.5px solid #333;
-*/}
+  margin-bottom: 10px auto;
+}
+
 
 .shortlist-header {
   color: #FDFFFC;
@@ -674,7 +683,7 @@ SALMON RED: #F05D5E*/
 /* LOADING PAGE STYLING */
 /************************/
 .loading-page {
-  background-image: url("/img/datespot_background.jpg");
+  background-image: url("../img/datespot_background.jpg");
   -webkit-background-size: cover;
   -moz-background-size: cover;
   -o-background-size: cover;
