@@ -26,9 +26,9 @@ SALMON RED: #F05D5E*/
   border: none;
 }
 
-.scroll-content {
+/*.scroll-content {
   background-color: #000;
-}
+}*/
 
 /*Disables Ionic items turning grey on press*/
 .item.active, .item.activated, .item-complex.active .item-content, 
@@ -63,8 +63,7 @@ SALMON RED: #F05D5E*/
 /***********************/
 
 .splash-page {
-/*  background:url(../img/datespot_splash.png);
-*/  background-size: cover;
+  background-size: cover;
   background-repeat: no-repeat;
 }
 
@@ -189,6 +188,14 @@ SALMON RED: #F05D5E*/
 /* DISCOVER PAGE STYLING */
 /*************************/
 
+.discover-page {
+  background-image: url("/img/datespot_background.jpg");
+  -webkit-background-size: cover;
+  -moz-background-size: cover;
+  -o-background-size: cover;
+  background-size: cover;
+}
+
 .card, .td-card {
   position: relative;
   border-radius: 15px;
@@ -265,7 +272,6 @@ SALMON RED: #F05D5E*/
 
 .card-spot-address, .card-spot-postcode {
   font-size: 12px;
-  /*text-shadow: 1px 1px #222;*/
   color: #CCC;
   font-weight: bold;
   background-color: transparent;
@@ -308,13 +314,15 @@ SALMON RED: #F05D5E*/
 /* SHORTLIST PAGE STYLING */
 /**************************/
 .shortlist-background {
-  background-color: #CCC;
+  background-image: url("/img/datespot_background.jpg");
+  -webkit-background-size: no-repeat cover;
+  -moz-background-size: no-repeat cover;
+  -o-background-size: cover;
+  background-size: cover;
 }
 
 .shortlist-info {
-/*  padding: 0px;
-/*  padding-left: 5px; padding-right: 5px; padding-bottom: 10px;
-*/  
+  padding-left: 5px; padding-right: 5px; padding-bottom: 10px;
   background: no-repeat center;
   background-size: cover!important;
   -webkit-background-size: cover!important;
@@ -336,9 +344,6 @@ SALMON RED: #F05D5E*/
   top: 0;
   left: 0;
   font-weight: bold;
-/*  background-color: transparent;
-*/  /*background: -webkit-linear-gradient(
-      transparent, #222 99%);*/
 }
 
 .shortlist-title-block {
@@ -346,12 +351,11 @@ SALMON RED: #F05D5E*/
   font-weight: bold;
   background-color: transparent;
   font-weight: bold;
-/*  background-image: linear-gradient(to bottom, transparent, #111 99%);
-*/}
+}
 
 .item-remove-animate .item-icon-right {
-  border: 0.5px solid #333;
-}
+/*  border: 0.5px solid #333;
+*/}
 
 .shortlist-header {
   color: #FDFFFC;
@@ -401,6 +405,7 @@ SALMON RED: #F05D5E*/
   padding: 10px;
   background-color: #CCC;
   font-weight: bold;
+  margin-bottom: 6px;
 }
 
 .shortlist-call-button, .shortlist-email-button {
@@ -423,8 +428,7 @@ SALMON RED: #F05D5E*/
 
 .shortlist-options, .row.shortlist-options {
   width: 400px;
-  margin-bottom: 15px;
-  color: #95AEC7;
+  /*margin-bottom: 15px;*/
 }
 
 /*SWIPE LEFT BUTTON FUNCTIONS*/
@@ -432,6 +436,12 @@ SALMON RED: #F05D5E*/
   font-size: 25px;
   text-align: center; 
   padding: 10px;
+}
+
+.shortlist-buffer {
+  margin-top: 5px;
+  height: 5px;
+  background-color: transparent;
 }
 
 
@@ -663,15 +673,19 @@ SALMON RED: #F05D5E*/
 /*************************
 /* LOADING PAGE STYLING */
 /************************/
-.loadingPage {
-  background-color: #FFF;
+.loading-page {
+  background-image: url("/img/datespot_background.jpg");
+  -webkit-background-size: cover;
+  -moz-background-size: cover;
+  -o-background-size: cover;
+  background-size: cover;
 }
 
 .heart-image {
   height: 95px;
 }
 
-.loadingMessage {
+.loading-message {
   font-size: 16px;
   color: #f3f3f3;
    -webkit-box-ordinal-group: 1;

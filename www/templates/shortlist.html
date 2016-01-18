@@ -11,6 +11,8 @@
   <ion-content class="shortlist-background">
 
     <ion-list>
+      <div class="shortlist-buffer"></div>    
+
       <ion-item 
         class="item-remove-animate item-icon-right" 
         ng-repeat="spot in shortlist"
@@ -24,6 +26,7 @@
             <h3 class="shortlist-address">{{spot.address}}, {{spot.postcode}}</h3>
           </div>
         </div>
+
 
         <!-- SWIPE OPTIONS TO DELETE, SHARE OR PIN EACH DATESPOT -->
         <i class="icon ion-chevron-right icon-accesory"></i>
@@ -55,12 +58,13 @@
             <i class="ion-calendar"> Book</i>
           </div>
         </div>
-        
+
+
       </ion-item>
       
       <!-- BLANK SPACE BETWEEN SHORTLIST ITEMS -->
-<!--       <div class="shortlist-buffer"></div>       
- -->      
+      <div class="shortlist-buffer"></div>       
+      
     </ion-list>
 
   </ion-content>
